@@ -38,7 +38,12 @@ export default function NavBar() {
   };
 
   return (
-    <AppBar position="static" >
+    <AppBar position="fixed" color="transparent" enableColorOnDark  sx={{
+    backgroundColor: isLightMode?'inherit':'rgba(0, 0, 0, 0.4)', 
+    backdropFilter: 'blur(10px)',
+  }}
+
+>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
@@ -90,7 +95,7 @@ export default function NavBar() {
               ))}
               <MenuItem>
                 <IconButton href="/login" sx={{ fontSize: '1.0rem', display: 'flex', alignItems: 'start', justifyContent: 'center', gap: '5px'}}>
-                    <AccountCircleIcon/>  Login 
+                    <AccountCircleIcon/>  LOGIN 
                  </IconButton>
              </MenuItem>
             </Menu>
@@ -115,11 +120,9 @@ export default function NavBar() {
             PRDS UI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
-             <MenuItem>
               <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
-               { isLightMode ? <><ModeNightIcon/> Dark Mode</> : <><SunnyIcon/> Light Mode </>}
+               { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
               </IconButton>
-              </MenuItem>
             {pages.map((page) => (
               <Button
                 key={page}
@@ -129,14 +132,12 @@ export default function NavBar() {
                 {page}
               </Button>
             ))}
-            <Tooltip title="Login">
               <IconButton href='/login' sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
-                <AccountCircleIcon/>  Login 
+                <AccountCircleIcon/>  LOGIN 
               </IconButton>
-            </Tooltip>
           </Box>
           <Box sx={{ flexGrow: 0, display: 'flex' }}>
-            <Button sx={{backgroundColor: 'yellow' , borderRadius: '10px', borderStyle: 'solid',borderWidth: '1px', borderColor: 'black', fontWeight: 'bold', color: 'black'}}>Get Started</Button>
+            {/* <Button sx={{backgroundColor: 'yellow' , borderRadius: '10px', borderStyle: 'solid',borderWidth: '1px', borderColor: 'black', fontWeight: 'bold', color: 'black'}}>Get Started</Button> */}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar1"

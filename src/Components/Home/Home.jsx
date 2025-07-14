@@ -1,8 +1,117 @@
-function Home(){
-    return(
-        <>
-         <p>I am from page</p>
-        </>
-    )
+import { Box, Container, Chip, Avatar } from '@mui/material';
+import home from '../../assets/home.png';
+function Home() {
+  return (
+    <>
+      <Container
+        maxWidth="md"
+        sx={{
+          backgroundColor: 'inherit',
+          display: 'flex',
+          alignItems: { md: 'start', xs: 'center' },
+          justifyContent: 'center',
+          gap: '20%',
+          marginTop: '4%',
+          flexDirection: { md: 'row', xs: 'column-reverse' },
+        }}
+      >
+        <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
+          <p style={{ fontSize: '3rem' }}>
+            Communicate <br />
+            Collaborate <br /> Create
+          </p>
+          <p style={{ fontSize: '1.3rem', textAlign: 'start' }}>
+            We deliver high-impact data and testing solution to power ai,
+            software and global innovation
+          </p>
+          <Box sx={{ display: 'flex', gap: '2%', marginTop: '2%' }}>
+            <Chip
+              variant="outlined"
+              label="Testing"
+              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+            />
+            <Chip
+              variant="outlined"
+              label="Testing"
+              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+            />
+            <Chip
+              variant="outlined"
+              label="Testing"
+              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+            />
+            <Chip
+              variant="outlined"
+              label="Testing"
+              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+            />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            width: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img src={home} width="150%" height="150%" />
+        </Box>
+      </Container>
+      <Container maxWidth={false} disableGutters>
+        <svg
+          viewBox="0 0 1200 600" // Increased from 200 to 300
+          preserveAspectRatio="none"
+          style={{ width: '100%', height: '100%' }}
+        >
+          <path
+            d="M0,150 C700,200 1200,0 1200,100 L1200,600 L0,600 Z"
+            fill="rgba(173, 216, 230, 0.6)" // Light blue with 60% opacity
+          />
+
+          <foreignObject x="0" y="0" width="1200" height="800">
+            <Box
+              xmlns="http://www.w3.org/1999/xhtml"
+              style={{ display: 'flex', height: '100%' }}
+            >
+              <Box
+                sx={{
+                  width: '50%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  fontSize: '2.2rem',
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  fontFamily: 'fantasy',
+                }}
+              >
+                <p style={{ width: '80%' }}>
+                  Precision Development. Bulletproof Testing. Stellar Results.
+                </p>
+              </Box>
+              <Box
+                sx={{
+                  width: '50%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <p>
+                  We believe software should do more than just function — it
+                  should perform flawlessly, delight users, and scale with
+                  confidence. Our development process is laser-focused on
+                  precision, while our testing protocols ensure every
+                  interaction is rock-solid. With us, you don't just ship
+                  products — you launch standout experiences.
+                </p>
+              </Box>
+            </Box>
+          </foreignObject>
+        </svg>
+      </Container>
+    </>
+  );
 }
 export default Home;
