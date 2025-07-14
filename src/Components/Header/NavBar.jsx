@@ -1,32 +1,34 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
+import {useState} from 'react';
+import {AppBar, Box, Toolbar, IconButton, Typography,Menu, Container,Button, Tooltip, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AdbIcon from '@mui/icons-material/Adb';
+import SunnyIcon from '@mui/icons-material/Sunny';
+import ModeNightIcon from '@mui/icons-material/ModeNight';
+import { useSelector, useDispatch } from 'react-redux';
+import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function NavBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode)
+  const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
+  const ChangeMode = () =>{
+    
+    if(isLightMode){
+      dispatch(disableLightMode());
+    }else{
+      dispatch(enableLightMode());
+    }
+   
+  }
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -36,7 +38,7 @@ export default function NavBar() {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor: 'white', color: 'black'}}>
+    <AppBar position="static" >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
@@ -45,11 +47,7 @@ export default function NavBar() {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
@@ -87,9 +85,14 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center', color: 'black'}}>{page}</Typography>
+                  <Typography sx={{ textAlign: 'center'}}>{page}</Typography>
                 </MenuItem>
               ))}
+              <MenuItem>
+                <IconButton href="/login" sx={{ fontSize: '1.0rem', display: 'flex', alignItems: 'start', justifyContent: 'center', gap: '5px'}}>
+                    <AccountCircleIcon/>  Login 
+                 </IconButton>
+             </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -112,17 +115,22 @@ export default function NavBar() {
             PRDS UI
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
+             <MenuItem>
+              <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
+               { isLightMode ? <><ModeNightIcon/> Dark Mode</> : <><SunnyIcon/> Light Mode </>}
+              </IconButton>
+              </MenuItem>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'black', display: 'block' }}
+                sx={{ my: 2,color: 'inherit', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ fontSize: '0.9rem', color: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
+            <Tooltip title="Login">
+              <IconButton href='/login' sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
                 <AccountCircleIcon/>  Login 
               </IconButton>
             </Tooltip>
@@ -131,7 +139,7 @@ export default function NavBar() {
             <Button sx={{backgroundColor: 'yellow' , borderRadius: '10px', borderStyle: 'solid',borderWidth: '1px', borderColor: 'black', fontWeight: 'bold', color: 'black'}}>Get Started</Button>
             <Menu
               sx={{ mt: '45px' }}
-              id="menu-appbar"
+              id="menu-appbar1"
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
@@ -150,11 +158,6 @@ export default function NavBar() {
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
-              <MenuItem>
-                <IconButton>
-                    <AccountCircleIcon/>  Login 
-                 </IconButton>
-             </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
