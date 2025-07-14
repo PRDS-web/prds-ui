@@ -51,7 +51,7 @@ export default function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
@@ -105,7 +105,7 @@ export default function NavBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -119,10 +119,13 @@ export default function NavBar() {
           >
             PRDS UI
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
-              <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
+          <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit' ,display: {xs: 'flex', md: 'none'}}}>
                { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
-              </IconButton>
+          </IconButton>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
+            <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: {md: 'flex', xs: 'none'}}}>
+               { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
+          </IconButton>
             {pages.map((page) => (
               <Button
                 key={page}

@@ -1,5 +1,10 @@
 import { Box, Container, Chip, Avatar } from '@mui/material';
 import home from '../../assets/home.png';
+import BugReportIcon from '@mui/icons-material/BugReport';
+import CodeIcon from '@mui/icons-material/Code';
+import LockIcon from '@mui/icons-material/Lock';
+import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+
 function Home() {
   return (
     <>
@@ -24,26 +29,26 @@ function Home() {
             We deliver high-impact data and testing solution to power ai,
             software and global innovation
           </p>
-          <Box sx={{ display: 'flex', gap: '2%', marginTop: '2%' }}>
+          <Box sx={{ display: 'flex', gap: 1, marginTop: '3%', flexWrap:  'wrap'}} >
             <Chip
               variant="outlined"
               label="Testing"
-              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+              avatar={<BugReportIcon />}
             />
             <Chip
               variant="outlined"
-              label="Testing"
-              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+              label="Development"
+              avatar={<CodeIcon/>}
             />
             <Chip
               variant="outlined"
-              label="Testing"
-              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+              label="Speed & Security"
+              avatar={<LockIcon />}
             />
             <Chip
               variant="outlined"
-              label="Testing"
-              avatar={<Avatar src="/static/images/avatar/1.jpg" />}
+              label="Happy Customer"
+              avatar={<EmojiEmotionsIcon />}
             />
           </Box>
         </Box>
