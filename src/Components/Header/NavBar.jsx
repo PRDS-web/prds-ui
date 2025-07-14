@@ -14,16 +14,12 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // const [isLightMode, setIsLightMode] = useState(true);
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode)
   const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-//   const handleOpenUserMenu = (event) => {
-//     setAnchorElUser(event.currentTarget);
-//   };
   const ChangeMode = () =>{
     
     if(isLightMode){
@@ -51,11 +47,7 @@ export default function NavBar() {
             noWrap
             component="a"
             href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
+            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
@@ -97,7 +89,7 @@ export default function NavBar() {
                 </MenuItem>
               ))}
               <MenuItem>
-                <IconButton  sx={{ fontSize: '1.0rem', display: 'flex', alignItems: 'start', justifyContent: 'center', gap: '5px'}}>
+                <IconButton href="/login" sx={{ fontSize: '1.0rem', display: 'flex', alignItems: 'start', justifyContent: 'center', gap: '5px'}}>
                     <AccountCircleIcon/>  Login 
                  </IconButton>
              </MenuItem>
@@ -147,7 +139,7 @@ export default function NavBar() {
             <Button sx={{backgroundColor: 'yellow' , borderRadius: '10px', borderStyle: 'solid',borderWidth: '1px', borderColor: 'black', fontWeight: 'bold', color: 'black'}}>Get Started</Button>
             <Menu
               sx={{ mt: '45px' }}
-              id="menu-appbar"
+              id="menu-appbar1"
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: 'top',
