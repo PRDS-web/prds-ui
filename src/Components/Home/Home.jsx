@@ -25,7 +25,7 @@ function Home() {
             Communicate <br />
             Collaborate <br /> Create
           </Box>
-          <p style={{ fontSize: '1.3rem', textAlign: 'start' }}>
+          <p style={{ fontSize: '1.2rem', textAlign: 'start' }}>
             We deliver high-impact data and testing solution to power ai,
             software and global innovation
           </p>
@@ -77,18 +77,17 @@ function Home() {
           <foreignObject x="0" y="0" width="1200" height="800">
             <Box
               xmlns="http://www.w3.org/1999/xhtml"
-              sx={{ display: 'flex', height: '100%', width: '100%' }}
+              sx={{ display: 'flex', height: '100%', width: '100%', justifyContent: 'center', alignItems: 'center'  , flexDirection: {md: 'row', xs: 'column'} }}
             >
               <Box
                 sx={{
-                  width: '50%',
+                  width: {md: '50%', xs: '100%' },
+                  margin: '10px',
                   display: 'flex',
                   justifyContent: 'center',
-                  alignItems: 'center',
-                  fontSize: '2.2rem',
+                  alignItems: 'start',
+                  fontSize: {md: '2.1rem', xs: '2.9rem' },
                   textAlign: 'center',
-                  fontWeight: 'bold',
-                  fontFamily: 'fantasy',
                 }}
               >
                 <p style={{ width: '80%' }}>
@@ -97,19 +96,20 @@ function Home() {
               </Box>
               <Box
                 sx={{
-                  width: '50%',
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  width: {xs: '100%', md: '50%'},
+                  fontSize: {md: '1.2rem', xs: '1.8rem'},
+                  textAlign: 'center'
                 }}
               >
                 <p>
-                  We believe software should do more than just function — it
-                  should perform flawlessly, delight users, and scale with
+                  We believe software should do more than just function. It should perform flawlessly, delight users, and scale with
                   confidence. Our development process is laser-focused on
                   precision, while our testing protocols ensure every
                   interaction is rock-solid. With us, you don't just ship
-                  products — you launch standout experiences.
+                  products, you launch standout experiences.
                 </p>
               </Box>
             </Box>

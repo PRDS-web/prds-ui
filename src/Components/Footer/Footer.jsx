@@ -1,0 +1,113 @@
+import * as React from 'react';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import { Facebook, Instagram, Twitter } from '@mui/icons-material';
+import { Box, TextField, Button } from '@mui/material';
+
+export default function Footer() {
+  return (
+    <Box
+      component="footer"
+      sx={{
+        backgroundColor: 'lightblue',
+        color: 'black',
+        p: 7,
+        marginTop: '3%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      }}
+    >
+      <Container
+        maxWidth="lg"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'inherit'
+        }}
+      >
+        <Grid container spacing={11}>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              About Us
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              We are XYZ company, dedicated to providing the best service to our
+              customers.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              Contact Us
+            </Typography>
+            <TextField
+              label="Your Query"
+              multiline
+              rows={4}
+              variant="outlined"
+              fullWidth
+              sx={{ marginBottom: '8px' }}
+            />
+
+            <Typography variant="body2" color="text.secondary">
+              <TextField
+                required
+                id="outlined-required"
+                label="Email Id"
+                defaultValue=""
+                sx={{
+                  '& .MuiInputBase-input': {
+                    padding: '13px 10px',
+                  },
+                }}
+              />
+            </Typography>
+            <Typography variant="body2">
+                <Button variant="contained" sx={{width: '100%', marginTop: 1}}>Submit</Button>
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1}}>
+              Email: PRDS@company.com
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1}}>
+              Phone: +1 234 567 8901
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Typography variant="h6" color="text.primary" gutterBottom>
+              Follow Us
+            </Typography>
+            <Link href="https://www.facebook.com/" color="inherit">
+              <Facebook />
+            </Link>
+            <Link
+              href="https://www.instagram.com/"
+              color="inherit"
+              sx={{ pl: 1, pr: 1 }}
+            >
+              <Instagram />
+            </Link>
+            <Link href="https://www.twitter.com/" color="inherit">
+              <Twitter />
+            </Link>
+          </Grid>
+        </Grid>
+      </Container>
+      <Box
+        mt={5}
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Typography variant="body2" color="text.secondary" align="center">
+          {'Copyright © '}
+          <Link color="inherit" href="https://prds-ui.vercel.app/">
+            PRDS Website
+          </Link>
+          {' ' + new Date().getFullYear().toString() + '.'}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
