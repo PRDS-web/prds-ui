@@ -68,7 +68,7 @@ function Home() {
           component='svg'
           viewBox="0 0 1200 600" // Increased from 200 to 300
           preserveAspectRatio="none"
-          sx={{width: {xs: '103%'}}}
+          sx={{width: {xs: '103%',md: '100%'}}}
         >
           <path
             d="M0,150 C700,200 1200,0 1200,100 L1200,600 L0,600 Z"
