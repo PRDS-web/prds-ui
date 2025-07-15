@@ -1,4 +1,4 @@
-import  {useState} from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Button, Container } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -36,7 +36,8 @@ export default function LoginForm() {
     setValue(newValue);
   };
   return (
-    <Container component="main"
+    <Container
+      component="main"
       sx={{
         display: 'flex',
         justifyContent: 'center',
@@ -44,15 +45,23 @@ export default function LoginForm() {
         margin: '2%',
       }}
     >
-      <Box sx={{ margin: '2%', width: {xs: '100%', md: '40%'}, height: {xs: '60%', md: '80%'},
+      <Box
+        sx={{
+          margin: '2%',
+          width: { xs: '100%', md: '40%' },
+          minHeight: { xs: '20vh', md: '30vh' }, // Use viewport height
           boxShadow: 3,
           borderRadius: 2,
           px: 4,
           py: 6,
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"}}>
+          mt: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflowY: 'auto', // Scroll if content overflows
+        }}
+      >
         <TabContext value={value}>
           <Box
             // sx={{ borderBottom: 1, color: 'inherit', borderColor: 'divider' }}
@@ -76,9 +85,8 @@ export default function LoginForm() {
                   color: 'inherit',
                   '&.Mui-selected': {
                     color: 'inherit',
-                    backgroundColor: isLightMode? 'white': 'black',
-                    borderRadius: '5px'
-
+                    backgroundColor: isLightMode ? 'white' : 'black',
+                    borderRadius: '5px',
                   },
                 },
               }}
@@ -125,7 +133,7 @@ export default function LoginForm() {
                   margin: '10px',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexWrap: {xs: 'wrap'}
+                  flexWrap: { xs: 'wrap' },
                 }}
               >
                 <Button
