@@ -9,6 +9,7 @@ import Root from './Root/Root.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
+      
         <Root />
     </Provider>
   </StrictMode>

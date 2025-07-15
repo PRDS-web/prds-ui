@@ -14,7 +14,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode)
+  const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
@@ -51,9 +51,8 @@ export default function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -89,7 +88,7 @@ export default function NavBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem href={'/'+page} key={page} onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: 'center'}}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -105,27 +104,30 @@ export default function NavBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
             PRDS UI
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
-              <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
+          <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit' ,display: {xs: 'flex', md: 'none'}}}>
                { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
-              </IconButton>
+          </IconButton>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
+            <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: {md: 'flex', xs: 'none'}}}>
+               { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
+          </IconButton>
             {pages.map((page) => (
               <Button
                 key={page}
+                href={'/'+page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2,color: 'inherit', display: 'block' }}
               >
