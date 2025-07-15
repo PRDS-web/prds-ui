@@ -14,7 +14,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode)
+  const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const dispatch = useDispatch()
 
   const handleOpenNavMenu = (event) => {
@@ -53,7 +53,6 @@ export default function NavBar() {
             component="a"
             href="/"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -89,7 +88,7 @@ export default function NavBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem href={'/'+page} key={page} onClick={handleCloseNavMenu}>
                   <Typography sx={{ textAlign: 'center'}}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -112,7 +111,6 @@ export default function NavBar() {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -129,6 +127,7 @@ export default function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
+                href={'/'+page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2,color: 'inherit', display: 'block' }}
               >
