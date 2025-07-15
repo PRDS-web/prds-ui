@@ -118,11 +118,11 @@ export default function NavBar() {
             PRDS UI
           </Typography>
           <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit' ,display: {xs: 'flex', md: 'none'}}}>
-               { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
+               { localStorage.getItem('themeMode') === 'light' ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
           </IconButton>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
             <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: {md: 'flex', xs: 'none'}}}>
-               { isLightMode ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
+               { localStorage.getItem('themeMode') === 'light' ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
           </IconButton>
             {pages.map((page) => (
               <Button

@@ -85,7 +85,7 @@ export default function LoginForm() {
                   color: 'inherit',
                   '&.Mui-selected': {
                     color: 'inherit',
-                    backgroundColor: isLightMode ? 'white' : 'black',
+                    backgroundColor: localStorage.getItem('themeMode') === 'light' ? 'white' : 'black',
                     borderRadius: '5px',
                   },
                 },
