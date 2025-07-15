@@ -64,20 +64,20 @@ function Home() {
         </Box>
       </Container>
       <Container maxWidth={false} disableGutters>
-        <svg
+        <Box
+          component='svg'
           viewBox="0 0 1200 600" // Increased from 200 to 300
           preserveAspectRatio="none"
-          style={{ width: '100%', height: '100%' }}
+          sx={{width: {xs: '103%'}}}
         >
           <path
             d="M0,150 C700,200 1200,0 1200,100 L1200,600 L0,600 Z"
             fill="rgba(173, 216, 230, 0.6)" // Light blue with 60% opacity
           />
-
           <foreignObject x="0" y="0" width="1200" height="800">
             <Box
               xmlns="http://www.w3.org/1999/xhtml"
-              style={{ display: 'flex', height: '100%' }}
+              sx={{ display: 'flex', height: '100%', width: '100%' }}
             >
               <Box
                 sx={{
@@ -114,7 +114,7 @@ function Home() {
               </Box>
             </Box>
           </foreignObject>
-        </svg>
+        </Box>
       </Container>
     </>
   );
