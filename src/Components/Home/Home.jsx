@@ -21,10 +21,10 @@ function Home() {
         }}
       >
         <Box sx={{ width: '50%', display: 'flex', flexDirection: 'column' }}>
-          <p style={{ fontSize: '3rem' }}>
+          <Box component='p' sx={{ fontSize: {xs: '2.5rem', md: '3rem'} }}>
             Communicate <br />
             Collaborate <br /> Create
-          </p>
+          </Box>
           <p style={{ fontSize: '1.3rem', textAlign: 'start' }}>
             We deliver high-impact data and testing solution to power ai,
             software and global innovation
