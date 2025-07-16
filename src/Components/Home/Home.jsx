@@ -104,13 +104,13 @@ function Home() {
                   textAlign: 'center'
                 }}
               >
-                <p>
+                <Box component='p'>
                   We believe software should do more than just function. It should perform flawlessly, delight users, and scale with
                   confidence. Our development process is laser-focused on
                   precision, while our testing protocols ensure every
                   interaction is rock-solid. With us, you don't just ship
                   products, you launch standout experiences.
-                </p>
+                </Box>
               </Box>
             </Box>
           </foreignObject>
