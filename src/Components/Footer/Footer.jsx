@@ -44,31 +44,6 @@ export default function Footer() {
             <Typography variant="h6" color="text.primary" gutterBottom>
               Contact Us
             </Typography>
-            <TextField
-              label="Your Query"
-              multiline
-              rows={4}
-              variant="outlined"
-              fullWidth
-              sx={{ marginBottom: '8px' }}
-            />
-
-            <Typography variant="body2" color="text.secondary">
-              <TextField
-                required
-                id="outlined-required"
-                label="Email Id"
-                defaultValue=""
-                sx={{
-                  '& .MuiInputBase-input': {
-                    padding: '13px 10px',
-                  },
-                }}
-              />
-            </Typography>
-            <Typography variant="body2">
-                <Button variant="contained" sx={{width: '100%', marginTop: 1}}>Submit</Button>
-            </Typography>
             <Typography variant="body2" color="text.secondary" sx={{marginTop: 1}}>
               Email: PRDS@company.com
             </Typography>
