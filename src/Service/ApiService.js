@@ -18,7 +18,7 @@ export const getUserInfo = async (userInfo) => {
   );
   const data = response.data;
   const token = data.access_token;
-  console.log('Token', token);
+//   console.log('Token', token);
 
   let config = {
     method: 'post',
@@ -38,6 +38,6 @@ export const getUserInfo = async (userInfo) => {
     .catch((error) => {
       return error;
     });
-  console.log('userDetails', userdetails);
+//   console.log('userDetails', userdetails);
   return userdetails;
 };

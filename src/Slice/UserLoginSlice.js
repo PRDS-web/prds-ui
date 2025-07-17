@@ -6,7 +6,6 @@ import { getUserInfo } from '../Service/ApiService';
 export const fetchUsersAsync = createAsyncThunk(
   '/fetchUser',
   async (userDetails) => {
-    console.log('call make to user', userDetails);
     const response = await getUserInfo(userDetails);
     return response;
   }
