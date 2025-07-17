@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -12,13 +12,18 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import MuiContainer from '@mui/material/Container';
+import { useDispatch } from 'react-redux';
 import {
   OAuthifyProvider,
   GitHubLoginButton,
   GoogleLoginButton,
   GoogleIcon,
   GithubIcon,
+  useOAuthify,
 } from 'oauthify';
+import { CircularProgress, Backdrop, Alert,Snackbar } from '@mui/material';
+import { Navigate } from 'react-router';
+import { fetchUsersAsync } from '../../Slice/UserLoginSlice';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -57,18 +62,19 @@ const Container = styled(MuiContainer)(({ theme }) => ({
 }));
 
 export default function LoginForm() {
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const { onSuccess, onFailure } = useOAuthify();
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const dispatch = useDispatch();
 
   const commanTextField = {
     '& label': {
       color: 'white', // Label color
-    },
-    '$ text': {
-      color: 'white'
     },
     '& label.Mui-focused': {
       color: 'inherit', // Focused label color
@@ -83,14 +89,66 @@ export default function LoginForm() {
       '&.Mui-focused fieldset': {
         borderColor: 'white', // Focused border
       },
+      '& input': {
+        color: 'white', // Text color while typing
+      },
     },
   };
+  useEffect(() => {
+    console.log(onSuccess);
+    if (onSuccess == 'undefined' || onSuccess == null) return;
+    async function handleAuthRedirect() {
+      setLoading(true);
+      setRedirect(false);
+      dispatch(fetchUsersAsync(onSuccess.code));
+      await new Promise((res) => setTimeout(res, 1000));
+      setLoading(false);
+      setRedirect(true);
+      
+    }
+    handleAuthRedirect();
+  }, [onSuccess,dispatch]);
+  useEffect(() => {
+    console.log(onFailure)
+    handleGoogleFailureLogin();
+    setLoading(true);
+       new Promise((res) => setTimeout(res, 1000));
+      setLoading(false);
+    if (onFailure == 'undefined' || onFailure == null) return;
+    async function handleAuthRedirect() {
+      setLoading(true);
+      await new Promise((res) => setTimeout(res, 1000));
+      setLoading(false);  
+    }
+    handleAuthRedirect();
+  }, [onFailure]);
+  // const handleGoogleSuccessLogin = (googleLoginInfo) =>{
+  //   console.log(googleLoginInfo)
+  // }
 
-  const handleClickOpen = () => {
+  const handleGoogleFailureLogin = (googleLoginInfo) =>{
+    console.log(googleLoginInfo)
+  }
+  // const handleGithubLoginSuccess = (githubLoginInfo) =>{
+  //   console.log(githubLoginInfo);
+  // }
+  // const handleGithubLoginFailure = (githubLoginInfo) => {
+  //   console.log(githubLoginInfo);
+  // }
+  const handleClickOpen = (error) => {
+    console.log(error);
     setOpen(true);
   };
 
-  const handleClose = () => {
+  // React.useEffect(() => {
+  //   handleGoogleSuccessLogin();
+  // }, [onSuccess]);
+
+  // React.useEffect(() => {
+  //   handleFailure();
+  // }, [onFailure]);
+  const handleClose = (error) => {
+    console.log(error);
     setOpen(false);
   };
 
@@ -135,6 +193,24 @@ export default function LoginForm() {
 
   return (
     <Container maxWidth={false} sx={{ height: '100vh' }}>
+      <Backdrop
+        sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+        {redirect && <Navigate to="/" />}
+        <Snackbar
+          open={loading}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          autoHideDuration={3000}
+        >
+          <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
+            Login Successful!
+          </Alert>
+        </Snackbar>
+
+      </Backdrop>
+
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -158,59 +234,57 @@ export default function LoginForm() {
             backgroundColor: 'inherit',
           }}
         >
-          <OAuthifyProvider>
-            <GoogleLoginButton
-              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-              redirectUri="https://prds-ui.vercel.app/"
-              // onSuccess={handleSuccess}
-              // onFailure={handleFailure}
+          <GoogleLoginButton
+            clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            redirectUri={`${window.location.origin}/oauthify-redirect`}
+            // onSuccess={handleGoogleSuccessLogin}
+            onFailure={handleGoogleFailureLogin}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                gap: 2,
+                height: '37px',
+                alignItems: 'center',
+                alignContent: 'space-between',
+                justifyContent: 'center',
+                color: 'inherit',
+                backgroundColor: 'inherit',
+                cursor: 'pointer',
+              }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  gap: 2,
-                  height: '37px',
-                  alignItems: 'center',
-                  alignContent: 'space-between',
-                  justifyContent: 'center',
-                  color: 'inherit',
-                  backgroundColor: 'inherit',
-                  cursor: 'pointer',
-                }}
-              >
-                <GoogleIcon size={16} />
-                Sign in with Google
-              </Box>
-            </GoogleLoginButton>
+              <GoogleIcon size={16} />
+              Sign in with Google
+            </Box>
+          </GoogleLoginButton>
 
-            <GitHubLoginButton
-              clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
+          <GitHubLoginButton
+            clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
               redirectUri="https://prds-ui.vercel.app/"
               // onSuccess={handleSuccess}
               // onFailure={handleFailure}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                gap: 2,
+                height: '37px',
+                alignItems: 'center',
+                alignContent: 'space-between',
+                justifyContent: 'center',
+                color: 'inherit',
+                backgroundColor: 'inherit',
+                cursor: 'pointer',
+              }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  gap: 2,
-                  height: '37px',
-                  alignItems: 'center',
-                  alignContent: 'space-between',
-                  justifyContent: 'center',
-                  color: 'inherit',
-                  backgroundColor: 'inherit',
-                  cursor: 'pointer',
-                }}
-              >
-                <GithubIcon size={16} />
-                Sign in with GitHub
-              </Box>
-            </GitHubLoginButton>
-          </OAuthifyProvider>
+              <GithubIcon size={16} />
+              Sign in with GitHub
+            </Box>
+          </GitHubLoginButton>
         </Box>
         <Divider>or</Divider>
         <Box
@@ -302,7 +376,7 @@ export default function LoginForm() {
             Don&apos;t have an account?{' '}
             <span>
               <Link
-                href="/material-ui/getting-started/templates/sign-in/"
+                href="/signup"
                 variant="body2"
                 sx={{ alignSelf: 'center', color: 'white' }}
               >

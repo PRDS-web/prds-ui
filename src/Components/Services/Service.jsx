@@ -18,11 +18,11 @@ export default function Service() {
       <Grid container spacing={3} sx={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
         {Array.from(Array(6)).map((_, index) => (
           <Grid item xs={4} key={index} >
-            <Card sx={{ maxWidth: 300 , height: '87vh'}}>
+            <Card sx={{ maxWidth: 300 , height: '89%'}}>
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  height="310vh"
+                  height="300hv"
                   image="https://wallpapers.com/images/hd/spiderman-candid-zi96tx7tphmj5vc1.jpg"
                   alt="green iguana"
                 />
