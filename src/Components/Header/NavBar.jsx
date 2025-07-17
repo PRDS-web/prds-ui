@@ -1,5 +1,17 @@
-import {useState} from 'react';
-import {AppBar, Box, Toolbar, IconButton, Typography,Menu, Container,Button, Tooltip, MenuItem } from '@mui/material';
+import { useState } from 'react';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+  Avatar,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -7,28 +19,26 @@ import SunnyIcon from '@mui/icons-material/Sunny';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { useSelector, useDispatch } from 'react-redux';
 import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
-
+import {logout} from '../../Slice/UserLoginSlice';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Dashboard', 'Logout'];
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
-  const dispatch = useDispatch()
-
+  const { users, isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const ChangeMode = () =>{
-    
-    if(isLightMode){
+  const ChangeMode = () => {
+    if (isLightMode) {
       dispatch(disableLightMode());
-    }else{
+    } else {
       dispatch(enableLightMode());
     }
-   
-  }
+  };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -36,23 +46,32 @@ export default function NavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
   return (
-    <AppBar position="fixed" color="transparent" enableColorOnDark  sx={{
-    backgroundColor: isLightMode?'inherit':'rgba(0, 0, 0, 0.4)', 
-    backdropFilter: 'blur(10px)',
-  }}
-
->
+    <AppBar
+      position="fixed"
+      color="transparent"
+      enableColorOnDark
+      sx={{
+        backgroundColor: isLightMode ? 'inherit' : 'rgba(0, 0, 0, 0.4)',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
             href="/"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700,
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -88,15 +107,82 @@ export default function NavBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem href={'/'+page} key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center'}}>{page}</Typography>
+                <MenuItem
+                  href={'/' + page}
+                  key={page}
+                  onClick={handleCloseNavMenu}
+                >
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
               <MenuItem>
-                <IconButton href="/login" sx={{ fontSize: '1.0rem', display: 'flex', alignItems: 'start', justifyContent: 'center', gap: '5px'}}>
-                    <AccountCircleIcon/>  LOGIN 
-                 </IconButton>
-             </MenuItem>
+                {!isLoggedIn ? (
+                  <IconButton
+                    href="/login"
+                    sx={{
+                      fontSize: '1.0rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '5px',
+                      color: 'inherit',
+                    }}
+                  >
+                    <AccountCircleIcon /> LOGIN
+                  </IconButton>
+                ) : (
+                  <Box>
+                    <Tooltip title={users.name || 'Profile'}>
+                      <IconButton onClick={handleOpenUserMenu}>
+                        <Avatar
+                          alt={users.name || 'User'}
+                          src={users.picture || undefined}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      sx={{ mt: '45px' }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      {settings.map((setting) => (
+                        <MenuItem
+                          href={'/' + setting.toLowerCase()}
+                          component="a"
+                          key={setting}
+                          onClick={() => {
+                            handleCloseUserMenu();
+                            if (setting === 'Logout') {
+                              const persistedState = JSON.parse(
+                                localStorage.getItem('persist:root')
+                              );
+                              delete persistedState.user;
+                              localStorage.setItem(
+                                'persist:root',
+                                JSON.stringify(persistedState)
+                              );
+                              dispatch(logout());
+                            }
+                          }}
+                        >
+                          <Typography>{setting}</Typography>
+                        </MenuItem>
+                      ))}
+                    </Menu>
+                  </Box>
+                )}
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -117,51 +203,131 @@ export default function NavBar() {
           >
             PRDS UI
           </Typography>
-          <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit' ,display: {xs: 'flex', md: 'none'}}}>
-               { localStorage.getItem('themeMode') === 'light' ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
+          <IconButton
+            onClick={ChangeMode}
+            sx={{
+              fontSize: '0.9rem',
+              color: 'inherit',
+              display: { xs: 'flex', md: 'none' },
+            }}
+          >
+            {localStorage.getItem('themeMode') === 'light' ? (
+              <>
+                <Tooltip title="Dark Mode">
+                  <ModeNightIcon />
+                </Tooltip>
+              </>
+            ) : (
+              <>
+                <Tooltip title="Light Mode">
+                  <SunnyIcon />{' '}
+                </Tooltip>
+              </>
+            )}
           </IconButton>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' , justifyContent: 'end'} }}>
-            <IconButton onClick={ChangeMode} sx={{ fontSize: '0.9rem', color: 'inherit', display: {md: 'flex', xs: 'none'}}}>
-               { localStorage.getItem('themeMode') === 'light' ? <><Tooltip title="Dark Mode"><ModeNightIcon/></Tooltip></> : <><Tooltip title="Light Mode"><SunnyIcon/> </Tooltip></>}
-          </IconButton>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex', justifyContent: 'end' },
+            }}
+          >
+            <IconButton
+              onClick={ChangeMode}
+              sx={{
+                fontSize: '0.9rem',
+                color: 'inherit',
+                display: { md: 'flex', xs: 'none' },
+              }}
+            >
+              {localStorage.getItem('themeMode') === 'light' ? (
+                <>
+                  <Tooltip title="Dark Mode">
+                    <ModeNightIcon />
+                  </Tooltip>
+                </>
+              ) : (
+                <>
+                  <Tooltip title="Light Mode">
+                    <SunnyIcon />{' '}
+                  </Tooltip>
+                </>
+              )}
+            </IconButton>
             {pages.map((page) => (
               <Button
                 key={page}
-                href={'/'+page}
+                href={'/' + page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2,color: 'inherit', display: 'block' }}
+                sx={{ my: 2, color: 'inherit', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
-              <IconButton href='/login' sx={{ fontSize: '0.9rem', color: 'inherit', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '2px'}}>
-                <AccountCircleIcon/>  LOGIN 
+            {!isLoggedIn ? (
+              <IconButton
+                href="/login"
+                sx={{
+                  fontSize: '1.0rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '5px',
+                  color: 'inherit',
+                }}
+              >
+                <AccountCircleIcon /> LOGIN
               </IconButton>
-          </Box>
-          <Box sx={{ flexGrow: 0, display: 'flex' }}>
-            {/* <Button sx={{backgroundColor: 'yellow' , borderRadius: '10px', borderStyle: 'solid',borderWidth: '1px', borderColor: 'black', fontWeight: 'bold', color: 'black'}}>Get Started</Button> */}
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar1"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            ) : (
+              <Box>
+                <Tooltip title={users.name || 'Profile'}>
+                  <IconButton onClick={handleOpenUserMenu}>
+                    <Avatar
+                      alt={users.name || 'User'}
+                      src={users.picture || undefined}
+                    />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={() => {
+                            handleCloseUserMenu();
+                            if (setting === 'Logout') {
+                              const persistedState = JSON.parse(
+                                localStorage.getItem('persist:root')
+                              );
+                              delete persistedState.user;
+                              localStorage.setItem(
+                                'persist:root',
+                                JSON.stringify(persistedState)
+                              );
+                              dispatch(logout());
+                            }}}>
+                      <Typography
+                        href={'/' + setting.toLowerCase()}
+                        sx={{ textAlign: 'center' }}
+                      >
+                        {setting}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            )}
           </Box>
         </Toolbar>
       </Container>

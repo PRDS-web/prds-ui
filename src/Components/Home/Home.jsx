@@ -1,9 +1,11 @@
-import { Box, Container, Chip, Avatar } from '@mui/material';
+import Box from '@mui/material/Box';
 import home from '../../assets/home.png';
 import BugReportIcon from '@mui/icons-material/BugReport';
 import CodeIcon from '@mui/icons-material/Code';
 import LockIcon from '@mui/icons-material/Lock';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import Container from '@mui/material/Container';
+import Chip from '@mui/material/Chip';
 
 function Home() {
   return (
