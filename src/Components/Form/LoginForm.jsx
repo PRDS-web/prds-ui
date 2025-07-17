@@ -95,7 +95,7 @@ export default function LoginForm() {
     },
   };
   useEffect(() => {
-    console.log(onSuccess);
+    // console.log(onSuccess);
     if (onSuccess == 'undefined' || onSuccess == null) return;
     async function handleAuthRedirect() {
       setLoading(true);
@@ -109,7 +109,7 @@ export default function LoginForm() {
     handleAuthRedirect();
   }, [onSuccess,dispatch]);
   useEffect(() => {
-    console.log(onFailure)
+    // console.log(onFailure)
     handleGoogleFailureLogin();
     setLoading(true);
        new Promise((res) => setTimeout(res, 1000));
@@ -126,8 +126,8 @@ export default function LoginForm() {
   //   console.log(googleLoginInfo)
   // }
 
-  const handleGoogleFailureLogin = (googleLoginInfo) =>{
-    console.log(googleLoginInfo)
+  const handleGoogleFailureLogin = () =>{
+    // console.log(googleLoginInfo)
   }
   // const handleGithubLoginSuccess = (githubLoginInfo) =>{
   //   console.log(githubLoginInfo);
