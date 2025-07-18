@@ -52,7 +52,7 @@ export default function Profile() {
         <Box
           component="p"
           sx={{
-            marginLeft: ['28%', '25%' ,'20%', '25%'],
+            marginLeft: ['28%', '25%' ,'20%', '15%'],
             color: 'white',
             fontWeight: 'bold',
             fontSize: ['1.6rem', '2rem'],
