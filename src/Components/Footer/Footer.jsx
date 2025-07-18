@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import { Facebook, Instagram, Twitter } from '@mui/icons-material';
-import { Box} from '@mui/material';
+import { Box, Card} from '@mui/material';
 
 export default function Footer() {
   return (
@@ -12,7 +12,7 @@ export default function Footer() {
       sx={{
         backgroundColor: 'rgba(173, 216, 230, 0.6)',
         color: 'black',
-        p: 7,
+        p: 6,
         marginTop: '3%',
         display: 'flex',
         alignItems: 'center',
@@ -20,13 +20,15 @@ export default function Footer() {
         flexDirection: 'column',
       }}
     >
-      <Container
+      <Card
         maxWidth="lg"
+        variant='elevation'
         sx={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: 'inherit'
+          color: 'inherit',
+          padding: '50px',
         }}
       >
         <Grid container spacing={11}>
@@ -69,9 +71,9 @@ export default function Footer() {
             </Link>
           </Grid>
         </Grid>
-      </Container>
+      </Card>
       <Box
-        mt={5}
+        mt={2}
         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <Typography variant="body2" color="text.secondary" align="center">
