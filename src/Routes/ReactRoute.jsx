@@ -9,6 +9,7 @@ import Footer from '../Components/Footer/Footer';
 import SignUpForm from '../Components/Form/SignUpForm';
 import { OAuthifyRedirect } from 'oauthify';
 import Logout from '../Components/Form/Logout';
+import Profile from '../Components/Profile/Profile';
 
 
 function ReactRoute() {
@@ -20,8 +21,9 @@ function ReactRoute() {
        </Route>
        <Route path='/login' element={<><LoginForm/> </>}/>
        <Route path='/signup' element={<><SignUpForm/> </>}/>
-       <Route path="/oauthify-redirect" element={<OAuthifyRedirect />} />
+       <Route path='/oauthify-redirect' element={<OAuthifyRedirect />} />
        <Route path='/logout' element={<Logout/>}/>
+       <Route path='/profile' element={<><NavBar/><Profile/> <Footer/></>}/>
      </Routes>
     </BrowserRouter>
   );

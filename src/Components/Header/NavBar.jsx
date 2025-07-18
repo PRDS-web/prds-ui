@@ -20,12 +20,14 @@ import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { useSelector, useDispatch } from 'react-redux';
 import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import {logout} from '../../Slice/UserLoginSlice';
+import Boy from '../../assets/boyWithoutBG.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [isImageFailed, setIsImageFailed] = useState(false);
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const { users, isLoggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -136,7 +138,8 @@ export default function NavBar() {
                       <IconButton onClick={handleOpenUserMenu}>
                         <Avatar
                           alt={users.name || 'User'}
-                          src={users.picture || undefined}
+                          src={users.picture || Boy}
+                          onError={() => setIsImageFailed(true)}
                         />
                       </IconButton>
                     </Tooltip>
@@ -283,7 +286,9 @@ export default function NavBar() {
                   <IconButton onClick={handleOpenUserMenu}>
                     <Avatar
                       alt={users.name || 'User'}
-                      src={users.picture || undefined}
+                      src={isImageFailed ? Boy : users.picture}
+                      onError={() => setIsImageFailed(true)}
+                      sx={{border: '2px solid white', backgroundColor: 'white'}}
                     />
                   </IconButton>
                 </Tooltip>
