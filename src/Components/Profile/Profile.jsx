@@ -33,7 +33,7 @@ export default function Profile() {
         <Avatar
           variant="square"
           alt={name || 'User Profile'}
-          src={(isImageFailed || picture=='' || picture !=null) ? Boy : picture}
+          src={(isImageFailed || picture=='' || picture ==null) ? Boy : picture}
           //   onLoad={() => }
           onError={() => setIsImageFailed(true)}
           sx={{

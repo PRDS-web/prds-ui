@@ -138,7 +138,7 @@ export default function NavBar() {
                       <IconButton onClick={handleOpenUserMenu}>
                         <Avatar
                           alt={users.name || 'User'}
-                          src={(isImageFailed || users.picture=='' || users.picture !=null) ? Boy : users.picture}
+                          src={(isImageFailed || users.picture=='' || users.picture ==null) ? Boy : users.picture}
                           onError={() => setIsImageFailed(true)}
                         />
                       </IconButton>
@@ -286,7 +286,7 @@ export default function NavBar() {
                   <IconButton onClick={handleOpenUserMenu}>
                     <Avatar
                       alt={users.name || 'User'}
-                     src={(isImageFailed || users.picture=='' || users.picture !=null) ? Boy : users.picture}
+                     src={(isImageFailed || users.picture=='' || users.picture ==null) ? Boy : users.picture}
                       onError={() => setIsImageFailed(true)}
                       sx={{border: '2px solid white', backgroundColor: 'white'}}
                     />
