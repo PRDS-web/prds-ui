@@ -4,8 +4,7 @@ import { useSelector } from 'react-redux';
 import Box from '@mui/material/Box';
 import Boy from '../../assets/boyWithoutBG.png';
 import { useState } from 'react';
-import { Grid3x3 } from '@mui/icons-material';
-import { Card, MenuItem, Select, TextField } from '@mui/material';
+import { Card, MenuItem, OutlinedInput, Select, TextField } from '@mui/material';
 
 export default function Profile() {
   const [isImageFailed, setIsImageFailed] = useState(false);
@@ -16,15 +15,16 @@ export default function Profile() {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    marginRight: [0, 0, 1]
   };
   const commonJob = {fontSize: ['0.8rem', '0.7rem' ,'1.0rem']}
   return (
-    <Container maxWidth={false} disableGutters sx={{ mt: '3.5%' }}>
+    <Container maxWidth={false} disableGutters sx={{ marginTop: ['3.5%', '3%', '3.5%'] }}>
       <Box
         component="main"
         sx={{
           backgroundColor: 'rgba(17, 55, 67, 0.73)',
-          height: ['15vh', '30vh'],
+          height: ['15vh', '25vh','30vh'],
           display: 'flex',
           alignItems: 'end',
           justifyContent: 'start',
@@ -70,21 +70,22 @@ export default function Profile() {
           flexDirection: 'row',
           justifyContent: {md: 'end', xs: 'center', sm: 'end'},
           alignItems: 'center',
+          gap: [ 1,  1,  2],
         }}
       >
         <Box sx={common}>
           <p style={{ fontWeight: 'bold' }}> 23</p>
           <Box component='p' sx={commonJob}>Total Opening</Box>
         </Box>
-        <Box ml={2} sx={common}>
+        <Box sx={common}>
           <p style={{ fontWeight: 'bold' }}> 23</p>
           <Box component='p' sx={commonJob}>Total Opening</Box>
         </Box>
-        <Box ml={2} sx={common}>
+        <Box sx={common}>
           <p style={{ fontWeight: 'bold' }}> 23</p>
           <Box component='p' sx={commonJob}>Total Opening</Box>
         </Box>
-        <Box m={2} sx={common}>
+        <Box sx={common}>
           <p style={{ fontWeight: 'bold' }}> 23</p>
           <Box component='p' sx={commonJob}>Total Opening</Box>
         </Box>
@@ -158,9 +159,11 @@ export default function Profile() {
                 onChange={(e) => setGender(e.target.value)}
                 label='Gender'
                 fullWidth
+                input={<OutlinedInput label="Gender" />}
                 variant="outlined"
                 disabled>
-                <MenuItem value="Male" defaultValue='Na'>Male</MenuItem>
+                <MenuItem value='NA'>None of Selected</MenuItem>
+                <MenuItem value="Male">Male</MenuItem>
                 <MenuItem value="Female">Backend</MenuItem>
               </Select>
             </Box>
