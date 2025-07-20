@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import  DarkLightModeReducer  from '../Slice/DarkLightSlice.js';
 import  UserReducer from '../Slice/UserLoginSlice.js';
+import ProfileReducer from '../Slice/ProfileSlice.js';
 import storage from 'redux-persist/lib/storage'; 
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
@@ -13,7 +14,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   DarkLightMode: DarkLightModeReducer,
-  user: UserReducer
+  user: UserReducer,
+  profile: ProfileReducer,
 });
 
 

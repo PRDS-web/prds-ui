@@ -1,43 +1,45 @@
 import axios from 'axios';
 
-export const getUserInfo = async (userInfo) => {
-  const response = await axios.post(
-    'https://oauth2.googleapis.com/token',
-    new URLSearchParams({
-      code: userInfo,
-      client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-      client_secret: import.meta.env.VITE_GOOGLE_SECRET,
-      redirect_uri: `${window.location.origin}/oauthify-redirect`,
-      grant_type: 'authorization_code',
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+export const getUserInfo = async (code) => {
+  try{
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/sso?code=${code}`, { withCredentials: true });
+    console.log('User information fetched successfully:');
+
+    return response.data.user;
+  } catch (error) {
+    console.error('Error fetching user information:', error.response);
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
     }
-  );
-  const data = response.data;
-  const token = data.access_token;
-//   console.log('Token', token);
-
-  let config = {
-    method: 'post',
-    maxBodyLength: Infinity,
-    url: 'https://www.googleapis.com/oauth2/v3/userinfo',
-    headers: {
-      Authorization:
-        'Bearer '+token,
-    },
-  };
-
-  const userdetails = await axios
-    .request(config)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return error;
-    });
-//   console.log('userDetails', userdetails);
-  return userdetails;
+    console.error('Error fetching user information');
+    return error.response.data;
+  }
+  
 };
+
+export const getProfileInfo = async () => {
+  try{
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/getUserInfo`, { withCredentials: true});
+    console.log('Profile information fetched successfully:');
+    return response.data.user;
+  }catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error fetching profile information', error);
+    return error.response.data;
+  }
+
+}

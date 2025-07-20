@@ -1,22 +1,25 @@
 //userSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserInfo } from '../Service/ApiService';
+import { getProfileInfo } from '../Service/ApiService';
 
-export const fetchUser = createAsyncThunk(
-  '/fetchUser',
-  async (userDetails, { rejectWithValue }) => {
-    const response = await getUserInfo(userDetails);
-    console.log('Response from getUserInfo:', response);
-    if (response.status > 202) {
+export const fetchProfile = createAsyncThunk(
+  '/fetchProfile',
+  // here we don't need any parameters, so we can pass an _ underscore
+  // to indicate that we are not using the first parameter
+  async (_, { rejectWithValue }) => {
+    const response = await getProfileInfo();
+    console.log('Response from getProfileInfo:', response);
+    if (response.status > 210) {
+      console.log('Error fetching profile');
       return rejectWithValue(response);
     }
     return response;
   }
 );
 
-const userSlice = createSlice({
-  name: 'user',
+const profileSlice = createSlice({
+  name: 'profile',
   initialState: {
     users: {},
     isLoading: false,
@@ -28,19 +31,6 @@ const userSlice = createSlice({
     isError: false,
   },
   reducers: {
-    logout: (state) => {
-      const persistedState = JSON.parse(localStorage.getItem('persist:root'));
-      delete persistedState.user;
-      localStorage.setItem('persist:root', JSON.stringify(persistedState));
-      state.users = {};
-      state.isLoading = false;
-      state.isRedirect = false;
-      state.isLoggedIn = false;
-      state.errorMessage = null;
-      state.successMessage = null;
-      state.isSuccess = false;
-      state.isError = false;
-    },
     resetIsError: (state) => {
       state.isError = false;
       state.errorMessage = null;
@@ -49,10 +39,13 @@ const userSlice = createSlice({
       state.isSuccess = false;
       state.successMessage = null;
     },
+    resetRedirect: (state) => {
+      state.isRedirect = false;
+    }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state) => {
+      .addCase(fetchProfile.pending, (state) => {
         state.isLoading = true;
         state.isRedirect = false;
         state.errorMessage = null;
@@ -61,19 +54,19 @@ const userSlice = createSlice({
         state.isSuccess = false;
         state.isError = false;
       })
-      .addCase(fetchUser.fulfilled, (state, action) => {
+      .addCase(fetchProfile.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isRedirect = true;
+        state.isRedirect = false;
         state.users = action.payload;
         state.isLoggedIn = true;
         state.isSuccess = true;
         state.errorMessage = null;
         state.isError = false;
-        state.successMessage = 'Login Successfully Completed';
+        state.successMessage = 'Profile fetched successfully';
       })
-      .addCase(fetchUser.rejected, (state, action) => {
+      .addCase(fetchProfile.rejected, (state, action) => {
         state.isLoading = false;
-        state.isRedirect = false;
+        state.isRedirect = true;
         state.isLoggedIn = false;
         state.errorMessage = action.payload.message;
         state.successMessage = null;
@@ -84,6 +77,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout, resetIsSuccess, resetIsError } = userSlice.actions;
+export const { resetIsSuccess, resetIsError,resetRedirect } = profileSlice.actions;
 
-export default userSlice.reducer;
+export default profileSlice.reducer;
