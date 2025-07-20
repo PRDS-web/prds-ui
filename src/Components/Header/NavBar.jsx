@@ -167,14 +167,6 @@ export default function NavBar() {
                           onClick={() => {
                             handleCloseUserMenu();
                             if (setting === 'Logout') {
-                              const persistedState = JSON.parse(
-                                localStorage.getItem('persist:root')
-                              );
-                              delete persistedState.user;
-                              localStorage.setItem(
-                                'persist:root',
-                                JSON.stringify(persistedState)
-                              );
                               dispatch(logout());
                             }
                           }}

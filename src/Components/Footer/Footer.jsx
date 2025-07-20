@@ -21,7 +21,6 @@ export default function Footer() {
       }}
     >
       <Card
-        maxWidth="lg"
         variant='elevation'
         sx={{
           display: 'flex',

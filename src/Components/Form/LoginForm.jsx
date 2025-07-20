@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import MuiContainer from '@mui/material/Container';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import {resetIsError, resetIsSuccess} from '../../Slice/UserLoginSlice';
 import {
-  OAuthifyProvider,
   GitHubLoginButton,
   GoogleLoginButton,
   GoogleIcon,
@@ -23,7 +23,7 @@ import {
 } from 'oauthify';
 import { CircularProgress, Backdrop, Alert,Snackbar } from '@mui/material';
 import { Navigate } from 'react-router';
-import { fetchUsersAsync } from '../../Slice/UserLoginSlice';
+import { fetchUser } from '../../Slice/UserLoginSlice';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -68,9 +68,8 @@ export default function LoginForm() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [open, setOpen] = useState(false);
   const { onSuccess, onFailure } = useOAuthify();
-  const [loading, setLoading] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
+  const { isLoading, isRedirect, successMessage, isSuccess, errorMessage, isError } = useSelector((state) => state.user);
 
   const commanTextField = {
     '& label': {
@@ -97,31 +96,28 @@ export default function LoginForm() {
   useEffect(() => {
     // console.log(onSuccess);
     if (onSuccess == 'undefined' || onSuccess == null) return;
+
     async function handleAuthRedirect() {
-      setLoading(true);
-      setRedirect(false);
-      dispatch(fetchUsersAsync(onSuccess.code));
-      await new Promise((res) => setTimeout(res, 1000));
-      setLoading(false);
-      setRedirect(true);
-      
+      dispatch(fetchUser(onSuccess.code)); 
     }
     handleAuthRedirect();
   }, [onSuccess,dispatch]);
-  useEffect(() => {
-    // console.log(onFailure)
-    handleGoogleFailureLogin();
-    setLoading(true);
-       new Promise((res) => setTimeout(res, 1000));
-      setLoading(false);
-    if (onFailure == 'undefined' || onFailure == null) return;
-    async function handleAuthRedirect() {
-      setLoading(true);
-      await new Promise((res) => setTimeout(res, 1000));
-      setLoading(false);  
-    }
-    handleAuthRedirect();
-  }, [onFailure]);
+
+
+  // useEffect(() => {
+  //   // // console.log(onFailure)
+  //   // handleGoogleFailureLogin();
+  //   // setLoading(true);
+  //   //    new Promise((res) => setTimeout(res, 1000));
+  //   //   setLoading(false);
+  //   // if (onFailure == 'undefined' || onFailure == null) return;
+  //   // async function handleAuthRedirect() {
+  //   //   setLoading(true);
+  //   //   await new Promise((res) => setTimeout(res, 1000));
+  //   //   setLoading(false);  
+  //   // }
+  //   // handleAuthRedirect();
+  // }, [onFailure]);
   // const handleGoogleSuccessLogin = (googleLoginInfo) =>{
   //   console.log(googleLoginInfo)
   // }
@@ -144,9 +140,9 @@ export default function LoginForm() {
   //   handleGoogleSuccessLogin();
   // }, [onSuccess]);
 
-  // React.useEffect(() => {
-  //   handleFailure();
-  // }, [onFailure]);
+  useEffect(() => {
+    handleGoogleFailureLogin();
+  }, [onFailure]);
   const handleClose = (error) => {
     console.log(error);
     setOpen(false);
@@ -162,6 +158,14 @@ export default function LoginForm() {
       email: data.get('email'),
       password: data.get('password'),
     });
+  };
+
+  const handleOnClose = () => {
+    if(isSuccess) {
+    dispatch(resetIsSuccess());
+  }else{
+    dispatch(resetIsError());
+  }
   };
 
   const validateInputs = () => {
@@ -192,25 +196,24 @@ export default function LoginForm() {
   };
 
   return (
-    <Container maxWidth={false} sx={{ height: '100vh' }}>
+    <Container maxWidth={false} sx={{ height: '100vh', overflowY: 'auto' }}>
       <Backdrop
         sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-        open={loading}
+        open={isLoading}
       >
         <CircularProgress color="inherit" />
-        {redirect && <Navigate to="/" />}
+      </Backdrop>
+       {isRedirect && <Navigate to="/" />}
         <Snackbar
-          open={loading}
+          open={isSuccess || isError}
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
           autoHideDuration={3000}
+          onClose={handleOnClose}
         >
-          <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
-            Login Successful!
+          <Alert severity={isSuccess ? "success" : "error"} variant="filled" sx={{ width: '100%' }}>
+            {isSuccess ? successMessage : errorMessage}
           </Alert>
         </Snackbar>
-
-      </Backdrop>
-
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -237,8 +240,6 @@ export default function LoginForm() {
           <GoogleLoginButton
             clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
             redirectUri={`${window.location.origin}/oauthify-redirect`}
-            // onSuccess={handleGoogleSuccessLogin}
-            onFailure={handleGoogleFailureLogin}
           >
             <Box
               sx={{
@@ -262,7 +263,7 @@ export default function LoginForm() {
 
           <GitHubLoginButton
             clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
-              redirectUri="https://prds-ui.vercel.app/"
+            redirectUri={`${window.location.origin}/oauthify-redirect`}
               // onSuccess={handleSuccess}
               // onFailure={handleFailure}
           >
