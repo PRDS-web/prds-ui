@@ -78,7 +78,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            PRDS UI
+            Pradetra
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -196,7 +196,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            PRDS UI
+            Pradetra
           </Typography>
           <IconButton
             onClick={ChangeMode}

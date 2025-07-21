@@ -8,7 +8,7 @@ export const fetchUser = createAsyncThunk(
   async (userDetails, { rejectWithValue }) => {
     const response = await getUserInfo(userDetails);
     console.log('Response from getUserInfo:', response);
-    if (response.status > 202) {
+    if (response.status < 200 || response.status >= 300) {
       return rejectWithValue(response);
     }
     return response;
@@ -75,7 +75,7 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.isRedirect = false;
         state.isLoggedIn = false;
-        state.errorMessage = action.payload.message;
+        state.errorMessage = action.payload?.message || 'Login Failed';
         state.successMessage = null;
         state.isSuccess = false;
         state.isError = true;

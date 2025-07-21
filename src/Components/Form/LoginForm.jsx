@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import MuiCard from '@mui/material/Card';
@@ -13,7 +13,7 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from './ForgotPassword';
 import MuiContainer from '@mui/material/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import {resetIsError, resetIsSuccess} from '../../Slice/UserLoginSlice';
+import { resetIsError, resetIsSuccess } from '../../Slice/UserLoginSlice';
 import {
   GitHubLoginButton,
   GoogleLoginButton,
@@ -21,7 +21,7 @@ import {
   GithubIcon,
   useOAuthify,
 } from 'oauthify';
-import { CircularProgress, Backdrop, Alert,Snackbar } from '@mui/material';
+import { CircularProgress, Backdrop, Alert, Snackbar } from '@mui/material';
 import { Navigate } from 'react-router';
 import { fetchUser } from '../../Slice/UserLoginSlice';
 
@@ -69,7 +69,15 @@ export default function LoginForm() {
   const [open, setOpen] = useState(false);
   const { onSuccess, onFailure } = useOAuthify();
   const dispatch = useDispatch();
-  const { isLoading, isRedirect, successMessage, isSuccess, errorMessage, isError } = useSelector((state) => state.user);
+  const {
+    isLoading,
+    isRedirect,
+    successMessage,
+    isSuccess,
+    errorMessage,
+    isError,
+  } = useSelector((state) => state.user);
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const commanTextField = {
     '& label': {
@@ -98,11 +106,10 @@ export default function LoginForm() {
     if (onSuccess == 'undefined' || onSuccess == null) return;
 
     async function handleAuthRedirect() {
-      dispatch(fetchUser(onSuccess.code)); 
+      dispatch(fetchUser(onSuccess.code));
     }
     handleAuthRedirect();
-  }, [onSuccess,dispatch]);
-
+  }, [onSuccess, dispatch]);
 
   // useEffect(() => {
   //   // // console.log(onFailure)
@@ -114,7 +121,7 @@ export default function LoginForm() {
   //   // async function handleAuthRedirect() {
   //   //   setLoading(true);
   //   //   await new Promise((res) => setTimeout(res, 1000));
-  //   //   setLoading(false);  
+  //   //   setLoading(false);
   //   // }
   //   // handleAuthRedirect();
   // }, [onFailure]);
@@ -122,9 +129,9 @@ export default function LoginForm() {
   //   console.log(googleLoginInfo)
   // }
 
-  const handleGoogleFailureLogin = () =>{
+  const handleGoogleFailureLogin = () => {
     // console.log(googleLoginInfo)
-  }
+  };
   // const handleGithubLoginSuccess = (githubLoginInfo) =>{
   //   console.log(githubLoginInfo);
   // }
@@ -161,16 +168,22 @@ export default function LoginForm() {
   };
 
   const handleOnClose = () => {
-    if(isSuccess) {
-    dispatch(resetIsSuccess());
-  }else{
-    dispatch(resetIsError());
-  }
+    if (isSuccess) {
+      dispatch(resetIsSuccess());
+    } else {
+      dispatch(resetIsError());
+    }
   };
 
   const validateInputs = () => {
     const email = document.getElementById('email');
     const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+    if (isSignUp && password.value !== confirmPassword.value) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Password does not match.');
+      return false;
+    }
 
     let isValid = true;
 
@@ -203,17 +216,21 @@ export default function LoginForm() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-       {isRedirect && <Navigate to="/" />}
-        <Snackbar
-          open={isSuccess || isError}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          autoHideDuration={3000}
-          onClose={handleOnClose}
+      {isRedirect && <Navigate to="/" />}
+      <Snackbar
+        open={isSuccess || isError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        autoHideDuration={3000}
+        onClose={handleOnClose}
+      >
+        <Alert
+          severity={isSuccess ? 'success' : 'error'}
+          variant="filled"
+          sx={{ width: '100%' }}
         >
-          <Alert severity={isSuccess ? "success" : "error"} variant="filled" sx={{ width: '100%' }}>
-            {isSuccess ? successMessage : errorMessage}
-          </Alert>
-        </Snackbar>
+          {isSuccess ? successMessage : errorMessage}
+        </Alert>
+      </Snackbar>
       <Card variant="outlined">
         <Typography
           component="h1"
@@ -264,8 +281,8 @@ export default function LoginForm() {
           <GitHubLoginButton
             clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
             redirectUri={`${window.location.origin}/oauthify-redirect`}
-              // onSuccess={handleSuccess}
-              // onFailure={handleFailure}
+            // onSuccess={handleSuccess}
+            // onFailure={handleFailure}
           >
             <Box
               sx={{
@@ -318,24 +335,25 @@ export default function LoginForm() {
             />
           </FormControl>
           <FormControl>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'end',
-                alignItems: 'center',
-              }}
-            >
-              {/* <FormLabel htmlFor="password">Password</FormLabel> */}
-              <Link
-                component="button"
-                type="button"
-                onClick={handleClickOpen}
-                variant="body2"
-                sx={{ color: 'primery' }}
+            {!isSignUp && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'end',
+                  alignItems: 'center',
+                }}
               >
-                Forgot your password?
-              </Link>
-            </Box>
+                <Link
+                  component="button"
+                  type="button"
+                  onClick={handleClickOpen}
+                  variant="body2"
+                  sx={{ color: 'primary.main' }}
+                >
+                  Forgot your password?
+                </Link>
+              </Box>
+            )}
             <TextField
               error={passwordError}
               helperText={passwordErrorMessage}
@@ -353,31 +371,55 @@ export default function LoginForm() {
               color={passwordError ? 'error' : 'primary'}
             />
           </FormControl>
-          <FormControlLabel
-            control={
-              <Checkbox
-                value="remember"
-                sx={{
-                  color: 'white',
-                }}
+           {isSignUp && <FormControl><TextField
+            error={passwordError}
+            helperText={passwordErrorMessage}
+            name="password"
+            label="Confirm Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            autoFocus
+            required
+            fullWidth
+            sx={commanTextField}
+            variant="outlined"
+            color={passwordError ? 'error' : 'primary'}
+          /></FormControl>}
+          {!isSignUp && (
+            <>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="remember"
+                    sx={{
+                      color: 'white',
+                    }}
+                  />
+                }
+                label="Remember me"
               />
-            }
-            label="Remember me"
-          />
-          <ForgotPassword open={open} handleClose={handleClose} />
+              <ForgotPassword open={open} handleClose={handleClose} />
+            </>
+          )}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             onClick={validateInputs}
           >
-            Sign in
+            {isSignUp ? 'Sign up' : 'Sign in'}
           </Button>
           <Typography sx={{ textAlign: 'center' }}>
-            Don&apos;t have an account?{' '}
+            {isSignUp
+              ? 'Already have an account? '
+              : `Don't have an account? `}
             <span>
               <Link
-                href="/signup"
+                //href="/signup"
+                component="button"
+                type="button"
+                onClick={() => setIsSignUp(!isSignUp)}
                 variant="body2"
                 sx={{ alignSelf: 'center', color: 'white' }}
               >
