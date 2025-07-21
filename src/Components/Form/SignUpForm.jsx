@@ -10,7 +10,6 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import ForgotPassword from './ForgotPassword';
 import MuiContainer from '@mui/material/Container';
 import {
   OAuthifyProvider,
@@ -78,24 +77,25 @@ export default function SignUpForm() {
       },
       '&.Mui-focused fieldset': {
         borderColor: 'white', // Focused border
-      },'& input': {
-      color: 'white', // Text color while typing
-    },
+      },
+      '& input': {
+        color: 'white', // Text color while typing
+      },
     },
   };
 
-  const handleGoogleSuccessLogin = (googleLoginInfo) =>{
-    console.log(googleLoginInfo)
-  }
-  const handleGoogleFailureLogin = (googleLoginInfo) =>{
-    console.log(googleLoginInfo)
-  }
-  const handleGithubLoginSuccess = (githubLoginInfo) =>{
+  const handleGoogleSuccessLogin = (googleLoginInfo) => {
+    console.log(googleLoginInfo);
+  };
+  const handleGoogleFailureLogin = (googleLoginInfo) => {
+    console.log(googleLoginInfo);
+  };
+  const handleGithubLoginSuccess = (githubLoginInfo) => {
     console.log(githubLoginInfo);
-  }
+  };
   const handleGithubLoginFailure = (githubLoginInfo) => {
     console.log(githubLoginInfo);
-  }
+  };
   // const handleClickOpen = () => {
   //   setOpen(true);
   // };
@@ -168,59 +168,57 @@ export default function SignUpForm() {
             backgroundColor: 'inherit',
           }}
         >
-          <OAuthifyProvider>
-            <GoogleLoginButton
-              clientId='878291443758-klfu3caf4hnvj23vu5i5lgfj93g8gsh9.apps.googleusercontent.com'
-              redirectUri="http://localhost:5173/"
-              onSuccess={handleGoogleSuccessLogin}
-              onFailure={handleGoogleFailureLogin}
+          <GoogleLoginButton
+            clientId="878291443758-klfu3caf4hnvj23vu5i5lgfj93g8gsh9.apps.googleusercontent.com"
+            redirectUri="http://localhost:5173/"
+            onSuccess={handleGoogleSuccessLogin}
+            onFailure={handleGoogleFailureLogin}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                gap: 2,
+                height: '37px',
+                alignItems: 'center',
+                alignContent: 'space-between',
+                justifyContent: 'center',
+                color: 'inherit',
+                backgroundColor: 'inherit',
+                cursor: 'pointer',
+              }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  gap: 2,
-                  height: '37px',
-                  alignItems: 'center',
-                  alignContent: 'space-between',
-                  justifyContent: 'center',
-                  color: 'inherit',
-                  backgroundColor: 'inherit',
-                  cursor: 'pointer',
-                }}
-              >
-                <GoogleIcon size={16} />
-                Sign up with Google
-              </Box>
-            </GoogleLoginButton>
+              <GoogleIcon size={16} />
+              Sign up with Google
+            </Box>
+          </GoogleLoginButton>
 
-            <GitHubLoginButton
-              clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
-              redirectUri="http://localhost:5173/"
-              onSuccess={handleGithubLoginSuccess}
-              onFailure={handleGithubLoginFailure}
+          <GitHubLoginButton
+            clientId={import.meta.env.VITE_GITHUB_CLIENT_ID}
+            redirectUri="http://localhost:5173/"
+            onSuccess={handleGithubLoginSuccess}
+            onFailure={handleGithubLoginFailure}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+                gap: 2,
+                height: '37px',
+                alignItems: 'center',
+                alignContent: 'space-between',
+                justifyContent: 'center',
+                color: 'inherit',
+                backgroundColor: 'inherit',
+                cursor: 'pointer',
+              }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  width: '100%',
-                  gap: 2,
-                  height: '37px',
-                  alignItems: 'center',
-                  alignContent: 'space-between',
-                  justifyContent: 'center',
-                  color: 'inherit',
-                  backgroundColor: 'inherit',
-                  cursor: 'pointer',
-                }}
-              >
-                <GithubIcon size={16} />
-                Sign up with GitHub
-              </Box>
-            </GitHubLoginButton>
-          </OAuthifyProvider>
+              <GithubIcon size={16} />
+              Sign up with GitHub
+            </Box>
+          </GitHubLoginButton>
         </Box>
         <Divider>or</Divider>
         <Box
@@ -269,7 +267,7 @@ export default function SignUpForm() {
               color={passwordError ? 'error' : 'primary'}
             />
           </FormControl>
-                    <FormControl>
+          <FormControl>
             <TextField
               error={passwordError}
               helperText={passwordErrorMessage}

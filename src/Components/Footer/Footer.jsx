@@ -36,19 +36,34 @@ export default function Footer() {
               About Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are XYZ company, dedicated to providing the best service to our
-              customers.
+              Pradetra is the flagship service brand of PRDS Enterprises Pvt. Ltd.,
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              focused on delivering high-quality digital operations support to global businesses.
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Our core services include Data Collection, Manual QA Testing, 
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Annotation, Transcription,
+              Translation & Localization, and LLM Support Services.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Typography variant="h6" color="text.primary" gutterBottom>
               Contact Us
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1}}>
-              Email: PRDS@company.com
+            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1, fontWeight: 'bold'}}>
+              Mohit Mishra
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1}}>
-              Phone: +1 234 567 8901
+            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'bold'}}>
+              Director, Pradetra
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{fontWeight: 'bold'}}>
+              A PRDS Enterprises Company
+            </Typography>
+            <Typography variant="body2" color="text.secondary" sx={{fontWeight: 'bold'}}>
+              Email: <Link href="mailto:contact@pradetra.com" sx={{color: 'inherit'}}>contact@pradetra.com</Link>
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
