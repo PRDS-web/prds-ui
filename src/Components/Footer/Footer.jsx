@@ -1,103 +1,122 @@
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import { Facebook, Instagram, Twitter } from '@mui/icons-material';
-import { Box, Card} from '@mui/material';
+import {
+  Box,
+  Card,
+  Grid,
+  Typography,
+  Link,
+  IconButton,
+  useTheme,
+} from '@mui/material';
+import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
+import AdbIcon from '@mui/icons-material/Adb';
 
 export default function Footer() {
+  const theme = useTheme();
   return (
-    <Box
-      component="footer"
-      sx={{
-        backgroundColor: 'rgba(173, 216, 230, 0.6)',
-        color: 'black',
-        p: 6,
-        marginTop: '3%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-      }}
-    >
+    <Box sx={{ backgroundColor: 'lightblue', py: 6, px: 2, mx: 'auto' }}>
       <Card
-        variant='elevation'
+        elevation={6}
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: 'inherit',
-          padding: '50px',
+          width: '100%',
+          maxWidth: 1000,
+          mx: 'auto',
+          p: 4,
+          textAlign: 'center',
+          borderRadius: 4,
+          backgroundColor: theme.palette.mode == 'dark' ? 'black' : 'white',
         }}
       >
-        <Grid container spacing={11}>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              About Us
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom sx={{display: 'flex', alignContent: 'center',justifyContent: 'start'}}>
+              <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/"
+                sx={{
+                  mr: 2,
+                  display: { xs: 'none', md: 'flex' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  color: 'inherit',
+                  textDecoration: 'none'
+                }}
+              >
+                Pradetra
+              </Typography>
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Pradetra is the flagship service brand of PRDS Enterprises Pvt. Ltd.,
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              focused on delivering high-quality digital operations support to global businesses.
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Our core services include Data Collection, Manual QA Testing, 
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Annotation, Transcription,
+            <Typography variant="body2" color="text.secondary" textAlign={'start'}>
+              Pradetra is the flagship service brand and We focused on delivering high-quality digital operations support to global businesses.
+              Our core services include Data Collection, Manual QA Testing,  Annotation, Transcription,
               Translation & Localization, and LLM Support Services.
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
-              Contact Us
+          <Grid size={{ xs: 12, md: 4}}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
+              Quick Links
             </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{marginTop: 1, fontWeight: 'bold'}}>
-              Mohit Mishra
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 'bold'}}>
-              Director, Pradetra
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontWeight: 'bold'}}>
-              A PRDS Enterprises Company
-            </Typography>
-            <Typography variant="body2" color="text.secondary" sx={{fontWeight: 'bold'}}>
-              Email: <Link href="mailto:contact@pradetra.com" sx={{color: 'inherit'}}>contact@pradetra.com</Link>
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              <Link href="#" underline="none" color="text.primary">
+                Home
+              </Link>
+              <Link href="#" underline="none" color="text.primary">
+                Services
+              </Link>
+              <Link href="#" underline="none" color="text.primary">
+                About
+              </Link>
+              <Link href="#" underline="none" color="text.primary">
+                Contact
+              </Link>
+            </Box>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+
+          {/* Social Media */}
+          <Grid size={{ xs: 12, md: 4 }}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>
               Follow Us
             </Typography>
-            <Link href="https://www.facebook.com/" color="inherit">
-              <Facebook />
-            </Link>
-            <Link
-              href="https://www.instagram.com/"
-              color="inherit"
-              sx={{ pl: 1, pr: 1 }}
-            >
-              <Instagram />
-            </Link>
-            <Link href="https://www.twitter.com/" color="inherit">
-              <Twitter />
-            </Link>
+            <Box>
+              <IconButton>
+                <Facebook
+                  sx={{
+                    color: theme.palette.mode == 'dark' ? 'white' : 'black',
+                  }}
+                />
+              </IconButton>
+              <IconButton>
+                <Twitter
+                  sx={{
+                    color: theme.palette.mode == 'dark' ? 'white' : 'black',
+                  }}
+                />
+              </IconButton>
+              <IconButton>
+                <LinkedIn
+                  sx={{
+                    color: theme.palette.mode == 'dark' ? 'white' : 'black',
+                  }}
+                />
+              </IconButton>
+              <IconButton>
+                <Instagram
+                  sx={{
+                    color: theme.palette.mode == 'dark' ? 'white' : 'black',
+                  }}
+                />
+              </IconButton>
+            </Box>
           </Grid>
         </Grid>
+
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            © {new Date().getFullYear()} Pradetra. All rights reserved.
+          </Typography>
+        </Box>
       </Card>
-      <Box
-        mt={2}
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Typography variant="body2" color="text.secondary" align="center">
-          {'Copyright © '}
-          <Link color="inherit" href="https://prds-ui.vercel.app/">
-            PRDS Website
-          </Link>
-          {' ' + new Date().getFullYear().toString() + '.'}
-        </Typography>
-      </Box>
     </Box>
   );
 }

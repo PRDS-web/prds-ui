@@ -16,11 +16,11 @@ import {
   Snackbar,
 } from '@mui/material';
 import { fetchProfile } from '../../Slice/ProfileSlice';
-import { logout } from '../../Slice/UserLoginSlice';
 import { Navigate } from 'react-router';
-import { resetIsSuccess, resetIsError, resetRedirect } from '../../Slice/ProfileSlice';
+import { resetIsSuccess, resetIsError } from '../../Slice/ProfileSlice';
 
 export default function Profile() {
+  const isLoggedOut = useSelector((state) => state.user.isLoggedOut);
   const [isImageFailed, setIsImageFailed] = useState(false);
   const {
     name = 'User',
@@ -55,13 +55,7 @@ export default function Profile() {
     marginRight: [0, 0, 1],
   };
   const commonJob = { fontSize: ['0.8rem', '0.7rem', '1.0rem'] };
-
   useEffect(() => {
-    if (isRedirect) {
-      dispatch(logout());
-      dispatch(resetRedirect());
-      return;
-    }
     console.log('Fetching profile data...');
     dispatch(fetchProfile()); // Fetch profile data on component mount
   }, [isRedirect,dispatch]);
@@ -78,7 +72,7 @@ export default function Profile() {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      {isRedirect && <Navigate to="/" />}
+      {(isRedirect && isLoggedOut) && <Navigate to="/" />}
       <Snackbar
         open={isSuccess || isError}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
