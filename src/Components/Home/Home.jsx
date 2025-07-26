@@ -536,7 +536,8 @@ export default function Home() {
               <Grid size={{ xs: 12, md: 3 }} key={index}>
                 <Card
                   sx={{
-                    maxWidth: 'auto',
+                    width: '96%',
+                    height: '95%',
                     mx: 'auto',
                     p: 3,
                     textAlign: 'center',
