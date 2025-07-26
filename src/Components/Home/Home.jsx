@@ -352,7 +352,7 @@ export default function Home() {
               preserveAspectRatio="none"
               sx={{
                 width: '100%',
-                height: 600,
+                height: '100%',
                 display: 'block',
               }}
             >
@@ -360,7 +360,7 @@ export default function Home() {
                 d="M0,150 C700,200 1200,0 1200,100 L1200,600 L0,600 Z"
                 fill="rgba(7, 91, 122, 0.6)"
               />
-              <foreignObject x="0" y="0" width="1200" height="800">
+              <foreignObject x="0" y="0" width="100%" height="800">
                 <Box
                   xmlns="http://www.w3.org/1999/xhtml"
                   sx={{
