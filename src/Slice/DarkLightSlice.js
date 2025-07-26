@@ -12,12 +12,10 @@ export const DarkLightMode = createSlice({
     enableLightMode: (state) => {
       state.isLightMode = true;
       state.mode ='light';
-      localStorage.setItem('themeMode','light');
     },
     disableLightMode: (state) => {
       state.isLightMode = false;
       state.mode ='dark';
-      localStorage.setItem('themeMode','dark');
     }
   },
 })

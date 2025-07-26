@@ -11,6 +11,7 @@ import {
   Tooltip,
   MenuItem,
   Avatar,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -19,12 +20,14 @@ import SunnyIcon from '@mui/icons-material/Sunny';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { useSelector, useDispatch } from 'react-redux';
 import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
-import {logout} from '../../Slice/UserLoginSlice';
+import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
+import { useNavigate } from 'react-router-dom';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
 export default function NavBar() {
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [isImageFailed, setIsImageFailed] = useState(false);
@@ -34,8 +37,11 @@ export default function NavBar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  const theme = useTheme();
+ // console.log('User info',users.user.name)
+
   const ChangeMode = () => {
-    if (isLightMode) {
+    if (theme.palette.mode === 'light') {
       dispatch(disableLightMode());
     } else {
       dispatch(enableLightMode());
@@ -134,11 +140,17 @@ export default function NavBar() {
                   </IconButton>
                 ) : (
                   <Box>
-                    <Tooltip title={users.name || 'Profile'}>
+                    <Tooltip title={(users.name|| users.user.name) || 'Profile'}>
                       <IconButton onClick={handleOpenUserMenu}>
                         <Avatar
-                          alt={users.name || 'User'}
-                          src={(isImageFailed || users.picture=='' || users.picture ==null) ? Boy : users.picture}
+                          alt={(users.name|| users.user.name)  || 'User'}
+                          src={
+                            isImageFailed ||
+                            users.picture == '' ||
+                            users.picture == null
+                              ? Boy
+                              : users.picture
+                          }
                           onError={() => setIsImageFailed(true)}
                         />
                       </IconButton>
@@ -161,13 +173,14 @@ export default function NavBar() {
                     >
                       {settings.map((setting) => (
                         <MenuItem
-                          href={'/' + setting.toLowerCase()}
                           component="a"
                           key={setting}
                           onClick={() => {
                             handleCloseUserMenu();
                             if (setting === 'Logout') {
-                              dispatch(logout());
+                              dispatch(userLogout());
+                            } else {
+                              navigate('/' + setting.toLowerCase());
                             }
                           }}
                         >
@@ -253,7 +266,26 @@ export default function NavBar() {
                 key={page}
                 href={'/' + page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'inherit', display: 'block' }}
+                sx={{
+                  my: 2,
+                  color: 'inherit',
+                  display: 'block',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '2px',
+                    backgroundColor: theme.palette.mode == 'dark'? 'white': 'black',
+                    transform: 'scaleX(0)',
+                    transition: 'transform 0.3s ease',
+                    transformOrigin: 'left',
+                  },
+                  '&:hover::after': {
+                    transform: 'scaleX(1)',
+                  },
+                }}
               >
                 {page}
               </Button>
@@ -274,13 +306,22 @@ export default function NavBar() {
               </IconButton>
             ) : (
               <Box>
-                <Tooltip title={users.name || 'Profile'}>
+                <Tooltip title={(users.name|| users.user.name) || 'Profile'}>
                   <IconButton onClick={handleOpenUserMenu}>
                     <Avatar
-                      alt={users.name || 'User'}
-                     src={(isImageFailed || users.picture=='' || users.picture ==null) ? Boy : users.picture}
+                      alt={(users.name|| users.user.name) || 'User'}
+                      src={
+                        isImageFailed ||
+                        users.picture == '' ||
+                        users.picture == null
+                          ? Boy
+                          : users.picture
+                      }
                       onError={() => setIsImageFailed(true)}
-                      sx={{border: '2px solid white', backgroundColor: 'white'}}
+                      sx={{
+                        border: '2px solid white',
+                        backgroundColor: 'white',
+                      }}
                     />
                   </IconButton>
                 </Tooltip>
@@ -301,23 +342,18 @@ export default function NavBar() {
                   onClose={handleCloseUserMenu}
                 >
                   {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={() => {
-                            handleCloseUserMenu();
-                            if (setting === 'Logout') {
-                              const persistedState = JSON.parse(
-                                localStorage.getItem('persist:root')
-                              );
-                              delete persistedState.user;
-                              localStorage.setItem(
-                                'persist:root',
-                                JSON.stringify(persistedState)
-                              );
-                              dispatch(logout());
-                            }}}>
-                      <Typography
-                        href={'/' + setting.toLowerCase()}
-                        sx={{ textAlign: 'center' }}
-                      >
+                    <MenuItem
+                      key={setting}
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        if (setting === 'Logout') {
+                          dispatch(userLogout());
+                        } else {
+                          navigate('/' + setting.toLowerCase());
+                        }
+                      }}
+                    >
+                      <Typography sx={{ textAlign: 'center' }}>
                         {setting}
                       </Typography>
                     </MenuItem>

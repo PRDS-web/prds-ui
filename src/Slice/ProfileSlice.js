@@ -39,9 +39,15 @@ const profileSlice = createSlice({
       state.isSuccess = false;
       state.successMessage = null;
     },
-    resetRedirect: (state) => {
+    clearLogout: (state) => {
       state.isRedirect = false;
-    }
+      console.log("gfhjkkkjhgf")
+      const persistedState = JSON.parse(localStorage.getItem('persist:root'));
+      if (persistedState?.profile?.users) {
+        delete persistedState.profile.users;
+      }
+      localStorage.setItem('persist:root', JSON.stringify(persistedState));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -77,6 +83,7 @@ const profileSlice = createSlice({
   },
 });
 
-export const { resetIsSuccess, resetIsError,resetRedirect } = profileSlice.actions;
+export const { resetIsSuccess, resetIsError, resetRedirect, clearLogout } =
+  profileSlice.actions;
 
 export default profileSlice.reducer;
