@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AdbIcon from '@mui/icons-material/Adb';
 import SunnyIcon from '@mui/icons-material/Sunny';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,7 +23,7 @@ import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
 import { useNavigate } from 'react-router-dom';
-import LogoIcon from '../../assets/logo.png';
+// import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
@@ -69,8 +70,8 @@ export default function NavBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <img src={logo}  alt='Pradetra' width={45} height={45}/> */}
-          <img src={LogoIcon}  alt='Pradetra' width={60} height={75}/>
+          {/* <img src={AdbIcon}  alt='Pradetra' width={45} height={45}/> */}
+          <img src={AdbIcon}  alt='Pradetra' width={60} height={75}/>
           <Typography
             variant="h6"
             noWrap
@@ -210,7 +211,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <img src={LogoIcon}  alt='Pradetra' width={45} height={38}/>
+            <img src={AdbIcon}  alt='Pradetra' width={45} height={38}/>
             Pradetra
           </Typography>
           <IconButton
