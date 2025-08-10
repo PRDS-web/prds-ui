@@ -9,6 +9,7 @@ import Footer from '../Components/Footer/Footer';
 import { OAuthifyRedirect } from 'oauthify';
 import Logout from '../Components/Form/Logout';
 import Profile from '../Components/Profile/Profile';
+import ProtectedRoute from '../Components/ProtectedRoute/ProtectedRoute';
 
 function ReactRoute() {
    
@@ -16,13 +17,18 @@ function ReactRoute() {
   return (
     <BrowserRouter>
      <Routes>
-       <Route path='/' element={<><NavBar/><Home/> <Service/> <Footer/></>}>
-         <Route path='home' element={<><NavBar/><Toolbar /><Home/> <Service/> <Footer/></>}/>
+       <Route path='/' element={<><NavBar/><Home/> <Footer/></>}>
+         <Route path='home' element={<><NavBar/><Toolbar /><Home/> <Footer/></>}/>
        </Route>
        <Route path='/login' element={<><LoginForm/> </>}/>
        <Route path='/oauthify-redirect' element={<OAuthifyRedirect />} />
        <Route path='/logout' element={<Logout/>}/>
-       <Route path='/profile' element={<><NavBar/><Profile/> <Footer/></>}/>
+       <Route path='/profile' element={
+         <ProtectedRoute>
+           <><NavBar/><Profile/> <Footer/></>
+         </ProtectedRoute>
+       }/>
+       <Route path='/service' element={<><NavBar/><Service/><Footer/></>}/>
      </Routes>
     </BrowserRouter>
   );

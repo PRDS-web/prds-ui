@@ -23,6 +23,7 @@ import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
 import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
@@ -69,7 +70,8 @@ export default function NavBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          {/* <img src={logo}  alt='Pradetra' width={45} height={45}/> */}
+          <img src={logo}  alt='Pradetra' width={60} height={75}/>
           <Typography
             variant="h6"
             noWrap
@@ -116,7 +118,7 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  href={'/' + page}
+                  href={'/' + page.toLowerCase()}
                   key={page}
                   onClick={handleCloseNavMenu}
                 >
@@ -193,7 +195,7 @@ export default function NavBar() {
               </MenuItem>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+           
           <Typography
             variant="h5"
             noWrap
@@ -209,6 +211,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
+            <img src={logo}  alt='Pradetra' width={45} height={38}/>
             Pradetra
           </Typography>
           <IconButton
@@ -219,7 +222,7 @@ export default function NavBar() {
               display: { xs: 'flex', md: 'none' },
             }}
           >
-            {localStorage.getItem('themeMode') === 'light' ? (
+            {isLightMode ? (
               <>
                 <Tooltip title="Dark Mode">
                   <ModeNightIcon />
@@ -228,7 +231,7 @@ export default function NavBar() {
             ) : (
               <>
                 <Tooltip title="Light Mode">
-                  <SunnyIcon />{' '}
+                  <SunnyIcon />
                 </Tooltip>
               </>
             )}
@@ -247,24 +250,20 @@ export default function NavBar() {
                 display: { md: 'flex', xs: 'none' },
               }}
             >
-              {localStorage.getItem('themeMode') === 'light' ? (
-                <>
+              {isLightMode ? 
                   <Tooltip title="Dark Mode">
                     <ModeNightIcon />
                   </Tooltip>
-                </>
-              ) : (
-                <>
+                 : 
                   <Tooltip title="Light Mode">
-                    <SunnyIcon />{' '}
+                    <SunnyIcon />
                   </Tooltip>
-                </>
-              )}
+               }
             </IconButton>
             {pages.map((page) => (
               <Button
                 key={page}
-                href={'/' + page}
+                href={'/' + page.toLowerCase()}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,

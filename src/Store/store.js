@@ -10,6 +10,7 @@ import { combineReducers } from 'redux';
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['isloading']
 };
 
 const rootReducer = combineReducers({
