@@ -5,8 +5,6 @@ import {
   Typography,
   Container,
   Grid,
-  Container,
-  Grid,
   Card,
   CardContent,
   Button,
@@ -17,10 +15,6 @@ import {
   CssBaseline,
   Tabs,
   Tab,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Divider,
   useTheme
 } from '@mui/material';
@@ -157,7 +151,7 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-export default function Service() {
+function Service() {
   const [selectedTab, setSelectedTab] = useState(0);
   const servicesRef = useRef(null);
   const navigate = useNavigate();
