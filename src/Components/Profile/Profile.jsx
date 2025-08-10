@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import {
   Container,
   Paper,
@@ -24,13 +23,6 @@ import {
   InputLabel,
   Alert,
   Chip,
-  CircularProgress,
-  Snackbar,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions,
 } from '@mui/material';
 import {
   Edit,
@@ -57,7 +49,6 @@ import {
   GitHub,
   Twitter,
 } from '@mui/icons-material';
-import { fetchProfile, updateProfile, resetIsSuccess, resetIsError } from '../../Slice/ProfileSlice';
 
 // Create a custom theme
 const theme = createTheme({
@@ -103,26 +94,20 @@ function TabPanel({ children, value, index, ...other }) {
 }
 
 function Profile() {
-  const dispatch = useDispatch();
-  const { users, isLoading, isUpdating, isSuccess, isError, errorMessage, successMessage } = useSelector((state) => state.profile);
-  
   const [selectedTab, setSelectedTab] = useState(0);
   const [isEditing, setIsEditing] = useState(false);
-  const [skill, setSkill] = useState('');
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [skill,setSkill] = useState('');
   const [profileData, setProfileData] = useState({
     // General Info
-    name: '',
-    email: '',
-    country: '',
-    mobileNumber: '',
-    picture: '',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    country: 'United States',
+    mobile: '+1 (555) 123-4567',
+    avatar: 'https://via.placeholder.com/150/2196f3/ffffff?text=JD',
     bio: 'Professional Full-Stack Developer with 5+ years of experience in React, Node.js, and cloud technologies.',
     dateOfBirth: '1990-05-15',
     gender: 'Male',
     website: 'https://johndoe.dev',
-    loggedInType: '',
-    isVerified: false,
 
     // Banking Info
     bankName: 'Chase Bank',
@@ -149,169 +134,51 @@ function Profile() {
     graduationYear: '2015',
 
     // Social Links
-    linkedIn: '',
-    github: '',
+    linkedin: 'https://linkedin.com/in/johndoe',
+    github: 'https://github.com/johndoe',
     twitter: 'https://twitter.com/johndoe',
   });
 
   const [editData, setEditData] = useState({ ...profileData });
-  const [showUnsavedChangesDialog, setShowUnsavedChangesDialog] = useState(false);
-  const [pendingTabChange, setPendingTabChange] = useState(null);
-
-  // Fetch profile data on component mount
-  useEffect(() => {
-    dispatch(fetchProfile());
-  }, [dispatch]);
-
-  // Update local state when Redux state changes
-  useEffect(() => {
-    if (users && Object.keys(users).length > 0) {
-      const updatedProfileData = {
-        ...profileData,
-        name: users.name || '',
-        email: users.email || '',
-        country: users.country || '',
-        mobileNumber: users.mobileNumber || '',
-        picture: users.picture || profileData.picture,
-        skills: users.skills || [],
-        linkedIn: users.linkedIn || '',
-        github: users.github || '',
-        loggedInType: users.loggedInType || '',
-        isVerified: users.isVerified || false,
-      };
-      setProfileData(updatedProfileData);
-      setEditData(updatedProfileData);
-    }
-  }, [users]);
-
-  // Reset success/error messages
-  useEffect(() => {
-    if (isSuccess) {
-      setTimeout(() => {
-        dispatch(resetIsSuccess());
-      }, 3000);
-    }
-    if (isError) {
-      setTimeout(() => {
-        dispatch(resetIsError());
-      }, 5000);
-    }
-  }, [isSuccess, isError, dispatch]);
-
-  // Debug logging for state changes
-  useEffect(() => {
-    console.log('Profile state changed:', {
-      isSuccess,
-      isError,
-      successMessage,
-      errorMessage,
-      isUpdating
-    });
-  }, [isSuccess, isError, successMessage, errorMessage, isUpdating]);
 
   const handleTabChange = (event, newValue) => {
-    if (isEditing && hasUnsavedChanges) {
-      // Show Material-UI dialog for unsaved changes
-      setPendingTabChange(newValue);
-      setShowUnsavedChangesDialog(true);
-    } else {
-      setSelectedTab(newValue);
-      setIsEditing(false);
-      setHasUnsavedChanges(false);
-    }
-  };
-
-  const handleConfirmTabChange = () => {
-    if (pendingTabChange !== null) {
-      setSelectedTab(pendingTabChange);
-      setIsEditing(false);
-      setHasUnsavedChanges(false);
-      setEditData({ ...profileData });
-      setPendingTabChange(null);
-    }
-    setShowUnsavedChangesDialog(false);
-  };
-
-  const handleCancelTabChange = () => {
-    setPendingTabChange(null);
-    setShowUnsavedChangesDialog(false);
+    setSelectedTab(newValue);
+    setIsEditing(false);
   };
 
   const handleEdit = () => {
     setEditData({ ...profileData });
     setIsEditing(true);
-    setHasUnsavedChanges(false);
   };
 
-  const handleSave = async () => {
-    try {
-      console.log('Starting profile update...');
-      // Prepare data for backend update
-      const updateData = {
-        name: editData.name,
-        email: editData.email,
-        country: editData.country,
-        mobileNumber: editData.mobileNumber,
-        skills: editData.skills,
-        linkedIn: editData.linkedIn,
-        github: editData.github,
-      };
-
-      console.log('Update data:', updateData);
-      const result = await dispatch(updateProfile(updateData)).unwrap();
-      console.log('Profile update successful:', result);
-      
-      // Update local state
-      setProfileData({ ...editData });
-      setIsEditing(false);
-      setHasUnsavedChanges(false);
-    } catch (error) {
-      console.error('Failed to update profile:', error);
-      console.log('Error details:', {
-        message: error.message,
-        status: error.status,
-        data: error.data
-      });
-      // Error is handled by Redux state
-    }
+  const handleSave = () => {
+    setProfileData({ ...editData });
+    setIsEditing(false);
   };
 
   const handleCancel = () => {
     setEditData({ ...profileData });
     setIsEditing(false);
-    setHasUnsavedChanges(false);
   };
 
   const handleInputChange = (field, value) => {
-    if (field === 'skills') {
-      if (value === '' || value === undefined || value === null) {
+    console.log("I have data", field);
+     
+    if(field == 'skills'){
+      console.log("I have value", value);
+      if(value=='' || value == undefined || value ==null){
         return;
       }
-      const updatedSkills = [...editData.skills, value];
-      setEditData(prev => ({
-        ...prev,
-        skills: updatedSkills,
-      }));
+      let sk = [...profileData.skills];
+      sk.push(value);
+      profileData.skills = sk;
       setSkill('');
-      setHasUnsavedChanges(true);
       return;
     }
-    
     setEditData((prev) => ({
       ...prev,
       [field]: value,
     }));
-    setHasUnsavedChanges(true);
-  };
-
-  const handleDelete = (index) => {
-    const updatedSkills = [...editData.skills];
-    updatedSkills.splice(index, 1);
-    setEditData(prev => ({
-      ...prev,
-      skills: updatedSkills,
-    }));
-    setHasUnsavedChanges(true);
   };
 
   const tabLabels = [
@@ -363,7 +230,7 @@ function Profile() {
                 variant="body1"
                 sx={{ fontWeight: 600, color: 'text.primary', mt: 0.5 }}
               >
-                {profileData.name || 'Not provided'}
+                Shivendra Kuma
               </Typography>
             )}
           </Box>
@@ -486,8 +353,8 @@ function Profile() {
             {isEditing ? (
               <TextField
                 fullWidth
-                value={editData.mobileNumber}
-                onChange={(e) => handleInputChange('mobileNumber', e.target.value)}
+                value={editData.mobile}
+                onChange={(e) => handleInputChange('mobile', e.target.value)}
                 variant="outlined"
                 size="small"
                 sx={{ mt: 1 }}
@@ -497,15 +364,50 @@ function Profile() {
                 variant="body1"
                 sx={{ fontWeight: 600, color: 'text.primary', mt: 0.5 }}
               >
-                {profileData.mobileNumber}
+                {profileData.mobile}
               </Typography>
             )}
           </Box>
         </Box>
       </Grid>
+      {/*  
+      <Grid item xs={12}>
+        <Box sx={{ 
+          p: 3,
+          borderRadius: 2,
+          backgroundColor: 'background.default',
+          border: '1px solid',
+          borderColor: 'divider'
+        }}>
+          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textTransform: 'uppercase' }}>
+            Bio
+          </Typography>
+          {isEditing ? (
+            <TextField
+              fullWidth
+              value={editData.bio}
+              onChange={(e) => handleInputChange('bio', e.target.value)}
+              variant="outlined"
+              multiline
+              rows={3}
+              sx={{ mt: 1 }}
+            />
+          ) : (
+            <Typography variant="body1" sx={{ color: 'text.primary', mt: 0.5, lineHeight: 1.6 }}>
+              {profileData.bio}
+            </Typography>
+          )}
+        </Box>
+      </Grid> */}
     </Grid>
   );
 
+  const handleDelete = (index) => {
+    let sk = [...profileData.skills];
+    sk.splice(index,1);
+    profileData.skills = sk;
+    console.log("delete the value", sk);
+  };
   const renderBankingInfo = () => (
     <Grid container spacing={3}>
       <Grid item xs={12} md={6}>
@@ -1073,13 +975,14 @@ function Profile() {
             </Box>
           )}
           <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {editData.skills.map((skill, index) => (
+            {profileData.skills.map((skill, index) => (
               <Chip
                 key={index}
                 label={skill}
                 color="primary"
                 variant="outlined"
-                onDelete={isEditing ? () => handleDelete(index) : undefined}
+                onDelete={isEditing ?()=> handleDelete(index) : ''}
+                // deleteIcon={<DoneIcon />}
               />
             ))}
           </Box>
@@ -1117,8 +1020,8 @@ function Profile() {
             {isEditing ? (
               <TextField
                 fullWidth
-                value={editData.linkedIn}
-                onChange={(e) => handleInputChange('linkedIn', e.target.value)}
+                value={editData.linkedin}
+                onChange={(e) => handleInputChange('linkedin', e.target.value)}
                 variant="outlined"
                 size="small"
                 sx={{ mt: 1 }}
@@ -1128,7 +1031,7 @@ function Profile() {
                 variant="body1"
                 sx={{ fontWeight: 600, color: 'text.primary', mt: 0.5 }}
               >
-                {profileData.linkedIn}
+                {profileData.linkedin}
               </Typography>
             )}
           </Box>
@@ -1244,79 +1147,9 @@ function Profile() {
     }
   };
 
-  // Show loading state while fetching profile
-  if (isLoading) {
-    return (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box
-          sx={{
-            minHeight: '100vh',
-            backgroundColor: 'background.default',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            mt: 8,
-          }}
-        >
-          <CircularProgress size={60} />
-        </Box>
-      </ThemeProvider>
-    );
-  }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
-      {/* Success/Error Notifications */}
-      <Snackbar
-        open={isSuccess}
-        autoHideDuration={3000}
-        onClose={() => dispatch(resetIsSuccess())}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={() => dispatch(resetIsSuccess())} severity="success" sx={{ width: '100%' }}>
-          {successMessage || 'Operation completed successfully'}
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        open={isError}
-        autoHideDuration={5000}
-        onClose={() => dispatch(resetIsError())}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert onClose={() => dispatch(resetIsError())} severity="error" sx={{ width: '100%' }}>
-          {errorMessage || 'An error occurred while updating the profile'}
-        </Alert>
-      </Snackbar>
-
-      {/* Unsaved Changes Confirmation Dialog */}
-      <Dialog
-        open={showUnsavedChangesDialog}
-        onClose={handleCancelTabChange}
-        aria-labelledby="unsaved-changes-dialog-title"
-        aria-describedby="unsaved-changes-dialog-description"
-      >
-        <DialogTitle id="unsaved-changes-dialog-title">
-          Unsaved Changes
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="unsaved-changes-dialog-description">
-            You have unsaved changes. Are you sure you want to switch tabs? Your changes will be lost.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelTabChange} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmTabChange} color="error" variant="contained">
-            Switch Tab
-          </Button>
-        </DialogActions>
-      </Dialog>
-
       <Box
         sx={{
           minHeight: '100vh',
@@ -1338,7 +1171,7 @@ function Profile() {
             }}
           >
             <Avatar
-              src={profileData.picture || 'https://via.placeholder.com/150/2196f3/ffffff?text=JD'}
+              src={profileData.avatar}
               sx={{
                 width: 120,
                 height: 120,
@@ -1356,42 +1189,8 @@ function Profile() {
                 fontSize: { xs: '2rem', md: '2.5rem' },
               }}
             >
-              👤 {profileData.name || 'User Profile'}
+              👤 {profileData.name}
             </Typography>
-            
-            {/* Status Chips */}
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 2, flexWrap: 'wrap' }}>
-              {profileData.loggedInType && (
-                <Chip
-                  icon={profileData.loggedInType === 'google' ? <span>🔍</span> : 
-                        profileData.loggedInType === 'github' ? <span>🐙</span> : 
-                        <span>📧</span>}
-                  label={`${profileData.loggedInType.charAt(0).toUpperCase() + profileData.loggedInType.slice(1)} Login`}
-                  color="primary"
-                  variant="outlined"
-                  sx={{
-                    color: 'white',
-                    borderColor: 'white',
-                    '& .MuiChip-label': {
-                      color: 'white',
-                    },
-                  }}
-                />
-              )}
-              <Chip
-                icon={profileData.isVerified ? <span>✅</span> : <span>⚠️</span>}
-                label={profileData.isVerified ? 'Verified' : 'Not Verified'}
-                color={profileData.isVerified ? 'success' : 'warning'}
-                variant="outlined"
-                sx={{
-                  color: 'white',
-                  borderColor: profileData.isVerified ? '#4caf50' : '#ff9800',
-                  '& .MuiChip-label': {
-                    color: 'white',
-                  },
-                }}
-              />
-            </Box>
             <Typography
               variant="h6"
               sx={{
@@ -1411,7 +1210,6 @@ function Profile() {
               border: '2px solid',
               borderColor: 'divider',
               overflow: 'hidden',
-              position: 'relative',
             }}
           >
             {/* Tabs */}
@@ -1422,23 +1220,8 @@ function Profile() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                position: 'relative',
               }}
             >
-              {hasUnsavedChanges && isEditing && (
-                <Alert 
-                  severity="warning" 
-                  sx={{ 
-                    position: 'absolute', 
-                    top: -50, 
-                    left: '50%', 
-                    transform: 'translateX(-50%)',
-                    zIndex: 1,
-                  }}
-                >
-                  You have unsaved changes. Please save or cancel before switching tabs.
-                </Alert>
-              )}
               <Tabs
                 value={selectedTab}
                 onChange={handleTabChange}
@@ -1474,31 +1257,6 @@ function Profile() {
               {renderTabContent()}
             </TabPanel>
 
-            {/* Loading Overlay */}
-            {isUpdating && (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10,
-                }}
-              >
-                <Box sx={{ textAlign: 'center' }}>
-                  <CircularProgress size={60} />
-                  <Typography variant="h6" sx={{ mt: 2 }}>
-                    Updating Profile...
-                  </Typography>
-                </Box>
-              </Box>
-            )}
-
             {/* Action Buttons */}
             <Box
               sx={{
@@ -1516,7 +1274,6 @@ function Profile() {
                   variant="contained"
                   startIcon={<Edit />}
                   onClick={handleEdit}
-                  disabled={isUpdating}
                   sx={{
                     px: 4,
                     py: 1.5,
@@ -1536,9 +1293,8 @@ function Profile() {
                 <>
                   <Button
                     variant="contained"
-                    startIcon={isUpdating ? <CircularProgress size={20} color="inherit" /> : <Save />}
+                    startIcon={<Save />}
                     onClick={handleSave}
-                    disabled={isUpdating}
                     sx={{
                       px: 4,
                       py: 1.5,
@@ -1554,13 +1310,12 @@ function Profile() {
                       },
                     }}
                   >
-                    {isUpdating ? 'Saving...' : 'Save Changes'}
+                    Save Changes
                   </Button>
                   <Button
                     variant="outlined"
                     startIcon={<Cancel />}
                     onClick={handleCancel}
-                    disabled={isUpdating}
                     sx={{
                       px: 4,
                       py: 1.5,
