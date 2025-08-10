@@ -23,7 +23,7 @@ import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../assets/logo.png';
+// import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
 
@@ -70,8 +70,8 @@ export default function NavBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <img src={logo}  alt='Pradetra' width={45} height={45}/> */}
-          <img src={logo}  alt='Pradetra' width={60} height={75}/>
+          {/* <img src={AdbIcon}  alt='Pradetra' width={45} height={45}/> */}
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -211,7 +211,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <img src={logo}  alt='Pradetra' width={45} height={38}/>
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
             Pradetra
           </Typography>
           <IconButton
