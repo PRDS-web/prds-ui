@@ -71,7 +71,7 @@ export default function NavBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <img src={AdbIcon}  alt='Pradetra' width={45} height={45}/> */}
-          <img src={AdbIcon}  alt='Pradetra' width={60} height={75}/>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -211,7 +211,7 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <img src={AdbIcon}  alt='Pradetra' width={45} height={38}/>
+            <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
             Pradetra
           </Typography>
           <IconButton
