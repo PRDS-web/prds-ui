@@ -598,8 +598,8 @@ export default function Home() {
             ))}
           </Grid>
         </Box>
-        <Typography component={'a'} mt={5} mb={5} href="/" color="white">
-          See More Services
+        <Typography component={'a'} mt={5} mb={5} href="/service" color="white">
+          See Our Services
         </Typography>
       </Box>
       <Box

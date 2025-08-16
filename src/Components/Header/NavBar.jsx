@@ -118,7 +118,7 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  href={'/' + page.toLowerCase()}
+                  href={'/' + page.split(' ')[0].toLowerCase()}
                   key={page}
                   onClick={handleCloseNavMenu}
                 >
@@ -263,7 +263,7 @@ export default function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                href={'/' + page.toLowerCase()}
+                href={'/' + page.split(' ')[0].toLowerCase()}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
