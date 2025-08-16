@@ -10,6 +10,7 @@ import { OAuthifyRedirect } from 'oauthify';
 import Logout from '../Components/Form/Logout';
 import Profile from '../Components/Profile/Profile';
 import ProtectedRoute from '../Components/ProtectedRoute/ProtectedRoute';
+import AboutUs from '../Components/AboutUs/AboutUs';
 
 function ReactRoute() {
    
@@ -29,6 +30,7 @@ function ReactRoute() {
          </ProtectedRoute>
        }/>
        <Route path='/service' element={<><NavBar/><Service/><Footer/></>}/>
+        <Route path='/about' element={<><NavBar/><AboutUs/><Footer/></>}/>
      </Routes>
     </BrowserRouter>
   );

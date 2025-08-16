@@ -9,9 +9,6 @@ import {
   TextField,
   Button,
   Grid,
-  ThemeProvider,
-  createTheme,
-  CssBaseline,
   Tabs,
   Tab,
   Switch,
@@ -29,6 +26,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  useTheme
 } from '@mui/material';
 import {
   Edit,
@@ -57,35 +55,6 @@ import {
 } from '@mui/icons-material';
 import { fetchProfile, updateProfile, resetIsSuccess, resetIsError } from '../../Slice/ProfileSlice';
 
-// Create a custom theme
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#2196f3',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-    background: {
-      default: '#f5f5f5',
-      paper: '#ffffff',
-    },
-    text: {
-      primary: '#333333',
-      secondary: '#666666',
-    },
-  },
-  typography: {
-    h2: {
-      fontWeight: 700,
-    },
-    h4: {
-      fontWeight: 600,
-    },
-  },
-});
-
 function TabPanel({ children, value, index, ...other }) {
   return (
     <div
@@ -101,6 +70,7 @@ function TabPanel({ children, value, index, ...other }) {
 }
 
 function Profile() {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { users, isLoading, isUpdating, isSuccess, isError, errorMessage, successMessage } = useSelector((state) => state.profile);
   
