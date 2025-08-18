@@ -32,6 +32,9 @@ import {
   Star,
   ArrowForward,
   CheckCircle,
+  Business,
+  MedicalServices,
+  Translate,
 } from '@mui/icons-material';
 
 const services = [
@@ -100,73 +103,6 @@ const services = [
   },
   {
     id: 2,
-    title: 'QA Testing',
-    description:
-      'Comprehensive quality assurance and testing services to ensure flawless software delivery.',
-    icon: <BugReport sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'Automated Testing',
-      'Manual Testing',
-      'Performance Testing',
-      'Security Testing',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'Quality assurance is crucial for successful software delivery. Our QA team ensures your applications are bug-free, performant, and secure through comprehensive testing methodologies.',
-    detailedFeatures: [
-      'Automated testing with Selenium, Cypress, and Jest',
-      'Manual testing and exploratory testing',
-      'Performance testing and load testing',
-      'Security testing and vulnerability assessment',
-      'Mobile app testing on various devices',
-      'Cross-browser compatibility testing',
-      'API testing and integration testing',
-      'User acceptance testing (UAT)',
-    ],
-    technologies: [
-      'Selenium',
-      'Cypress',
-      'Jest',
-      'JMeter',
-      'Postman',
-      'Appium',
-    ],
-  },
-  {
-    id: 3,
-    title: 'Multi-Language',
-    description:
-      'Internationalization and localization services for global market reach.',
-    icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'i18n Implementation',
-      'Translation Services',
-      'Cultural Adaptation',
-      'RTL Support',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'Expand your global reach with our comprehensive internationalization and localization services. We help you adapt your applications for international markets with cultural sensitivity and technical precision.',
-    detailedFeatures: [
-      'Internationalization (i18n) implementation',
-      'Professional translation services in 50+ languages',
-      'Cultural adaptation and localization',
-      'Right-to-left (RTL) language support',
-      'Currency and date format localization',
-      'Content management for multiple languages',
-      'SEO optimization for international markets',
-      'Cultural compliance and legal requirements',
-    ],
-    technologies: [
-      'React-i18next',
-      'Vue-i18n',
-      'Angular i18n',
-      'Crowdin',
-      'Lokalise',
-    ],
-  },
-  {
-    id: 4,
     title: 'AI & Data Solutions',
     description:
       'End-to-end human-in-the-loop services to power AI/ML workflows.',
@@ -196,14 +132,13 @@ const services = [
       'Python',
       'Scrapy',
       'TruthfulQA / MMLU',
-      'Dynabench'
+      'Dynabench',
     ],
   },
-   {
-    id: 5,
+  {
+    id: 3,
     title: 'LLM & Model Services',
-    description:
-      'Optimizing and evaluating Large Language Models.',
+    description: 'Optimizing and evaluating Large Language Models.',
     icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'i18n Implementation',
@@ -222,7 +157,7 @@ const services = [
       'Automated evaluation pipelines',
       'Benchmark scoring (MMLU, TruthfulQA)',
       'Enterprise LLM deployment support',
-      'Continuous improvement feedback loop'
+      'Continuous improvement feedback loop',
     ],
     technologies: [
       'Whisper',
@@ -231,7 +166,150 @@ const services = [
       'Python',
       'Scrapy',
       'TruthfulQA / MMLU',
-      'Dynabench'
+      'Dynabench',
+    ],
+  },
+  {
+    id: 4,
+    title: 'Quality Assurance & Testing',
+    description: 'Comprehensive software & AI testing.',
+    icon: <BugReport sx={{ fontSize: 40, color: '#4caf50' }} />,
+    features: [
+      'Manual testing (functional, regression, usability)',
+      'Automated testing frameworks',
+      'Mobile & web app testing',
+      'API & load testing',
+    ],
+    color: '#4caf50',
+    detailedDescription:
+      'We ensure the accuracy, performance, and security of applications and AI models through rigorous manual and automated testing. Our global testing network guarantees real-world reliability.',
+    detailedFeatures: [
+      'Manual testing (functional, regression, usability)',
+      'Automated testing frameworks',
+      'Mobile & web app testing',
+      'API & load testing',
+      'Cross-browser/device testing',
+      'Security testing & bug tracking',
+      'AI/ML model drift detection',
+      'Global crowd testing',
+    ],
+    technologies: [
+      'Selenium',
+      'Cypress',
+      'Appium',
+      'Postman',
+      'JMeter',
+      'TestRail',
+      'Jenkins',
+      'BrowserStack',
+    ],
+  },
+
+  {
+    id: 5,
+    title: 'Multilingual Services',
+    description: 'Global reach with 150+ languages.',
+    icon: <Translate sx={{ fontSize: 40, color: '#ff9800' }} />,
+    features: [
+      'Translation & localization',
+      'Interpretation (medical, business, legal)',
+      'Transliteration (script-to-script)',
+      'Voice-over & dubbing',
+    ],
+    color: '#ff9800',
+    detailedDescription:
+      'We make technology and content accessible worldwide with expert linguistic services in 150+ languages, supported by native SMEs and advanced localization tools.',
+    detailedFeatures: [
+      'Translation & localization',
+      'Interpretation (medical, business, legal)',
+      'Transliteration (script-to-script)',
+      'Voice-over & dubbing',
+      'Subtitling & captioning',
+      'MT post-editing',
+      'SME linguistic consultancy',
+      'Multilingual content QA',
+    ],
+    technologies: [
+      'SDL Trados',
+      'MemoQ',
+      'Wordfast',
+      'Smartcat',
+      'Lokalise',
+      'Crowdin',
+      'Google MT / Amazon Translate',
+      'Verbit',
+    ],
+  },
+
+  {
+    id: 6,
+    title: 'Healthcare & Medical Services',
+    description: 'Reliable data & support for healthcare organizations.',
+    icon: <MedicalServices sx={{ fontSize: 40, color: '#e91e63' }} />,
+    features: [
+      'Medical transcription',
+      'Medical coding (ICD-10, CPT, HCPCS)',
+      'Billing & revenue cycle management',
+      'Medical scribing (EHR integration)',
+    ],
+    color: '#e91e63',
+    detailedDescription:
+      'We provide specialized healthcare services ranging from transcription and coding to insurance support, ensuring compliance, accuracy, and improved patient care systems.',
+    detailedFeatures: [
+      'Medical transcription',
+      'Medical coding (ICD-10, CPT, HCPCS)',
+      'Billing & revenue cycle management',
+      'Medical scribing (EHR integration)',
+      'TPA & insurance data services',
+      'Clinical data annotation (radiology, genomics)',
+      'Healthcare research data collection',
+      'HIPAA compliance support',
+    ],
+    technologies: [
+      '3M CodeFinder',
+      'Medisoft',
+      'eClinicalWorks',
+      'Epic Systems',
+      'Cerner',
+      'ICD-10 / CPT tools',
+      'Dragon Medical One',
+      'HIPAA-compliant platforms',
+    ],
+  },
+
+  {
+    id: 7,
+    title: 'Enterprise & BPO Services',
+    description: 'Scaling business processes efficiently.',
+    icon: <Business sx={{ fontSize: 40, color: '#9c27b0' }} />,
+    features: [
+      'Vendor onboarding & management',
+      'Market research & surveys',
+      'Business process outsourcing (BPO)',
+      'Customer support (voice/chat/email)',
+    ],
+    color: '#9c27b0',
+    detailedDescription:
+      'We help organizations streamline and scale operations with end-to-end BPO solutions, research, and back-office support designed for efficiency and cost-effectiveness.',
+    detailedFeatures: [
+      'Vendor onboarding & management',
+      'Market research & surveys',
+      'Opinion polls & data reporting',
+      'Business process outsourcing (BPO)',
+      'Document digitization & data entry',
+      'Customer support (voice/chat/email)',
+      'Financial & insurance back-office support',
+      'Workforce scaling with global teams',
+    ],
+    technologies: [
+      'Salesforce',
+      'Zoho CRM',
+      'HubSpot',
+      'SAP',
+      'Tableau',
+      'Power BI',
+      'Google Workspace',
+      'MS Dynamics',
     ],
   },
 ];
@@ -277,7 +355,7 @@ function TabPanel({ children, value, index, ...other }) {
 function Service() {
   const [selectedTab, setSelectedTab] = useState(0);
   const servicesRef = useRef(null);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const theme = useTheme();
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const mode = useSelector((state) => state.DarkLightMode.mode);
@@ -812,7 +890,7 @@ function Service() {
                         fontSize: { xs: '1rem', sm: '1.1rem' },
                       }}
                     >
-                      Ready to get started with {services[selectedTab].title}?
+                      👉 📩 Request a Quote
                     </Typography>
                     <Button
                       variant="contained"
@@ -1081,7 +1159,7 @@ function Service() {
               border: `3px solid ${services[selectedTab].color}30`,
             }}
           >
-            <Typography
+            {/* <Typography
               variant="h5"
               sx={{
                 mb: 3,
@@ -1090,8 +1168,8 @@ function Service() {
                 fontSize: { xs: '1.25rem', md: '1.5rem' },
               }}
             >
-              Ready to get started with {services[selectedTab].title}?
-            </Typography>
+              👉 📩 Request a Quote
+            </Typography> */}
             <Button
               variant="contained"
               size="medium"
@@ -1112,7 +1190,7 @@ function Service() {
                 },
               }}
             >
-              Get Quote for {services[selectedTab].title}
+              👉 📩 Request a Quote
             </Button>
           </Box>
         </Container>

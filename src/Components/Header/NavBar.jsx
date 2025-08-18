@@ -39,7 +39,6 @@ export default function NavBar() {
     setAnchorElNav(event.currentTarget);
   };
   const theme = useTheme();
- // console.log('User info',users.user.name)
 
   const ChangeMode = () => {
     if (theme.palette.mode === 'light') {
@@ -118,6 +117,7 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem
+                  component= 'a'
                   href={'/' + page.split(' ')[0].toLowerCase()}
                   key={page}
                   onClick={handleCloseNavMenu}
