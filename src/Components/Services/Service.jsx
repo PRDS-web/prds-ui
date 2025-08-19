@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import {
   Typography,
@@ -378,6 +379,11 @@ function Service() {
 
   return (
     <Box sx={{ flexGrow: 1 }} mt={6}>
+      <Helmet>
+        <title>Services | Pradetra</title>
+        <meta name="description" content="Explore Pradetra's services: AI & data solutions (RLHF, annotation, transcription), QA testing, app and web development, multilingual services, and enterprise BPO." />
+        <link rel="canonical" href="https://pradetra.com/service" />
+      </Helmet>
       <Box
         sx={{
           background: isLightMode
