@@ -9,8 +9,9 @@ import {
 } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { forwardRef } from 'react';
 
-export default function Contact(props) {
+const Contact = (props, ref) => {
   const theme = useTheme();
   const mode = theme.palette.mode;
   const comman = {
@@ -28,7 +29,7 @@ export default function Contact(props) {
   
   return (
     <Box
-      ref={props.ref}
+      ref={ref}
       sx={{
         bgcolor: theme.palette.background.default,
         width: '100%',
@@ -130,8 +131,8 @@ export default function Contact(props) {
                   fontWeight: 'bold',
                 }}
               >
-                contact@pradetra.com &nbsp; | &nbsp; +1 (800) 123 XX21 &nbsp; |
-                &nbsp; contact@pradetra.com
+                <Typography component='a' href='mailto:contact@pradetra.com' >contact@pradetra.com </Typography> &nbsp; | &nbsp; +91 9103808150 &nbsp; |
+                &nbsp; <Typography component='a' href='https://www.linkedin.com/company/pradetra'>LinkedIn@pradetra </Typography>
               </Typography>
             </Box>
           </Box>
@@ -141,8 +142,6 @@ export default function Contact(props) {
             sx={{
               p: { xs: 3, md: 5 },
               borderRadius: 6,
-              //bgcolor: theme.palette.mode=='dark':rgba(30,30,30,0.95)',
-              //  color: 'white',
               maxWidth: '70%',
               mx: 'auto',
               marginTop: 2,
@@ -201,4 +200,6 @@ export default function Contact(props) {
       </Box>
     </Box>
   );
-}
+};
+
+export default forwardRef(Contact);

@@ -1,30 +1,20 @@
 import React, { useState, useRef } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   Typography,
   Container,
   Grid,
-  Card,
-  CardContent,
   Button,
   Box,
   Chip,
   Avatar,
   Paper,
-  CssBaseline,
   Tabs,
   Tab,
   Divider,
   useTheme,
 } from '@mui/material';
 import {
-  Code,
   Language,
   BugReport,
   PhoneAndroid,
@@ -173,14 +163,14 @@ const services = [
     id: 4,
     title: 'Quality Assurance & Testing',
     description: 'Comprehensive software & AI testing.',
-    icon: <BugReport sx={{ fontSize: 40, color: '#4caf50' }} />,
+    icon: <BugReport sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Manual testing (functional, regression, usability)',
       'Automated testing frameworks',
       'Mobile & web app testing',
       'API & load testing',
     ],
-    color: '#4caf50',
+    color: '#2196f3',
     detailedDescription:
       'We ensure the accuracy, performance, and security of applications and AI models through rigorous manual and automated testing. Our global testing network guarantees real-world reliability.',
     detailedFeatures: [
@@ -209,14 +199,14 @@ const services = [
     id: 5,
     title: 'Multilingual Services',
     description: 'Global reach with 150+ languages.',
-    icon: <Translate sx={{ fontSize: 40, color: '#ff9800' }} />,
+    icon: <Translate sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Translation & localization',
       'Interpretation (medical, business, legal)',
       'Transliteration (script-to-script)',
       'Voice-over & dubbing',
     ],
-    color: '#ff9800',
+    color: '#2196f3',
     detailedDescription:
       'We make technology and content accessible worldwide with expert linguistic services in 150+ languages, supported by native SMEs and advanced localization tools.',
     detailedFeatures: [
@@ -245,14 +235,14 @@ const services = [
     id: 6,
     title: 'Healthcare & Medical Services',
     description: 'Reliable data & support for healthcare organizations.',
-    icon: <MedicalServices sx={{ fontSize: 40, color: '#e91e63' }} />,
+    icon: <MedicalServices sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Medical transcription',
       'Medical coding (ICD-10, CPT, HCPCS)',
       'Billing & revenue cycle management',
       'Medical scribing (EHR integration)',
     ],
-    color: '#e91e63',
+    color: '#2196f3',
     detailedDescription:
       'We provide specialized healthcare services ranging from transcription and coding to insurance support, ensuring compliance, accuracy, and improved patient care systems.',
     detailedFeatures: [
@@ -281,14 +271,14 @@ const services = [
     id: 7,
     title: 'Enterprise & BPO Services',
     description: 'Scaling business processes efficiently.',
-    icon: <Business sx={{ fontSize: 40, color: '#9c27b0' }} />,
+    icon: <Business sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Vendor onboarding & management',
       'Market research & surveys',
       'Business process outsourcing (BPO)',
       'Customer support (voice/chat/email)',
     ],
-    color: '#9c27b0',
+    color: '#2196f3',
     detailedDescription:
       'We help organizations streamline and scale operations with end-to-end BPO solutions, research, and back-office support designed for efficiency and cost-effectiveness.',
     detailedFeatures: [
@@ -893,11 +883,12 @@ function Service() {
                         fontSize: { xs: '1rem', sm: '1.1rem' },
                       }}
                     >
-                      Pricing structure Or click below to request a tailored proposal
+                      Instant Proposal Access
                     </Typography>
                     <Button
                       variant="contained"
                       size="small"
+                      href='/#contact'
                       endIcon={<ArrowForward />}
                       sx={{
                         backgroundColor: services[selectedTab].color,
@@ -915,7 +906,7 @@ function Service() {
                         },
                       }}
                     >
-                      👉 📩 Request a Quote
+                      Contact us
                     </Button>
                   </Box>
                 </Paper>
@@ -1171,12 +1162,13 @@ function Service() {
                 fontSize: { xs: '1.25rem', md: '1.5rem' },
               }}
             >
-              Pricing structure Or click below to request a tailored proposal
+              Instant Proposal Access
             </Typography>
             <Button
               variant="contained"
               size="medium"
               endIcon={<ArrowForward />}
+              href='/#contact'
               sx={{
                 backgroundColor: services[selectedTab].color,
                 px: { xs: 3, md: 4 },
@@ -1193,7 +1185,7 @@ function Service() {
                 },
               }}
             >
-              👉 📩 Request a Quote
+              Contact us
             </Button>
           </Box>
         </Container>

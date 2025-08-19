@@ -27,6 +27,10 @@ import {
   Support,
   Rocket,
 } from '@mui/icons-material';
+import Jeevendran from  '../../assets/Jeevendran.jpeg';
+import Kanshi from '../../assets/kanshi.jpeg';
+import Sudhanshu from '../../assets/Sudhanshu.jpeg';
+import Manas from '../../assets/Manas.jpeg';
 import CountUp from 'react-countup';
 
 // Company statistics
@@ -56,32 +60,39 @@ const companyStats = [
 // Team members
 const teamMembers = [
   {
-    name: 'Mohit Mishra',
+    name: 'Abhishek Panday',
     role: 'CEO & Founder',
-    avatar: '',
-    bio: 'Visionary leader with 15+ years in tech industry',
+    avatar: `${Jeevendran}`,
+    bio: 'Visionary leader driving strategy, growth, and client success',
     expertise: ['Strategy', 'Leadership', 'Innovation'],
   },
   {
-    name: 'Michael Chen',
+    name: 'Jeevendran R.',
     role: 'CTO',
-    avatar: 'MC',
-    bio: 'Technical expert specializing in scalable architectures',
+    avatar: `${Jeevendran}`,
+    bio: 'Expertise in AI/ML pipelines, cloud infrastructure, and automation frameworks.',
     expertise: ['Architecture', 'Cloud', 'DevOps'],
   },
   {
-    name: 'Emily Rodriguez',
+    name: 'Kanshi Tiwari',
     role: 'Head of Design',
-    avatar: 'ER',
-    bio: 'Creative director focused on user experience',
+    avatar: `${Kanshi}`,
+    bio: 'Expertise in UI/UX design, product branding, user research, and digital experience design.',
     expertise: ['UX/UI', 'Design Systems', 'Research'],
   },
   {
-    name: 'David Kim',
-    role: 'Lead Developer',
-    avatar: 'DK',
-    bio: 'Full-stack developer passionate about clean code',
-    expertise: ['React', 'Node.js', 'Python'],
+    name: 'Sudhanshu Singh',
+    role: 'Talent Acquisition Specialists',
+    avatar: `${Sudhanshu}`,
+    bio: 'Focus on hiring annotators, linguists, QA testers, and AI experts globally.',
+     expertise: ['Global Talent Strategy', 'AI & Linguistic Role Familiarity', 'Candidate Experience Optimization'],
+  },
+  {
+    name: 'Manas Panday',
+    role: 'Head of AI & LLM Services',
+    avatar: `${Manas}`,
+    bio: 'Expertise in LLM fine-tuning, evaluation, and enterprise AI integration.',
+    expertise: ['DeepSpeed/FSDP (PyTorch)', 'HELM', 'Level Studio'],
   },
 ];
 
@@ -620,7 +631,7 @@ export default function AboutUs() {
       </Box>
 
       {/* Team Section */}
-      {/* <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.paper }}>
+      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.paper }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography
@@ -663,17 +674,12 @@ export default function AboutUs() {
                     transition: 'transform 0.9s, box-shadow 0.3s',
                     '&:hover': {
                       transform: 'scale(1.1)',
-                      // boxShadow: 6,
                       boxShadow: isLightMode ? 5 : 7,
                     },
-                    // transition: 'all 0.3s ease',
-                    // '&:hover': {
-                    //   transform: 'translateY(-5px)',
-
-                    // },
                   }}
                 >
                   <Avatar
+                    src={member.avatar}
                     sx={{
                       width: 80,
                       height: 80,
@@ -683,9 +689,7 @@ export default function AboutUs() {
                       fontSize: '2rem',
                       fontWeight: 600,
                     }}
-                  >
-                    {member.avatar}
-                  </Avatar>
+                  />
                   <Typography
                     variant="h6"
                     sx={{
@@ -743,7 +747,7 @@ export default function AboutUs() {
             ))}
           </Grid>
         </Container>
-      </Box> */}
+      </Box>
 
       {/* FAQ Section */}
       <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.background }}>
@@ -909,6 +913,7 @@ export default function AboutUs() {
               <Button
                 variant="outlined"
                 size="large"
+                href='/#contact'
                 sx={{
                   borderColor: colors.divider,
                   color: colors.text,
