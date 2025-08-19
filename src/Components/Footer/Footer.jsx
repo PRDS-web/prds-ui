@@ -58,13 +58,13 @@ export default function Footer() {
               Quick Links
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/home" underline="none" color="text.primary">
                 Home
               </Link>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/service" underline="none" color="text.primary">
                 Services
               </Link>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/about" underline="none" color="text.primary">
                 About
               </Link>
               <Link href="#" underline="none" color="text.primary">
@@ -93,7 +93,7 @@ export default function Footer() {
                   }}
                 />
               </IconButton>
-              <IconButton>
+              <IconButton href='https://www.linkedin.com/company/pradetra'>
                 <LinkedIn
                   sx={{
                     color: theme.palette.mode == 'dark' ? 'white' : 'black',

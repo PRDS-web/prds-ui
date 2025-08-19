@@ -316,27 +316,28 @@ const services = [
 
 const testimonials = [
   {
-    name: 'Sarah Johnson',
-    role: 'CEO, TechStart Inc.',
+    name: 'Anonymous',
+    role: 'Leading Global AI Company',
     content:
-      'Vibe-coding-service delivered our mobile app ahead of schedule with exceptional quality. Highly recommended!',
-    avatar: 'SJ',
+      'Pradetra provided us with high-quality data collection and annotation at scale. Their team was reliable, efficient, and handled sensitive data with professionalism.',
+    avatar: 'AN',
   },
   {
-    name: 'Michael Chen',
-    role: 'CTO, Digital Solutions',
+    name: 'Anonymous',
+    role: 'Innovative Tech Enterprise',
     content:
-      'Their web development team is incredibly skilled. Our new platform has increased user engagement by 300%.',
-    avatar: 'MC',
+      'The QA and testing services helped us identify critical issues before launch. Their detailed reporting ensured a smooth release with zero surprises.',
+    avatar: 'AN',
   },
   {
-    name: 'Emily Rodriguez',
-    role: 'Product Manager, InnovateCorp',
+    name: 'Anonymous',
+    role: 'Multinational Software Firm',
     content:
-      'The QA testing services helped us identify critical issues before launch. Outstanding attention to detail.',
-    avatar: 'ER',
+      'Pradetra’s transcription and localization services were top-notch. Their multilingual support enabled us to expand into new markets seamlessly.',
+    avatar: 'AN',
   },
 ];
+
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -499,7 +500,7 @@ function Service() {
               display: 'flex',
               flexDirection: { xs: 'column', lg: 'row' },
               gap: { xs: 3, md: 4 },
-              height: { xs: 'auto', lg: '700px' },
+              height: { xs: 'auto', lg: '900px' },
               alignItems: 'stretch',
             }}
           >
@@ -587,6 +588,7 @@ function Service() {
                           display: 'flex',
                           alignItems: 'center',
                           width: '100%',
+                          height: '100vh'
                         }}
                       >
                         <Box
@@ -647,7 +649,7 @@ function Service() {
                 border: '2px solid',
                 borderColor: colors.divider,
                 display: { xs: 'none', lg: 'flex' },
-                flexDirection: 'column',
+                flexDirection: 'column'
               }}
             >
               {/* Mobile Content Area */}
@@ -881,6 +883,7 @@ function Service() {
                       border: `2px solid ${services[selectedTab].color}30`,
                     }}
                   >
+                    
                     <Typography
                       variant="h6"
                       sx={{
@@ -890,7 +893,7 @@ function Service() {
                         fontSize: { xs: '1rem', sm: '1.1rem' },
                       }}
                     >
-                      👉 📩 Request a Quote
+                      Pricing structure Or click below to request a tailored proposal
                     </Typography>
                     <Button
                       variant="contained"
@@ -912,7 +915,7 @@ function Service() {
                         },
                       }}
                     >
-                      Get Quote
+                      👉 📩 Request a Quote
                     </Button>
                   </Box>
                 </Paper>
@@ -1159,7 +1162,7 @@ function Service() {
               border: `3px solid ${services[selectedTab].color}30`,
             }}
           >
-            {/* <Typography
+            <Typography
               variant="h5"
               sx={{
                 mb: 3,
@@ -1168,8 +1171,8 @@ function Service() {
                 fontSize: { xs: '1.25rem', md: '1.5rem' },
               }}
             >
-              👉 📩 Request a Quote
-            </Typography> */}
+              Pricing structure Or click below to request a tailored proposal
+            </Typography>
             <Button
               variant="contained"
               size="medium"

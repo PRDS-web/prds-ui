@@ -56,9 +56,9 @@ const companyStats = [
 // Team members
 const teamMembers = [
   {
-    name: 'Sarah Johnson',
+    name: 'Mohit Mishra',
     role: 'CEO & Founder',
-    avatar: 'SJ',
+    avatar: '',
     bio: 'Visionary leader with 15+ years in tech industry',
     expertise: ['Strategy', 'Leadership', 'Innovation'],
   },
@@ -388,7 +388,7 @@ export default function AboutUs() {
                 }}
               >
                 Founded on 11 November 2024 Pradetra began with a clear vision:
-                to deliver world-class AI and data solutions through a
+                to deliver world class AI and data solutions through a
                 human-centric lens. Rooted in New Delhi, our journey started
                 with a passionate team that believed high-quality data services
                 shouldn't be reserved for elite tech firms.
@@ -403,7 +403,7 @@ export default function AboutUs() {
               >
                 At Pradetra, we hold firm to the belief that intelligent
                 technology is built through collaboration, precision, and
-                cultural integrity. Every project we undertake—whether it's
+                cultural integrity. Every project we undertake whether it's
                 multilingual transcription, image/audio annotation, AI model
                 evaluation, or curated research data—is driven by craftsmanship
                 and a commitment to excellence.
@@ -418,7 +418,7 @@ export default function AboutUs() {
                 Though we're relatively young, our progress speaks volumes. In
                 less than a year, we've completed an impressive number of client
                 engagements, launched scalable workflows, and earned trust
-                across industries—especially in AI development and research
+                across industries especially in AI development and research
                 domains.
               </Typography>
             </Grid>
@@ -474,11 +474,9 @@ export default function AboutUs() {
                   }}
                 >
                   To accelerate the future of
-                  <b>Artificial Intelligence and Digital Innovation </b> by
-                  delivering
-                  <b>
-                    high-quality, culturally diverse, and human-verified data
-                  </b>
+                  <b> Artificial Intelligence and Digital Innovation </b> by
+                  delivering 
+                  <b> high quality, culturally diverse, and human verified data </b>
                   that powers smarter, safer, and more ethical technologies
                   worldwide.
                 </Typography>
@@ -510,17 +508,15 @@ export default function AboutUs() {
                   <b> global leader in human-in-the-loop AI services</b>,
                   trusted by enterprises, research institutions, and governments
                   to provide
-                  <b>
-                    scalable data solutions, rigorous testing, and impactful
-                    insights
+                  <b> scalable data solutions, rigorous testing, and impactful
+                    insights 
                   </b>
-                  that shape the next generation of intelligent systems.
+                  {' '}that shape the next generation of intelligent systems.
                 </Typography>
                 <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    mb: 3,
                     mt: 3,
                     justifyContent: 'center',
                   }}
@@ -536,58 +532,9 @@ export default function AboutUs() {
                 <Box sx={{ maxWidth: '100%', mx: 'auto', py: 4 }}>
                   <Stack spacing={4}>
                     <Box>
-                      <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        Precision & Quality
-                      </Typography>
                       <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                        Every dataset, every annotation, every test we deliver
-                        meets enterprise-grade accuracy through multi-step
-                        validation and advanced tools.
-                      </Typography>
-                    </Box>
+                        We deliver <b>enterprise-grade precision</b> through <b>multi-step validation</b> and <b>advanced tooling</b>, ensuring every dataset and annotation meets the highest standards. With a <b>global network spanning 50+ countries</b>, we scale <b>data collection</b>, <b>transcription</b>, and <b>testing projects</b> swiftly and efficiently. By combining <b>cutting-edge AI</b>, <b>automation frameworks</b>, and <b>human expertise</b>, we build <b>future-ready data pipelines</b> tailored to your goals—always with a <b>client-centric</b>, <b>ethical approach</b> that champions <b>fairness</b>, <b>inclusivity</b>, and <b>bias-aware solutions</b>.
 
-                    <Box>
-                      <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        Global Scalability
-                      </Typography>
-                      <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                        With a diverse network of vendors and contributors
-                        across 50+ countries, we can scale data collection,
-                        transcription, and testing projects globally with speed
-                        and efficiency.
-                      </Typography>
-                    </Box>
-
-                    <Box>
-                      <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        Innovation First
-                      </Typography>
-                      <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                        We integrate state-of-the-art AI tools, automation
-                        frameworks, and human expertise to provide future-ready
-                        data pipelines.
-                      </Typography>
-                    </Box>
-
-                    <Box>
-                      <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        Client-Centric Approach
-                      </Typography>
-                      <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                        Your goals define our process. We adapt workflows to
-                        deliver customized, cost-efficient, and on-time
-                        solutions for your unique business challenges.
-                      </Typography>
-                    </Box>
-
-                    <Box>
-                      <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        Ethical AI
-                      </Typography>
-                      <Typography variant="body1" sx={{ lineHeight: 1.7 }}>
-                        We are committed to building fair, inclusive, and
-                        bias-aware datasets, ensuring technologies that
-                        represent all voices and communities.
                       </Typography>
                     </Box>
                   </Stack>
@@ -673,7 +620,7 @@ export default function AboutUs() {
       </Box>
 
       {/* Team Section */}
-      <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.paper }}>
+      {/* <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.paper }}>
         <Container maxWidth="lg">
           <Box sx={{ textAlign: 'center', mb: 6 }}>
             <Typography
@@ -796,7 +743,7 @@ export default function AboutUs() {
             ))}
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
 
       {/* FAQ Section */}
       <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: colors.background }}>
@@ -940,6 +887,7 @@ export default function AboutUs() {
               <Button
                 variant="contained"
                 size="large"
+                href='/service'
                 sx={{
                   backgroundColor: '#667eea',
                   px: 4,

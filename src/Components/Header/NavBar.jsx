@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
@@ -74,8 +74,8 @@ export default function NavBar() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -117,8 +117,8 @@ export default function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem
-                  component= 'a'
-                  href={'/' + page.split(' ')[0].toLowerCase()}
+                  component={Link}
+                  to={'/' + page.split(' ')[0].toLowerCase()}
                   key={page}
                   onClick={handleCloseNavMenu}
                 >
@@ -128,7 +128,8 @@ export default function NavBar() {
               <MenuItem>
                 {!isLoggedIn ? (
                   <IconButton
-                    href="/login"
+                    component={Link}
+                    to="/login"
                     sx={{
                       fontSize: '1.0rem',
                       display: 'flex',
@@ -199,8 +200,8 @@ export default function NavBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -263,7 +264,8 @@ export default function NavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                href={'/' + page.split(' ')[0].toLowerCase()}
+                component={Link}
+                to={'/' + page.split(' ')[0].toLowerCase()}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
