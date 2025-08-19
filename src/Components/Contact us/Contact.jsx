@@ -176,6 +176,14 @@ const Contact = (props, ref) => {
             />
             <TextField
               fullWidth
+              variant="outlined"
+              label="Country"
+              placeholder="Your Country"
+              sx={comman}
+              required
+            />
+            <TextField
+              fullWidth
               multiline
               minRows={4}
               label="Message"
