@@ -8,7 +8,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { Facebook, Twitter, LinkedIn, Instagram } from '@mui/icons-material';
-import AdbIcon from '@mui/icons-material/Adb';
+import logo from '../../assets/logo.PNG';
 
 export default function Footer() {
   const theme = useTheme();
@@ -29,7 +29,7 @@ export default function Footer() {
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 4 }}>
             <Typography variant="h6" fontWeight="bold" gutterBottom sx={{display: 'flex', alignContent: 'center',justifyContent: 'start'}}>
-              <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              <Box component="img" src={logo} alt="Pradetra logo" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 32, height: 32 }} />
               <Typography
                 variant="h6"
                 noWrap
@@ -58,16 +58,16 @@ export default function Footer() {
               Quick Links
             </Typography>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/home" underline="none" color="text.primary">
                 Home
               </Link>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/service" underline="none" color="text.primary">
                 Services
               </Link>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/about" underline="none" color="text.primary">
                 About
               </Link>
-              <Link href="#" underline="none" color="text.primary">
+              <Link href="/#contact" underline="none" color="text.primary">
                 Contact
               </Link>
             </Box>
@@ -93,7 +93,7 @@ export default function Footer() {
                   }}
                 />
               </IconButton>
-              <IconButton>
+              <IconButton href='https://www.linkedin.com/company/pradetra'>
                 <LinkedIn
                   sx={{
                     color: theme.palette.mode == 'dark' ? 'white' : 'black',

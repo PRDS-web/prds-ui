@@ -15,8 +15,6 @@ import {
   Step,
   StepLabel,
   Stepper,
-  stepConnectorClasses,
-  StepConnector,
 } from '@mui/material';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import GroupIcon from '@mui/icons-material/Group';
@@ -39,6 +37,7 @@ import {
   RocketLaunch,
   Reviews,
 } from '@mui/icons-material';
+import { useLocation } from 'react-router-dom';
 
 const teamImages = [
   'https://randomuser.me/api/portraits/men/32.jpg',
@@ -54,13 +53,12 @@ const teamImages = [
 
 export default function Home() {
   const theme = useTheme();
-  const [mainVisible, setMainVisible] = useState(false);
   const [svgVisible, setSvgVisible] = useState(false);
-  const mainRef = useRef(null);
   const svgRef = useRef(null);
   const contactRef = useRef(null);
   const serviceRef = useRef(null);
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const location = useLocation();
 
   const steps = [
     {
@@ -142,26 +140,27 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    const mainObserver = new window.IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) setMainVisible(true);
-      },
-      { threshold: 0.2 }
-    );
+    const currentSvg = svgRef.current;
     const svgObserver = new window.IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) setSvgVisible(true);
       },
       { threshold: 0.2 }
     );
-    if (mainRef.current) mainObserver.observe(mainRef.current);
-    if (svgRef.current) svgObserver.observe(svgRef.current);
+    if (currentSvg) svgObserver.observe(currentSvg);
 
     return () => {
-      if (mainRef.current) mainObserver.unobserve(mainRef.current);
-      if (svgRef.current) svgObserver.unobserve(svgRef.current);
+      if (currentSvg) svgObserver.unobserve(currentSvg);
     };
   }, []);
+
+  useEffect(() => {
+    if (location.hash === '#contact') {
+      contactRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else if (location.hash === '#services') {
+      serviceRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location]);
   const cardData = [
     {
       icon: <EmojiObjectsIcon sx={{ fontSize: 40, color: 'inherit', mb: 1 }} />,

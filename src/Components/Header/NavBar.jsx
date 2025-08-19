@@ -15,14 +15,14 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AdbIcon from '@mui/icons-material/Adb';
 import SunnyIcon from '@mui/icons-material/Sunny';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import { useSelector, useDispatch } from 'react-redux';
 import { enableLightMode, disableLightMode } from '../../Slice/DarkLightSlice';
 import { userLogout } from '../../Slice/UserLoginSlice';
 import Boy from '../../assets/boyWithoutBG.png';
-import { useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.PNG';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
 const settings = ['Profile', 'Dashboard', 'Logout'];
@@ -39,6 +39,7 @@ export default function NavBar() {
     setAnchorElNav(event.currentTarget);
   };
   const theme = useTheme();
+  const location = useLocation();
 
   const ChangeMode = () => {
     if (theme.palette.mode === 'light') {
@@ -69,13 +70,17 @@ export default function NavBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* <img src={AdbIcon}  alt='Pradetra' width={45} height={45}/> */}
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
+          <Box
+            component="img"
+            src={logo}
+            alt="Pradetra logo"
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 40, height: 40 }}
+          />
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -115,20 +120,35 @@ export default function NavBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem
-                  component= 'a'
-                  href={'/' + page.split(' ')[0].toLowerCase()}
-                  key={page}
-                  onClick={handleCloseNavMenu}
-                >
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
+              {pages.map((page) => {
+                const pageKey = page.split(' ')[0].toLowerCase();
+                const isActive = page === 'Contact us'
+                  ? false
+                  : pageKey === 'home'
+                    ? location.pathname === '/' || location.pathname === '/home'
+                    : location.pathname === '/' + pageKey;
+                return (
+                  <MenuItem
+                    component={Link}
+                    to={page === 'Contact us' ? '/#contact' : '/' + pageKey}
+                    key={page}
+                    onClick={handleCloseNavMenu}
+                    selected={isActive}
+                    sx={{
+                      borderRadius: 1,
+                      fontWeight: isActive ? 700 : 'inherit',
+                      bgcolor: isActive ? (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(14,91,110,0.12)') : 'transparent',
+                    }}
+                  >
+                    <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  </MenuItem>
+                );
+              })}
               <MenuItem>
                 {!isLoggedIn ? (
                   <IconButton
-                    href="/login"
+                    component={Link}
+                    to="/login"
                     sx={{
                       fontSize: '1.0rem',
                       display: 'flex',
@@ -199,8 +219,8 @@ export default function NavBar() {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -211,7 +231,12 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex'}, mr: 1 }} />
+            <Box
+              component="img"
+              src={logo}
+              alt="Pradetra logo"
+              sx={{ mr: 1, width: 32, height: 32 }}
+            />
             Pradetra
           </Typography>
           <IconButton
@@ -260,35 +285,49 @@ export default function NavBar() {
                   </Tooltip>
                }
             </IconButton>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                href={'/' + page.split(' ')[0].toLowerCase()}
-                onClick={handleCloseNavMenu}
-                sx={{
-                  my: 2,
-                  color: 'inherit',
-                  display: 'block',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '2px',
-                    backgroundColor: theme.palette.mode == 'dark'? 'white': 'black',
-                    transform: 'scaleX(0)',
-                    transition: 'transform 0.3s ease',
-                    transformOrigin: 'left',
-                  },
-                  '&:hover::after': {
-                    transform: 'scaleX(1)',
-                  },
-                }}
-              >
-                {page}
-              </Button>
-            ))}
+            {pages.map((page) => {
+              const pageKey = page.split(' ')[0].toLowerCase();
+              const isActive = page === 'Contact us'
+                ? false
+                : pageKey === 'home'
+                  ? location.pathname === '/' || location.pathname === '/home'
+                  : location.pathname === '/' + pageKey;
+              return (
+                <Button
+                  key={page}
+                  component={Link}
+                  to={page === 'Contact us' ? '/#contact' : '/' + pageKey}
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: 'inherit',
+                    display: 'block',
+                    borderRadius: 2,
+                    px: 1.5,
+                    position: 'relative',
+                    fontWeight: isActive ? 800 : 500,
+                    bgcolor: isActive ? (theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.10)' : 'rgba(14,91,110,0.10)') : 'transparent',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '2px',
+                      backgroundColor: theme.palette.mode == 'dark'? 'white': 'black',
+                      transform: isActive ? 'scaleX(1)' : 'scaleX(0)',
+                      transition: 'transform 0.3s ease',
+                      transformOrigin: 'left',
+                    },
+                    '&:hover::after': {
+                      transform: 'scaleX(1)',
+                    },
+                  }}
+                >
+                  {page}
+                </Button>
+              );
+            })}
             {!isLoggedIn ? (
               <IconButton
                 href="/login"

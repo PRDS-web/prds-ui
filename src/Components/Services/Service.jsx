@@ -1,30 +1,20 @@
 import React, { useState, useRef } from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  useNavigate,
-} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   Typography,
   Container,
   Grid,
-  Card,
-  CardContent,
   Button,
   Box,
   Chip,
   Avatar,
   Paper,
-  CssBaseline,
   Tabs,
   Tab,
   Divider,
   useTheme,
 } from '@mui/material';
 import {
-  Code,
   Language,
   BugReport,
   PhoneAndroid,
@@ -173,14 +163,14 @@ const services = [
     id: 4,
     title: 'Quality Assurance & Testing',
     description: 'Comprehensive software & AI testing.',
-    icon: <BugReport sx={{ fontSize: 40, color: '#4caf50' }} />,
+    icon: <BugReport sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Manual testing (functional, regression, usability)',
       'Automated testing frameworks',
       'Mobile & web app testing',
       'API & load testing',
     ],
-    color: '#4caf50',
+    color: '#2196f3',
     detailedDescription:
       'We ensure the accuracy, performance, and security of applications and AI models through rigorous manual and automated testing. Our global testing network guarantees real-world reliability.',
     detailedFeatures: [
@@ -209,14 +199,14 @@ const services = [
     id: 5,
     title: 'Multilingual Services',
     description: 'Global reach with 150+ languages.',
-    icon: <Translate sx={{ fontSize: 40, color: '#ff9800' }} />,
+    icon: <Translate sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Translation & localization',
       'Interpretation (medical, business, legal)',
       'Transliteration (script-to-script)',
       'Voice-over & dubbing',
     ],
-    color: '#ff9800',
+    color: '#2196f3',
     detailedDescription:
       'We make technology and content accessible worldwide with expert linguistic services in 150+ languages, supported by native SMEs and advanced localization tools.',
     detailedFeatures: [
@@ -245,14 +235,14 @@ const services = [
     id: 6,
     title: 'Healthcare & Medical Services',
     description: 'Reliable data & support for healthcare organizations.',
-    icon: <MedicalServices sx={{ fontSize: 40, color: '#e91e63' }} />,
+    icon: <MedicalServices sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Medical transcription',
       'Medical coding (ICD-10, CPT, HCPCS)',
       'Billing & revenue cycle management',
       'Medical scribing (EHR integration)',
     ],
-    color: '#e91e63',
+    color: '#2196f3',
     detailedDescription:
       'We provide specialized healthcare services ranging from transcription and coding to insurance support, ensuring compliance, accuracy, and improved patient care systems.',
     detailedFeatures: [
@@ -281,14 +271,14 @@ const services = [
     id: 7,
     title: 'Enterprise & BPO Services',
     description: 'Scaling business processes efficiently.',
-    icon: <Business sx={{ fontSize: 40, color: '#9c27b0' }} />,
+    icon: <Business sx={{ fontSize: 40, color: '#2196f3' }} />,
     features: [
       'Vendor onboarding & management',
       'Market research & surveys',
       'Business process outsourcing (BPO)',
       'Customer support (voice/chat/email)',
     ],
-    color: '#9c27b0',
+    color: '#2196f3',
     detailedDescription:
       'We help organizations streamline and scale operations with end-to-end BPO solutions, research, and back-office support designed for efficiency and cost-effectiveness.',
     detailedFeatures: [
@@ -316,27 +306,28 @@ const services = [
 
 const testimonials = [
   {
-    name: 'Sarah Johnson',
-    role: 'CEO, TechStart Inc.',
+    name: 'Anonymous',
+    role: 'Leading Global AI Company',
     content:
-      'Vibe-coding-service delivered our mobile app ahead of schedule with exceptional quality. Highly recommended!',
-    avatar: 'SJ',
+      'Pradetra provided us with high-quality data collection and annotation at scale. Their team was reliable, efficient, and handled sensitive data with professionalism.',
+    avatar: 'AN',
   },
   {
-    name: 'Michael Chen',
-    role: 'CTO, Digital Solutions',
+    name: 'Anonymous',
+    role: 'Innovative Tech Enterprise',
     content:
-      'Their web development team is incredibly skilled. Our new platform has increased user engagement by 300%.',
-    avatar: 'MC',
+      'The QA and testing services helped us identify critical issues before launch. Their detailed reporting ensured a smooth release with zero surprises.',
+    avatar: 'AN',
   },
   {
-    name: 'Emily Rodriguez',
-    role: 'Product Manager, InnovateCorp',
+    name: 'Anonymous',
+    role: 'Multinational Software Firm',
     content:
-      'The QA testing services helped us identify critical issues before launch. Outstanding attention to detail.',
-    avatar: 'ER',
+      'Pradetra’s transcription and localization services were top-notch. Their multilingual support enabled us to expand into new markets seamlessly.',
+    avatar: 'AN',
   },
 ];
+
 
 function TabPanel({ children, value, index, ...other }) {
   return (
@@ -499,7 +490,7 @@ function Service() {
               display: 'flex',
               flexDirection: { xs: 'column', lg: 'row' },
               gap: { xs: 3, md: 4 },
-              height: { xs: 'auto', lg: '700px' },
+              height: { xs: 'auto', lg: '900px' },
               alignItems: 'stretch',
             }}
           >
@@ -587,6 +578,7 @@ function Service() {
                           display: 'flex',
                           alignItems: 'center',
                           width: '100%',
+                          height: '100vh'
                         }}
                       >
                         <Box
@@ -647,7 +639,7 @@ function Service() {
                 border: '2px solid',
                 borderColor: colors.divider,
                 display: { xs: 'none', lg: 'flex' },
-                flexDirection: 'column',
+                flexDirection: 'column'
               }}
             >
               {/* Mobile Content Area */}
@@ -881,6 +873,7 @@ function Service() {
                       border: `2px solid ${services[selectedTab].color}30`,
                     }}
                   >
+                    
                     <Typography
                       variant="h6"
                       sx={{
@@ -890,11 +883,12 @@ function Service() {
                         fontSize: { xs: '1rem', sm: '1.1rem' },
                       }}
                     >
-                      👉 📩 Request a Quote
+                      Instant Proposal Access
                     </Typography>
                     <Button
                       variant="contained"
                       size="small"
+                      href='/#contact'
                       endIcon={<ArrowForward />}
                       sx={{
                         backgroundColor: services[selectedTab].color,
@@ -912,7 +906,7 @@ function Service() {
                         },
                       }}
                     >
-                      Get Quote
+                      Contact us
                     </Button>
                   </Box>
                 </Paper>
@@ -1159,7 +1153,7 @@ function Service() {
               border: `3px solid ${services[selectedTab].color}30`,
             }}
           >
-            {/* <Typography
+            <Typography
               variant="h5"
               sx={{
                 mb: 3,
@@ -1168,12 +1162,13 @@ function Service() {
                 fontSize: { xs: '1.25rem', md: '1.5rem' },
               }}
             >
-              👉 📩 Request a Quote
-            </Typography> */}
+              Instant Proposal Access
+            </Typography>
             <Button
               variant="contained"
               size="medium"
               endIcon={<ArrowForward />}
+              href='/#contact'
               sx={{
                 backgroundColor: services[selectedTab].color,
                 px: { xs: 3, md: 4 },
@@ -1190,7 +1185,7 @@ function Service() {
                 },
               }}
             >
-              👉 📩 Request a Quote
+              Contact us
             </Button>
           </Box>
         </Container>
