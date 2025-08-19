@@ -26,7 +26,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  useTheme
+  useTheme,
+  ThemeProvider,
+  CssBaseline
 } from '@mui/material';
 import {
   Edit,
