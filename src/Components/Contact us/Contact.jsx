@@ -131,8 +131,8 @@ const Contact = (props, ref) => {
                   fontWeight: 'bold',
                 }}
               >
-                <Typography component='a' href='mailto:contact@pradetra.com' >contact@pradetra.com </Typography> &nbsp; | &nbsp; +91 9103808150 &nbsp; |
-                &nbsp; <Typography component='a' href='https://www.linkedin.com/company/pradetra'>LinkedIn@pradetra </Typography>
+                <Typography sx={{color: '#90caf9'}} component='a' href='mailto:contact@pradetra.com' >contact@pradetra.com </Typography> &nbsp; | &nbsp; +91 9103808150 &nbsp; |
+                &nbsp; <Typography sx={{color: '#90caf9'}} component='a' href='https://www.linkedin.com/company/pradetra'>LinkedIn@pradetra </Typography>
               </Typography>
             </Box>
           </Box>
@@ -156,6 +156,7 @@ const Contact = (props, ref) => {
               label="Full Name"
               placeholder="Your Name"
               sx={comman}
+              required
             />
             <TextField
               fullWidth
@@ -163,13 +164,15 @@ const Contact = (props, ref) => {
               label="Email Id"
               placeholder="your@email.com"
               sx={comman}
+              required
             />
             <TextField
               fullWidth
               variant="outlined"
               label="Company"
-              placeholder="Your Company"
+              placeholder="Your Company If not applicable Please Type NA"
               sx={comman}
+              required
             />
             <TextField
               fullWidth
@@ -177,8 +180,9 @@ const Contact = (props, ref) => {
               minRows={4}
               label="Message"
               variant="outlined"
-              placeholder="Type your message here"
+              placeholder="Type your message here and atleast 25 words needed"
               sx={comman}
+              required
             />
             <Button
               type="submit"
