@@ -33,6 +33,7 @@ import Kanshi from '../../assets/kanshi.jpeg';
 import Sudhanshu from '../../assets/Sudhanshu.jpeg';
 import Manas from '../../assets/Manas.jpeg';
 import CountUp from 'react-countup';
+import Abhishek from '../../assets/Abhi.jpeg';
 
 // Company statistics
 const companyStats = [
@@ -63,7 +64,7 @@ const teamMembers = [
   {
     name: 'Abhishek Panday',
     role: 'CEO & Founder',
-    avatar: `${Jeevendran}`,
+    avatar: `${Abhishek}`,
     bio: 'Visionary leader driving strategy, growth, and client success',
     expertise: ['Strategy', 'Leadership', 'Innovation'],
   },
