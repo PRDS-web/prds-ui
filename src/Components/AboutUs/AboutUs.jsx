@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import PublicIcon from '@mui/icons-material/Public';
 import { useSelector } from 'react-redux';
 import {
@@ -249,6 +250,16 @@ export default function AboutUs() {
   });
 
   const colors = getThemeColors();
+
+  useEffect(() => {
+    const prevTitle = document.title;
+    const desc = document.querySelector('meta[name="description"]');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    document.title = 'About Us | Pradetra';
+    if (desc) desc.setAttribute('content', "Learn about Pradetra's mission, vision, team, and values. We deliver human-in-the-loop AI services, high-quality data, and digital solutions.");
+    if (canonical) canonical.setAttribute('href', 'https://pradetra.com/about');
+    return () => { document.title = prevTitle; };
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }} mt={6}>

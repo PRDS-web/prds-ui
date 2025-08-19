@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Typography,
@@ -375,6 +376,16 @@ function Service() {
   });
 
   const colors = getThemeColors();
+
+  useEffect(() => {
+    const prevTitle = document.title;
+    const desc = document.querySelector('meta[name="description"]');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    document.title = 'Services | Pradetra';
+    if (desc) desc.setAttribute('content', "Explore Pradetra's services: AI & data solutions (RLHF, annotation, transcription), QA testing, app and web development, multilingual services, and enterprise BPO.");
+    if (canonical) canonical.setAttribute('href', 'https://pradetra.com/service');
+    return () => { document.title = prevTitle; };
+  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }} mt={6}>
