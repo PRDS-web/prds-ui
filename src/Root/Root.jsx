@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import ReactRoute from '../Routes/ReactRoute.jsx';
 import { OAuthifyProvider } from 'oauthify';
-import { HelmetProvider } from 'react-helmet-async';
 export default function Root() {
   const mode =
     useSelector((state) => state.DarkLightMode.mode) ||
@@ -25,12 +24,10 @@ export default function Root() {
   const darkTheme = createTheme(theme);
   return (
     <OAuthifyProvider>
-      <HelmetProvider>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <ReactRoute />
-        </ThemeProvider>
-      </HelmetProvider>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <ReactRoute />
+      </ThemeProvider>
     </OAuthifyProvider>
   );
 }

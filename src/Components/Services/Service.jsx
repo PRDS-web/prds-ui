@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Helmet } from 'react-helmet-async';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import {
   Typography,
@@ -377,13 +377,18 @@ function Service() {
 
   const colors = getThemeColors();
 
+  useEffect(() => {
+    const prevTitle = document.title;
+    const desc = document.querySelector('meta[name="description"]');
+    const canonical = document.querySelector('link[rel="canonical"]');
+    document.title = 'Services | Pradetra';
+    if (desc) desc.setAttribute('content', "Explore Pradetra's services: AI & data solutions (RLHF, annotation, transcription), QA testing, app and web development, multilingual services, and enterprise BPO.");
+    if (canonical) canonical.setAttribute('href', 'https://pradetra.com/service');
+    return () => { document.title = prevTitle; };
+  }, []);
+
   return (
     <Box sx={{ flexGrow: 1 }} mt={6}>
-      <Helmet>
-        <title>Services | Pradetra</title>
-        <meta name="description" content="Explore Pradetra's services: AI & data solutions (RLHF, annotation, transcription), QA testing, app and web development, multilingual services, and enterprise BPO." />
-        <link rel="canonical" href="https://pradetra.com/service" />
-      </Helmet>
       <Box
         sx={{
           background: isLightMode

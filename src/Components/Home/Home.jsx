@@ -38,16 +38,15 @@ import {
   Reviews,
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 
 const teamImages = [
-  'https://randomuser.me/api/portraits/men/32.jpg',
-  'https://randomuser.me/api/portraits/women/44.jpg',
-  'https://randomuser.me/api/portraits/men/65.jpg',
-  'https://randomuser.me/api/portraits/women/68.jpg',
-  'https://randomuser.me/api/portraits/men/12.jpg',
-  'https://randomuser.me/api/portraits/women/21.jpg',
-  'https://randomuser.me/api/portraits/men/77.jpg',
+  'https://randomuser.me/api/portraits/men/3.jpg',
+  'https://randomuser.me/api/portraits/women/34.jpg',
+  'https://randomuser.me/api/portraits/men/15.jpg',
+  'https://randomuser.me/api/portraits/women/60.jpg',
+  'https://randomuser.me/api/portraits/men/17.jpg',
+  'https://randomuser.me/api/portraits/women/28.jpg',
+  'https://randomuser.me/api/portraits/men/7.jpg',
 ];
 
 // const navLinks = ['Work', 'Services', 'Pricing', 'Contact'];
@@ -210,29 +209,28 @@ export default function Home() {
     },
   ];
 
+  useEffect(() => {
+    const prevTitle = document.title;
+    const prevDesc = document.querySelector('meta[name="description"]');
+    const prevCanonical = document.querySelector('link[rel="canonical"]');
+    document.title = 'Pradetra | Smart tech. Real people. Real impact.';
+    if (prevDesc) {
+      prevDesc.setAttribute(
+        'content',
+        'Pradetra is a leading technology company delivering RLHF, data annotation, QA testing, transcription, and bespoke app development.'
+      );
+    }
+    if (prevCanonical) {
+      prevCanonical.setAttribute('href', 'https://pradetra.com/');
+    }
+    return () => {
+      document.title = prevTitle;
+      if (prevCanonical) prevCanonical.setAttribute('href', 'https://pradetra.com/');
+    };
+  }, []);
+
   return (
     <>
-      <Helmet>
-        <title>Pradetra | Smart tech. Real people. Real impact.</title>
-        <meta name="description" content="Pradetra is a leading technology company delivering RLHF, data annotation, QA testing, transcription, and bespoke app development." />
-        <link rel="canonical" href="https://pradetra.com/" />
-        <meta property="og:title" content="Pradetra" />
-        <meta property="og:description" content="High‑quality digital operations support: Data Collection, QA Testing, Annotation, Transcription, Localization, and LLM Support Services." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://pradetra.com/" />
-        <meta property="og:image" content="/src/assets/logo.PNG" />
-        <script type="application/ld+json">{JSON.stringify({
-          '@context': 'https://schema.org',
-          '@type': 'Organization',
-          name: 'Pradetra',
-          url: 'https://pradetra.com/',
-          logo: '/src/assets/logo.PNG',
-          sameAs: [
-            'https://www.linkedin.com/company/pradetra/'
-          ],
-          description: 'High‑quality digital operations support and AI services (RLHF, annotation, QA testing, transcription, localization).'
-        })}</script>
-      </Helmet>
       <Box
         // them
         sx={{
