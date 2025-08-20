@@ -1,0 +1,313 @@
+import React from 'react';
+import {
+  Language,
+  BugReport,
+  PhoneAndroid,
+  Web,
+  Business,
+  MedicalServices,
+  Translate,
+} from '@mui/icons-material';
+
+export const services = [
+    {
+      id: 0,
+      title: 'App Development',
+      description:
+        'Native and cross-platform mobile applications for iOS and Android with cutting-edge technologies.',
+      icon: <PhoneAndroid sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'React Native',
+        'Flutter',
+        'Native iOS/Android',
+        'App Store Optimization',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We specialize in creating high-performance mobile applications that deliver exceptional user experiences. Our team of expert developers uses the latest technologies and best practices to build apps that stand out in the competitive app market.',
+      detailedFeatures: [
+        'Cross-platform development with React Native and Flutter',
+        'Native iOS development with Swift and Objective-C',
+        'Native Android development with Kotlin and Java',
+        'App Store and Google Play Store optimization',
+        'Push notification implementation',
+        'Offline functionality and data synchronization',
+        'Third-party API integration',
+        'App performance optimization and testing',
+      ],
+      technologies: [
+        'React Native',
+        'Flutter',
+        'Swift',
+        'Kotlin',
+        'Firebase',
+        'AWS',
+      ],
+    },
+    {
+      id: 1,
+      title: 'Web Development',
+      description:
+        'Modern, responsive web applications built with the latest frameworks and technologies.',
+      icon: <Web sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: ['React.js', 'Node.js', 'Full-Stack', 'Progressive Web Apps'],
+      color: '#2196f3',
+      detailedDescription:
+        'Our web development services focus on creating scalable, secure, and user-friendly web applications. We build everything from simple landing pages to complex enterprise solutions that drive business growth.',
+      detailedFeatures: [
+        'Frontend development with React.js, Vue.js, and Angular',
+        'Backend development with Node.js, Python, and PHP',
+        'Database design and optimization (MySQL, PostgreSQL, MongoDB)',
+        'RESTful API development and integration',
+        'Progressive Web App (PWA) development',
+        'E-commerce platform development',
+        'Content Management System (CMS) development',
+        'Website maintenance and support',
+      ],
+      technologies: [
+        'React.js',
+        'Node.js',
+        'Vue.js',
+        'Angular',
+        'MongoDB',
+        'PostgreSQL',
+      ],
+    },
+    {
+      id: 2,
+      title: 'AI & Data Solutions',
+      description:
+        'End-to-end human-in-the-loop services to power AI/ML workflows.',
+      icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'i18n Implementation',
+        'Translation Services',
+        'Cultural Adaptation',
+        'RTL Support',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We provide end-to-end human-in-the-loop AI services that help organizations build smarter and more reliable systems. Our solutions ensure data accuracy, scalability, and cultural relevance across industries.',
+      detailedFeatures: [
+        'Data collection (Text, Audio, Video, Image)',
+        'Annotation (NER, bounding box, sentiment, speech, medical)',
+        'Transcription (verbatim, clean, timestamped)',
+        'Synthetic data generation',
+        'Data validation and quality assurance',
+        'Custom dataset creation for ML models',
+        'Real-time data processing pipelines',
+        'Data privacy and security compliance',
+      ],
+      technologies: [
+        'Whisper',
+        'Label Studio',
+        'OpenAI Eval',
+        'Python',
+        'Scrapy',
+        'TruthfulQA / MMLU',
+        'Dynabench',
+      ],
+    },
+    {
+      id: 3,
+      title: 'LLM & Model Services',
+      description: 'Optimizing and evaluating Large Language Models.',
+      icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'i18n Implementation',
+        'Translation Services',
+        'Cultural Adaptation',
+        'RTL Support',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We provide end-to-end human-in-the-loop AI services that help organizations build smarter and more reliable systems. Our solutions ensure data accuracy, scalability, and cultural relevance across industries.',
+      detailedFeatures: [
+        'Prompt engineering & fine-tuning',
+        'Custom dataset creation',
+        'Hallucination & truthfulness checks',
+        'Bias & fairness evaluation',
+        'Automated evaluation pipelines',
+        'Benchmark scoring (MMLU, TruthfulQA)',
+        'Enterprise LLM deployment support',
+        'Continuous improvement feedback loop',
+      ],
+      technologies: [
+        'Whisper',
+        'Label Studio',
+        'OpenAI Eval',
+        'Python',
+        'Scrapy',
+        'TruthfulQA / MMLU',
+        'Dynabench',
+      ],
+    },
+    {
+      id: 4,
+      title: 'Quality Assurance & Testing',
+      description: 'Comprehensive software & AI testing.',
+      icon: <BugReport sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'Manual testing (functional, regression, usability)',
+        'Automated testing frameworks',
+        'Mobile & web app testing',
+        'API & load testing',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We ensure the accuracy, performance, and security of applications and AI models through rigorous manual and automated testing. Our global testing network guarantees real-world reliability.',
+      detailedFeatures: [
+        'Manual testing (functional, regression, usability)',
+        'Automated testing frameworks',
+        'Mobile & web app testing',
+        'API & load testing',
+        'Cross-browser/device testing',
+        'Security testing & bug tracking',
+        'AI/ML model drift detection',
+        'Global crowd testing',
+      ],
+      technologies: [
+        'Selenium',
+        'Cypress',
+        'Appium',
+        'Postman',
+        'JMeter',
+        'TestRail',
+        'Jenkins',
+        'BrowserStack',
+      ],
+    },
+  
+    {
+      id: 5,
+      title: 'Multilingual Services',
+      description: 'Global reach with 150+ languages.',
+      icon: <Translate sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'Translation & localization',
+        'Interpretation (medical, business, legal)',
+        'Transliteration (script-to-script)',
+        'Voice-over & dubbing',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We make technology and content accessible worldwide with expert linguistic services in 150+ languages, supported by native SMEs and advanced localization tools.',
+      detailedFeatures: [
+        'Translation & localization',
+        'Interpretation (medical, business, legal)',
+        'Transliteration (script-to-script)',
+        'Voice-over & dubbing',
+        'Subtitling & captioning',
+        'MT post-editing',
+        'SME linguistic consultancy',
+        'Multilingual content QA',
+      ],
+      technologies: [
+        'SDL Trados',
+        'MemoQ',
+        'Wordfast',
+        'Smartcat',
+        'Lokalise',
+        'Crowdin',
+        'Google MT / Amazon Translate',
+        'Verbit',
+      ],
+    },
+  
+    {
+      id: 6,
+      title: 'Healthcare & Medical Services',
+      description: 'Reliable data & support for healthcare organizations.',
+      icon: <MedicalServices sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'Medical transcription',
+        'Medical coding (ICD-10, CPT, HCPCS)',
+        'Billing & revenue cycle management',
+        'Medical scribing (EHR integration)',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We provide specialized healthcare services ranging from transcription and coding to insurance support, ensuring compliance, accuracy, and improved patient care systems.',
+      detailedFeatures: [
+        'Medical transcription',
+        'Medical coding (ICD-10, CPT, HCPCS)',
+        'Billing & revenue cycle management',
+        'Medical scribing (EHR integration)',
+        'TPA & insurance data services',
+        'Clinical data annotation (radiology, genomics)',
+        'Healthcare research data collection',
+        'HIPAA compliance support',
+      ],
+      technologies: [
+        '3M CodeFinder',
+        'Medisoft',
+        'eClinicalWorks',
+        'Epic Systems',
+        'Cerner',
+        'ICD-10 / CPT tools',
+        'Dragon Medical One',
+        'HIPAA-compliant platforms',
+      ],
+    },
+  
+    {
+      id: 7,
+      title: 'Enterprise & BPO Services',
+      description: 'Scaling business processes efficiently.',
+      icon: <Business sx={{ fontSize: 40, color: '#2196f3' }} />,
+      features: [
+        'Vendor onboarding & management',
+        'Market research & surveys',
+        'Business process outsourcing (BPO)',
+        'Customer support (voice/chat/email)',
+      ],
+      color: '#2196f3',
+      detailedDescription:
+        'We help organizations streamline and scale operations with end-to-end BPO solutions, research, and back-office support designed for efficiency and cost-effectiveness.',
+      detailedFeatures: [
+        'Vendor onboarding & management',
+        'Market research & surveys',
+        'Opinion polls & data reporting',
+        'Business process outsourcing (BPO)',
+        'Document digitization & data entry',
+        'Customer support (voice/chat/email)',
+        'Financial & insurance back-office support',
+        'Workforce scaling with global teams',
+      ],
+      technologies: [
+        'Salesforce',
+        'Zoho CRM',
+        'HubSpot',
+        'SAP',
+        'Tableau',
+        'Power BI',
+        'Google Workspace',
+        'MS Dynamics',
+      ],
+    },
+  ];
+  
+  export const testimonials = [
+    {
+      name: 'Anonymous',
+      role: 'Leading Global AI Company',
+      content:
+        'Pradetra provided us with high-quality data collection and annotation at scale. Their team was reliable, efficient, and handled sensitive data with professionalism.',
+      avatar: 'AN',
+    },
+    {
+      name: 'Anonymous',
+      role: 'Innovative Tech Enterprise',
+      content:
+        'The QA and testing services helped us identify critical issues before launch. Their detailed reporting ensured a smooth release with zero surprises.',
+      avatar: 'AN',
+    },
+    {
+      name: 'Anonymous',
+      role: 'Multinational Software Firm',
+      content:
+        'Pradetra’s transcription and localization services were top-notch. Their multilingual support enabled us to expand into new markets seamlessly.',
+      avatar: 'AN',
+    },
+  ];
+  
