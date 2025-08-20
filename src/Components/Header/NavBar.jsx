@@ -70,12 +70,14 @@ export default function NavBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box
-            component="img"
-            src={logo}
-            alt="Pradetra logo"
-            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 40, height: 40 }}
-          />
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Box
+              component="img"
+              src={logo}
+              alt="Pradetra logo"
+              sx={{ display: { xs: 'none', md: 'flex' }, mr: 1, width: 40, height: 40, cursor: 'pointer' }}
+            />
+          </Link>
           <Typography
             variant="h6"
             noWrap
@@ -231,12 +233,14 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <Box
-              component="img"
-              src={logo}
-              alt="Pradetra logo"
-              sx={{ mr: 1, width: 32, height: 32 }}
-            />
+            <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              <Box
+                component="img"
+                src={logo}
+                alt="Pradetra logo"
+                sx={{ mr: 1, width: 32, height: 32, cursor: 'pointer' }}
+              />
+            </Link>
             Pradetra
           </Typography>
           <IconButton

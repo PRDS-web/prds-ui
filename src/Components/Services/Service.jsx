@@ -14,6 +14,10 @@ import {
   Tab,
   Divider,
   useTheme,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  useMediaQuery,
 } from '@mui/material';
 import {
   Language,
@@ -26,331 +30,20 @@ import {
   Business,
   MedicalServices,
   Translate,
+  ExpandMore,
 } from '@mui/icons-material';
+import { services, testimonials } from './ServicesData.jsx';
 
-const services = [
-  {
-    id: 0,
-    title: 'App Development',
-    description:
-      'Native and cross-platform mobile applications for iOS and Android with cutting-edge technologies.',
-    icon: <PhoneAndroid sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'React Native',
-      'Flutter',
-      'Native iOS/Android',
-      'App Store Optimization',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We specialize in creating high-performance mobile applications that deliver exceptional user experiences. Our team of expert developers uses the latest technologies and best practices to build apps that stand out in the competitive app market.',
-    detailedFeatures: [
-      'Cross-platform development with React Native and Flutter',
-      'Native iOS development with Swift and Objective-C',
-      'Native Android development with Kotlin and Java',
-      'App Store and Google Play Store optimization',
-      'Push notification implementation',
-      'Offline functionality and data synchronization',
-      'Third-party API integration',
-      'App performance optimization and testing',
-    ],
-    technologies: [
-      'React Native',
-      'Flutter',
-      'Swift',
-      'Kotlin',
-      'Firebase',
-      'AWS',
-    ],
-  },
-  {
-    id: 1,
-    title: 'Web Development',
-    description:
-      'Modern, responsive web applications built with the latest frameworks and technologies.',
-    icon: <Web sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: ['React.js', 'Node.js', 'Full-Stack', 'Progressive Web Apps'],
-    color: '#2196f3',
-    detailedDescription:
-      'Our web development services focus on creating scalable, secure, and user-friendly web applications. We build everything from simple landing pages to complex enterprise solutions that drive business growth.',
-    detailedFeatures: [
-      'Frontend development with React.js, Vue.js, and Angular',
-      'Backend development with Node.js, Python, and PHP',
-      'Database design and optimization (MySQL, PostgreSQL, MongoDB)',
-      'RESTful API development and integration',
-      'Progressive Web App (PWA) development',
-      'E-commerce platform development',
-      'Content Management System (CMS) development',
-      'Website maintenance and support',
-    ],
-    technologies: [
-      'React.js',
-      'Node.js',
-      'Vue.js',
-      'Angular',
-      'MongoDB',
-      'PostgreSQL',
-    ],
-  },
-  {
-    id: 2,
-    title: 'AI & Data Solutions',
-    description:
-      'End-to-end human-in-the-loop services to power AI/ML workflows.',
-    icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'i18n Implementation',
-      'Translation Services',
-      'Cultural Adaptation',
-      'RTL Support',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We provide end-to-end human-in-the-loop AI services that help organizations build smarter and more reliable systems. Our solutions ensure data accuracy, scalability, and cultural relevance across industries.',
-    detailedFeatures: [
-      'Data collection (Text, Audio, Video, Image)',
-      'Annotation (NER, bounding box, sentiment, speech, medical)',
-      'Transcription (verbatim, clean, timestamped)',
-      'Synthetic data generation',
-      'Data collection (Text, Audio, Video, Image)',
-      'Annotation (NER, bounding box, sentiment, speech, medical)',
-      'Transcription (verbatim, clean, timestamped)',
-    ],
-    technologies: [
-      'Whisper',
-      'Label Studio',
-      'OpenAI Eval',
-      'Python',
-      'Scrapy',
-      'TruthfulQA / MMLU',
-      'Dynabench',
-    ],
-  },
-  {
-    id: 3,
-    title: 'LLM & Model Services',
-    description: 'Optimizing and evaluating Large Language Models.',
-    icon: <Language sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'i18n Implementation',
-      'Translation Services',
-      'Cultural Adaptation',
-      'RTL Support',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We provide end-to-end human-in-the-loop AI services that help organizations build smarter and more reliable systems. Our solutions ensure data accuracy, scalability, and cultural relevance across industries.',
-    detailedFeatures: [
-      'Prompt engineering & fine-tuning',
-      'Custom dataset creation',
-      'Hallucination & truthfulness checks',
-      'Bias & fairness evaluation',
-      'Automated evaluation pipelines',
-      'Benchmark scoring (MMLU, TruthfulQA)',
-      'Enterprise LLM deployment support',
-      'Continuous improvement feedback loop',
-    ],
-    technologies: [
-      'Whisper',
-      'Label Studio',
-      'OpenAI Eval',
-      'Python',
-      'Scrapy',
-      'TruthfulQA / MMLU',
-      'Dynabench',
-    ],
-  },
-  {
-    id: 4,
-    title: 'Quality Assurance & Testing',
-    description: 'Comprehensive software & AI testing.',
-    icon: <BugReport sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'Manual testing (functional, regression, usability)',
-      'Automated testing frameworks',
-      'Mobile & web app testing',
-      'API & load testing',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We ensure the accuracy, performance, and security of applications and AI models through rigorous manual and automated testing. Our global testing network guarantees real-world reliability.',
-    detailedFeatures: [
-      'Manual testing (functional, regression, usability)',
-      'Automated testing frameworks',
-      'Mobile & web app testing',
-      'API & load testing',
-      'Cross-browser/device testing',
-      'Security testing & bug tracking',
-      'AI/ML model drift detection',
-      'Global crowd testing',
-    ],
-    technologies: [
-      'Selenium',
-      'Cypress',
-      'Appium',
-      'Postman',
-      'JMeter',
-      'TestRail',
-      'Jenkins',
-      'BrowserStack',
-    ],
-  },
-
-  {
-    id: 5,
-    title: 'Multilingual Services',
-    description: 'Global reach with 150+ languages.',
-    icon: <Translate sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'Translation & localization',
-      'Interpretation (medical, business, legal)',
-      'Transliteration (script-to-script)',
-      'Voice-over & dubbing',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We make technology and content accessible worldwide with expert linguistic services in 150+ languages, supported by native SMEs and advanced localization tools.',
-    detailedFeatures: [
-      'Translation & localization',
-      'Interpretation (medical, business, legal)',
-      'Transliteration (script-to-script)',
-      'Voice-over & dubbing',
-      'Subtitling & captioning',
-      'MT post-editing',
-      'SME linguistic consultancy',
-      'Multilingual content QA',
-    ],
-    technologies: [
-      'SDL Trados',
-      'MemoQ',
-      'Wordfast',
-      'Smartcat',
-      'Lokalise',
-      'Crowdin',
-      'Google MT / Amazon Translate',
-      'Verbit',
-    ],
-  },
-
-  {
-    id: 6,
-    title: 'Healthcare & Medical Services',
-    description: 'Reliable data & support for healthcare organizations.',
-    icon: <MedicalServices sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'Medical transcription',
-      'Medical coding (ICD-10, CPT, HCPCS)',
-      'Billing & revenue cycle management',
-      'Medical scribing (EHR integration)',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We provide specialized healthcare services ranging from transcription and coding to insurance support, ensuring compliance, accuracy, and improved patient care systems.',
-    detailedFeatures: [
-      'Medical transcription',
-      'Medical coding (ICD-10, CPT, HCPCS)',
-      'Billing & revenue cycle management',
-      'Medical scribing (EHR integration)',
-      'TPA & insurance data services',
-      'Clinical data annotation (radiology, genomics)',
-      'Healthcare research data collection',
-      'HIPAA compliance support',
-    ],
-    technologies: [
-      '3M CodeFinder',
-      'Medisoft',
-      'eClinicalWorks',
-      'Epic Systems',
-      'Cerner',
-      'ICD-10 / CPT tools',
-      'Dragon Medical One',
-      'HIPAA-compliant platforms',
-    ],
-  },
-
-  {
-    id: 7,
-    title: 'Enterprise & BPO Services',
-    description: 'Scaling business processes efficiently.',
-    icon: <Business sx={{ fontSize: 40, color: '#2196f3' }} />,
-    features: [
-      'Vendor onboarding & management',
-      'Market research & surveys',
-      'Business process outsourcing (BPO)',
-      'Customer support (voice/chat/email)',
-    ],
-    color: '#2196f3',
-    detailedDescription:
-      'We help organizations streamline and scale operations with end-to-end BPO solutions, research, and back-office support designed for efficiency and cost-effectiveness.',
-    detailedFeatures: [
-      'Vendor onboarding & management',
-      'Market research & surveys',
-      'Opinion polls & data reporting',
-      'Business process outsourcing (BPO)',
-      'Document digitization & data entry',
-      'Customer support (voice/chat/email)',
-      'Financial & insurance back-office support',
-      'Workforce scaling with global teams',
-    ],
-    technologies: [
-      'Salesforce',
-      'Zoho CRM',
-      'HubSpot',
-      'SAP',
-      'Tableau',
-      'Power BI',
-      'Google Workspace',
-      'MS Dynamics',
-    ],
-  },
-];
-
-const testimonials = [
-  {
-    name: 'Anonymous',
-    role: 'Leading Global AI Company',
-    content:
-      'Pradetra provided us with high-quality data collection and annotation at scale. Their team was reliable, efficient, and handled sensitive data with professionalism.',
-    avatar: 'AN',
-  },
-  {
-    name: 'Anonymous',
-    role: 'Innovative Tech Enterprise',
-    content:
-      'The QA and testing services helped us identify critical issues before launch. Their detailed reporting ensured a smooth release with zero surprises.',
-    avatar: 'AN',
-  },
-  {
-    name: 'Anonymous',
-    role: 'Multinational Software Firm',
-    content:
-      'Pradetra’s transcription and localization services were top-notch. Their multilingual support enabled us to expand into new markets seamlessly.',
-    avatar: 'AN',
-  },
-];
-
-
-function TabPanel({ children, value, index, ...other }) {
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
 
 function Service() {
   const [selectedTab, setSelectedTab] = useState(0);
   const servicesRef = useRef(null);
-  // const navigate = useNavigate();
   const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const mode = useSelector((state) => state.DarkLightMode.mode);
+
+
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -534,7 +227,7 @@ function Service() {
                   Choose Your Service
                 </Typography>
               </Box>
-              <Tabs
+              { isDesktop && <Tabs
                 orientation="vertical"
                 value={selectedTab}
                 onChange={handleTabChange}
@@ -636,7 +329,7 @@ function Service() {
                     }
                   />
                 ))}
-              </Tabs>
+              </Tabs>}
             </Box>
 
             {/* Right Side Content Area */}
@@ -653,275 +346,7 @@ function Service() {
                 flexDirection: 'column'
               }}
             >
-              {/* Mobile Content Area */}
-              <Box
-                sx={{
-                  display: { xs: 'block', lg: 'none' },
-                  mt: 3,
-                }}
-              >
-                <Paper
-                  sx={{
-                    p: { xs: 3, sm: 4 },
-                    borderRadius: 3,
-                    boxShadow: isLightMode ? 2 : 4,
-                    border: '2px solid',
-                    borderColor: colors.divider,
-                    backgroundColor: colors.paper,
-                  }}
-                >
-                  {/* Service Header */}
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      mb: 3,
-                      p: 3,
-                      borderRadius: 2,
-                      backgroundColor: `${services[selectedTab].color}15`,
-                      borderBottom: `3px solid ${services[selectedTab].color}`,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        p: 2,
-                        borderRadius: 2,
-                        backgroundColor: colors.paper,
-                        mr: 3,
-                        boxShadow: 1,
-                      }}
-                    >
-                      {services[selectedTab].icon}
-                    </Box>
-                    <Box>
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 700,
-                          color: services[selectedTab].color,
-                          mb: 1,
-                          fontSize: { xs: '1.25rem', sm: '1.5rem' },
-                        }}
-                      >
-                        {services[selectedTab].title}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          lineHeight: 1.5,
-                          fontSize: { xs: '0.9rem', sm: '1rem' },
-                          color: colors.textSecondary,
-                        }}
-                      >
-                        {services[selectedTab].description}
-                      </Typography>
-                    </Box>
-                  </Box>
-
-                  {/* Detailed Description */}
-                  <Typography
-                    sx={{
-                      mb: 4,
-                      lineHeight: 1.7,
-                      fontSize: { xs: '0.95rem', sm: '1rem' },
-                      color: colors.text,
-                      fontWeight: 100,
-                    }}
-                  >
-                    {services[selectedTab].detailedDescription}
-                  </Typography>
-
-                  <Divider
-                    sx={{ my: 3, borderWidth: 2, borderColor: colors.divider }}
-                  />
-
-                  {/* Key Features */}
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      mb: 3,
-                      color: services[selectedTab].color,
-                      fontWeight: 700,
-                      borderBottom: `2px solid ${services[selectedTab].color}20`,
-                      pb: 1,
-                      fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                      textAlign: 'center',
-                    }}
-                  >
-                    ✨ Key Features
-                  </Typography>
-                  <Box sx={{ mb: 4 }}>
-                    {services[selectedTab].detailedFeatures.map(
-                      (feature, index) => (
-                        <Box
-                          key={index}
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'flex-start',
-                            p: 2,
-                            mb: 2,
-                            borderRadius: 2,
-                            backgroundColor: colors.paper,
-                            border: `2px solid ${services[selectedTab].color}20`,
-                            transition: 'all 0.3s ease',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            '&::before': {
-                              content: '""',
-                              position: 'absolute',
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              height: '2px',
-                              backgroundColor: services[selectedTab].color,
-                              transform: 'scaleX(0)',
-                              transition: 'transform 0.3s ease',
-                            },
-                            '&:hover': {
-                              backgroundColor: `${services[selectedTab].color}08`,
-                              transform: 'translateY(-1px)',
-                              boxShadow: `0 2px 8px ${services[selectedTab].color}30`,
-                              borderColor: services[selectedTab].color,
-                              '&::before': {
-                                transform: 'scaleX(1)',
-                              },
-                            },
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              p: 0.5,
-                              borderRadius: '50%',
-                              backgroundColor: `${services[selectedTab].color}15`,
-                              mr: 2,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              minWidth: 28,
-                              height: 28,
-                              flexShrink: 0,
-                            }}
-                          >
-                            <CheckCircle
-                              sx={{
-                                color: services[selectedTab].color,
-                                fontSize: 16,
-                              }}
-                            />
-                          </Box>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              lineHeight: 1.4,
-                              fontWeight: 500,
-                              fontSize: { xs: '0.85rem', sm: '0.9rem' },
-                              color: colors.text,
-                            }}
-                          >
-                            {feature}
-                          </Typography>
-                        </Box>
-                      )
-                    )}
-                  </Box>
-
-                  <Divider
-                    sx={{ my: 3, borderWidth: 2, borderColor: colors.divider }}
-                  />
-
-                  {/* Technologies */}
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      mb: 3,
-                      color: services[selectedTab].color,
-                      fontWeight: 700,
-                      borderBottom: `2px solid ${services[selectedTab].color}20`,
-                      pb: 1,
-                      fontSize: { xs: '1.1rem', sm: '1.25rem' },
-                    }}
-                  >
-                    Technologies We Use
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexWrap: 'wrap',
-                      gap: 1,
-                      mb: 4,
-                      p: 2,
-                      backgroundColor: colors.background,
-                      borderRadius: 2,
-                      border: '1px solid',
-                      borderColor: colors.divider,
-                    }}
-                  >
-                    {services[selectedTab].technologies.map((tech, index) => (
-                      <Chip
-                        key={index}
-                        label={tech}
-                        size="small"
-                        sx={{
-                          backgroundColor: `${services[selectedTab].color}20`,
-                          color: services[selectedTab].color,
-                          fontWeight: 600,
-                          fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                          py: 1,
-                          px: 1,
-                          border: `1px solid ${services[selectedTab].color}30`,
-                        }}
-                      />
-                    ))}
-                  </Box>
-
-                  {/* Call to Action */}
-                  <Box
-                    sx={{
-                      textAlign: 'center',
-                      p: 3,
-                      backgroundColor: `${services[selectedTab].color}10`,
-                      borderRadius: 3,
-                      border: `2px solid ${services[selectedTab].color}30`,
-                    }}
-                  >
-                    
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        mb: 2,
-                        color: services[selectedTab].color,
-                        fontWeight: 700,
-                        fontSize: { xs: '1rem', sm: '1.1rem' },
-                      }}
-                    >
-                      Instant Proposal Access
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      href='/#contact'
-                      endIcon={<ArrowForward />}
-                      sx={{
-                        backgroundColor: services[selectedTab].color,
-                        px: 2,
-                        py: 1,
-                        fontSize: { xs: '0.8rem', sm: '0.9rem' },
-                        fontWeight: 600,
-                        borderRadius: 2,
-                        boxShadow: 1,
-                        '&:hover': {
-                          backgroundColor: services[selectedTab].color,
-                          opacity: 0.9,
-                          transform: 'translateY(-1px)',
-                          boxShadow: 2,
-                        },
-                      }}
-                    >
-                      Contact us
-                    </Button>
-                  </Box>
-                </Paper>
-              </Box>
+              {/* Desktop Content Area */}
               <Box
                 sx={{
                   backgroundColor: `${services[selectedTab].color}20`,
@@ -1153,52 +578,363 @@ function Service() {
               </Box>
             </Box>
           </Box>
-          {/* Call to Action */}
+
+          {/* Mobile Content Area - Moved outside the hidden container */}
           <Box
             sx={{
-              textAlign: 'center',
-              mt: 5,
-              p: { xs: 3, md: 4 },
-              backgroundColor: `${services[selectedTab].color}10`,
-              borderRadius: 4,
-              border: `3px solid ${services[selectedTab].color}30`,
+              display: { xs: 'block', lg: 'none' },
+              mt: 3,
             }}
           >
-            <Typography
-              variant="h5"
-              sx={{
-                mb: 3,
-                color: services[selectedTab].color,
-                fontWeight: 700,
-                fontSize: { xs: '1.25rem', md: '1.5rem' },
-              }}
-            >
-              Instant Proposal Access
-            </Typography>
+            {/* Mobile Accordion - Each service as a separate accordion item */}
+            <Box sx={{ mt: 2 }}>
+              {services.map((service) => (
+                <Accordion
+                  key={service.id}
+                  sx={{
+                    mb: 2,
+                    borderRadius: 2,
+                    boxShadow: isLightMode ? 2 : 4,
+                    border: '2px solid',
+                    borderColor: colors.divider,
+                    backgroundColor: colors.paper,
+                    '&:before': {
+                      display: 'none',
+                    },
+                    '&.Mui-expanded': {
+                      margin: '16px 0',
+                    },
+                  }}
+                >
+                  <AccordionSummary
+                    expandIcon={<ExpandMore sx={{ color: service.color, fontSize: 28 }} />}
+                    sx={{
+                      minHeight: '56px',
+                      '&:hover': {
+                        backgroundColor:
+                          colors.action?.hover ||
+                          (isLightMode ? '#f5f5f5' : '#2a2a2a'),
+                      },
+                      '& .MuiAccordionSummary-content': {
+                        margin: '12px 0',
+                      },
+                    }}
+                  >
+                    <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+                      <Box
+                        sx={{
+                          p: 1,
+                          borderRadius: 2,
+                          backgroundColor: `${service.color}15`,
+                          mr: 2,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {React.cloneElement(service.icon, {
+                          sx: { fontSize: 24, color: service.color }
+                        })}
+                      </Box>
+                      <Typography
+                        variant="h3"
+                        sx={{
+                          fontWeight: 600,
+                          color: service.color,
+                          fontSize: { xs: '1.5rem', sm: '1.8rem' },
+                        }}
+                      >
+                        {service.title}
+                      </Typography>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ p: 3 }}>
+                    {/* Service Header */}
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        mb: 3,
+                        p: 3,
+                        borderRadius: 2,
+                        backgroundColor: `${service.color}15`,
+                        borderBottom: `3px solid ${service.color}`,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          p: 2,
+                          borderRadius: 2,
+                          backgroundColor: colors.paper,
+                          mr: 3,
+                          boxShadow: 1,
+                        }}
+                      >
+                        {service.icon}
+                      </Box>
+                      <Box>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            fontWeight: 700,
+                            color: service.color,
+                            mb: 1,
+                            fontSize: { xs: '1rem', sm: '1.1rem' },
+                          }}
+                        >
+                          {service.title}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            lineHeight: 1.5,
+                            fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                            color: colors.textSecondary,
+                          }}
+                        >
+                          {service.description}
+                        </Typography>
+                      </Box>
+                    </Box>
+
+                    {/* Service Overview */}
+                    <Typography
+                      sx={{
+                        mb: 4,
+                        lineHeight: 1.7,
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        color: colors.text,
+                        fontWeight: 100,
+                      }}
+                    >
+                      {service.detailedDescription}
+                    </Typography>
+
+                    <Divider sx={{ my: 3, borderWidth: 2, borderColor: colors.divider }} />
+
+                    {/* Key Features */}
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        mb: 3,
+                        color: service.color,
+                        fontWeight: 700,
+                        borderBottom: `2px solid ${service.color}20`,
+                        pb: 1,
+                        fontSize: { xs: '1rem', sm: '1.1rem' },
+                        textAlign: 'center',
+                      }}
+                    >
+                      ✨ Key Features
+                    </Typography>
+                    <Box sx={{ mb: 4 }}>
+                      {service.detailedFeatures.map((feature, index) => (
+                        <Box
+                          key={index}
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            p: 2,
+                            mb: 2,
+                            borderRadius: 2,
+                            backgroundColor: colors.paper,
+                            border: `2px solid ${service.color}20`,
+                            transition: 'all 0.3s ease',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            '&::before': {
+                              content: '""',
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              height: '2px',
+                              backgroundColor: service.color,
+                              transform: 'scaleX(0)',
+                              transition: 'transform 0.3s ease',
+                            },
+                            '&:hover': {
+                              backgroundColor: `${service.color}08`,
+                              transform: 'translateY(-1px)',
+                              boxShadow: `0 2px 8px ${service.color}30`,
+                              borderColor: service.color,
+                              '&::before': {
+                                transform: 'scaleX(1)',
+                              },
+                            },
+                          }}
+                        >
+                          <Box
+                            sx={{
+                              p: 0.5,
+                              borderRadius: '50%',
+                              backgroundColor: `${service.color}15`,
+                              mr: 2,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              minWidth: 28,
+                              height: 28,
+                              flexShrink: 0,
+                            }}
+                          >
+                            <CheckCircle
+                              sx={{
+                                color: service.color,
+                                fontSize: 16,
+                              }}
+                            />
+                          </Box>
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              lineHeight: 1.4,
+                              fontWeight: 500,
+                              fontSize: { xs: '0.85rem', sm: '0.9rem' },
+                              color: colors.text,
+                            }}
+                          >
+                            {feature}
+                          </Typography>
+                        </Box>
+                      ))}
+                    </Box>
+
+                    <Divider sx={{ my: 3, borderWidth: 2, borderColor: colors.divider }} />
+
+                    {/* Technologies */}
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        mb: 3,
+                        color: service.color,
+                        fontWeight: 700,
+                        borderBottom: `2px solid ${service.color}20`,
+                        pb: 1,
+                        fontSize: { xs: '1rem', sm: '1.1rem' },
+                      }}
+                    >
+                      🛠️ Technologies We Use
+                    </Typography>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: 1,
+                        mb: 4,
+                        p: 2,
+                        backgroundColor: colors.background,
+                        borderRadius: 2,
+                        border: '1px solid',
+                        borderColor: colors.divider,
+                      }}
+                    >
+                      {service.technologies.map((tech, index) => (
+                        <Chip
+                          key={index}
+                          label={tech}
+                          size="small"
+                          sx={{
+                            backgroundColor: `${service.color}20`,
+                            color: service.color,
+                            fontWeight: 600,
+                            fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                            py: 1,
+                            px: 1,
+                            border: `1px solid ${service.color}30`,
+                          }}
+                        />
+                      ))}
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </Box>
+          </Box>
+        </Container>  
+      </Box>
+
+      {/* Contact CTA Button */}
+      <Box
+        sx={{
+          textAlign: 'center',
+          py: { xs: 6, md: 8 },
+          backgroundColor: isLightMode ? '#f8f9fa' : '#1a1a1a',
+          borderTop: '2px solid',
+          borderBottom: '2px solid',
+          borderColor: colors.divider,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Typography
+            variant="h4"
+            sx={{
+              mb: 3,
+              fontWeight: 700,
+              color: colors.text,
+              fontSize: { xs: '1.5rem', md: '2rem' },
+            }}
+          >
+            Ready to Get Started?
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 4,
+              color: colors.textSecondary,
+              fontSize: { xs: '1rem', md: '1.25rem' },
+              maxWidth: '600px',
+              mx: 'auto',
+              lineHeight: 1.6,
+            }}
+          >
+            Have questions about our services or ready to start your project? 
+            Our team is here to help you succeed.
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 3,
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Button
               variant="contained"
-              size="medium"
+              size="large"
+              href="/#contact"
               endIcon={<ArrowForward />}
-              href='/#contact'
               sx={{
-                backgroundColor: services[selectedTab].color,
-                px: { xs: 3, md: 4 },
-                py: { xs: 1.5, md: 2 },
-                fontSize: { xs: '0.9rem', md: '1rem' },
+                backgroundColor: isLightMode ? '#667eea' : '#3498db',
+                color: 'white',
+                px: { xs: 4, md: 6 },
+                py: { xs: 2, md: 2.5 },
+                fontSize: { xs: '1rem', md: '1.1rem' },
                 fontWeight: 600,
                 borderRadius: 3,
-                boxShadow: 2,
+                boxShadow: 4,
                 '&:hover': {
-                  backgroundColor: services[selectedTab].color,
-                  opacity: 0.9,
+                  backgroundColor: isLightMode ? '#5a6fd8' : '#2980b9',
                   transform: 'translateY(-2px)',
-                  boxShadow: 3,
+                  boxShadow: 6,
                 },
+                transition: 'all 0.3s ease',
               }}
             >
-              Contact us
+              Contact Us Now
             </Button>
           </Box>
+          <Typography
+            variant="body2"
+            sx={{
+              mt: 3,
+              color: colors.textSecondary,
+              fontSize: { xs: '0.85rem', md: '0.9rem' },
+            }}
+          >
+           Response within 24 hours • Free consultation • No commitment required
+          </Typography>
         </Container>
       </Box>
 
@@ -1242,7 +978,7 @@ function Service() {
 
           <Grid container spacing={{ xs: 3, md: 4 }} justifyContent="center">
             {testimonials.map((testimonial, index) => (
-              <Grid item xs={12} md={4} key={index} sx={{ display: 'flex' }}>
+              <Grid size={{ xs: 12, md: 4 }} key={index} sx={{ display: 'flex' }}>
                 <Paper
                   sx={{
                     p: { xs: 3, md: 4 },
