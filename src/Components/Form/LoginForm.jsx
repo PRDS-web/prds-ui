@@ -125,8 +125,7 @@ export default function LoginForm() {
     }
   }, [isSignUp, isSuccess]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     if (emailError || passwordError || (isSignUp && confirmPasswordError)) {
       return;
     }
