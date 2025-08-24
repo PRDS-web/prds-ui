@@ -301,13 +301,13 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
             justifyContent: 'space-evenly',
           }}
         >
-          <Person sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Person sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -346,13 +346,13 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
             width: '100%',
           }}
         >
-          <Email sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Email sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -392,12 +392,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <LocationOn sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <LocationOn sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -436,12 +436,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <Phone sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Phone sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -478,19 +478,19 @@ function Profile() {
 
   const renderBankingInfo = () => (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <AccountBalance sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <AccountBalance sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -523,19 +523,19 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <CreditCard sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <CreditCard sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -570,19 +570,19 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <Business sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Business sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -619,19 +619,19 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <CreditCard sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <CreditCard sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -657,21 +657,21 @@ function Profile() {
 
   const renderSecurityPrivacy = () => (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
+      <Grid size={{xs: 12, md: 6}}>
         <Alert severity="info" sx={{ mb: 3 }}>
           Manage your security settings and privacy preferences to keep your
           account safe.
         </Alert>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <Typography variant="h6" sx={{ mb: 2, color: 'text.primary' }}>
@@ -694,14 +694,14 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <Typography variant="h6" sx={{ mb: 2, color: 'text.primary' }}>
@@ -726,21 +726,21 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12}>
+        <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <Typography variant="h6" sx={{ mb: 2, color: 'text.primary' }}>
             Notification Preferences
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs: 12, md: 6}}>
               <FormControlLabel
                 control={
                   <Switch
@@ -758,7 +758,7 @@ function Profile() {
                 label="Email Notifications"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs: 12, md: 6}}>
               <FormControlLabel
                 control={
                   <Switch
@@ -776,7 +776,7 @@ function Profile() {
                 label="SMS Notifications"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid size={{xs: 12, md: 6}}>
               <FormControlLabel
                 control={
                   <Switch
@@ -794,7 +794,7 @@ function Profile() {
                 label="Marketing Emails"
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+              <Grid size={{xs: 12, md: 6}}>
               <FormControlLabel
                 control={
                   <Switch
@@ -825,12 +825,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <Work sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Work sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -870,12 +870,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <Person sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <Person sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -915,12 +915,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <School sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <School sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -960,12 +960,12 @@ function Profile() {
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
-          <School sx={{ mr: 2, color: 'primary.main', fontSize: 28 }} />
+          <School sx={{ mr: 2, color: theme.palette.mode === 'dark' ? 'primary.main' : '#1976d2', fontSize: 28 }} />
           <Box sx={{ flex: 1 }}>
             <Typography
               variant="caption"
@@ -1005,9 +1005,9 @@ function Profile() {
           sx={{
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <Typography
@@ -1060,16 +1060,16 @@ function Profile() {
 
   const renderSocialLinks = () => (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <LinkedIn sx={{ mr: 2, color: '#0077b5', fontSize: 28 }} />
@@ -1105,16 +1105,16 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <GitHub sx={{ mr: 2, color: '#333', fontSize: 28 }} />
@@ -1150,16 +1150,16 @@ function Profile() {
         </Box>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
             p: 3,
             borderRadius: 2,
-            backgroundColor: 'background.default',
+            backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
             border: '1px solid',
-            borderColor: 'divider',
+            borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
           }}
         >
           <Twitter sx={{ mr: 2, color: '#1DA1F2', fontSize: 28 }} />
@@ -1290,7 +1290,7 @@ function Profile() {
       <Box
         sx={{
           minHeight: '100vh',
-          backgroundColor: 'background.default',
+          backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f5f5f5',
           py: 4,
           mt: 8,
         }}
@@ -1378,10 +1378,10 @@ function Profile() {
             sx={{
               borderRadius: 3,
               boxShadow: 3,
-              border: '2px solid',
-              borderColor: 'divider',
               overflow: 'hidden',
               position: 'relative',
+              backgroundColor: theme.palette.mode === 'dark' ? 'background.paper' : '#ffffff',
+              border: theme.palette.mode === 'dark' ? '2px solid divider' : '2px solid #e0e0e0',
             }}
           >
             {/* Tabs */}
@@ -1393,6 +1393,9 @@ function Profile() {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
+                backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
+                borderTop: theme.palette.mode === 'dark' ? 'none' : '1px solid',
+                borderTopColor: theme.palette.mode === 'dark' ? 'transparent' : 'divider',
               }}
             >
               {hasUnsavedChanges && isEditing && (
@@ -1420,6 +1423,25 @@ function Profile() {
                     fontSize: '0.9rem',
                     fontWeight: 600,
                     textTransform: 'none',
+                    color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+                    '&.Mui-selected': {
+                      color: theme.palette.mode === 'dark' ? '#fff' : '#1976d2',
+                      fontWeight: 700,
+                    },
+                    '&:hover': {
+                      color: theme.palette.mode === 'dark' ? '#fff' : '#1976d2',
+                      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(25, 118, 210, 0.08)',
+                    },
+                  },
+                  '& .MuiTabs-indicator': {
+                    backgroundColor: theme.palette.mode === 'dark' ? '#fff' : '#1976d2',
+                    height: 3,
+                  },
+                  '& .MuiTabs-scrollButtons': {
+                    color: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.6)',
+                    '&.Mui-disabled': {
+                      opacity: 0.3,
+                    },
                   },
                 }}
               >
@@ -1428,8 +1450,23 @@ function Profile() {
                     key={index}
                     label={
                       <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        {tab.icon}
-                        <Typography sx={{ ml: 1, fontSize: '0.9rem' }}>
+                        <Box sx={{ 
+                          color: 'inherit',
+                          display: 'flex',
+                          alignItems: 'center',
+                          mr: 1,
+                          '& .MuiSvgIcon-root': {
+                            fontSize: '1.2rem',
+                          }
+                        }}>
+                          {tab.icon}
+                        </Box>
+                        <Typography sx={{ 
+                          ml: 0.5, 
+                          fontSize: '0.9rem',
+                          color: 'inherit',
+                          fontWeight: 'inherit'
+                        }}>
                           {tab.label}
                         </Typography>
                       </Box>
@@ -1477,8 +1514,8 @@ function Profile() {
                 gap: 2,
                 p: 3,
                 borderTop: '2px solid',
-                borderColor: 'divider',
-                backgroundColor: 'background.default',
+                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
+                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
               }}
             >
               {!isEditing ? (

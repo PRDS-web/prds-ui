@@ -12,6 +12,7 @@ import {
   MenuItem,
   Avatar,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -25,7 +26,7 @@ import logo from '../../assets/logo.PNG';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import logo from '../../assets/logo.png';
 const pages = ['Home', 'Service', 'About us', 'Contact us'];
-const settings = ['Profile', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Logout'];
 
 export default function NavBar() {
   const navigate = useNavigate();
@@ -34,11 +35,12 @@ export default function NavBar() {
   const [isImageFailed, setIsImageFailed] = useState(false);
   const isLightMode = useSelector((state) => state.DarkLightMode.isLightMode);
   const { users, isLoggedIn } = useSelector((state) => state.user);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.down('md'));
   const dispatch = useDispatch();
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const theme = useTheme();
   const location = useLocation();
 
   const ChangeMode = () => {
@@ -217,7 +219,14 @@ export default function NavBar() {
               </MenuItem>
             </Menu>
           </Box>
-           
+          {isDesktop && <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+                <Box
+                  component="img"
+                  src={logo}
+                  alt="Pradetra logo"
+                  sx={{ mr: 1, width: 32, height: 32, cursor: 'pointer' }}
+                />
+            </Link>}
           <Typography
             variant="h5"
             noWrap
@@ -233,14 +242,6 @@ export default function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-              <Box
-                component="img"
-                src={logo}
-                alt="Pradetra logo"
-                sx={{ mr: 1, width: 32, height: 32, cursor: 'pointer' }}
-              />
-            </Link>
             Pradetra
           </Typography>
           <IconButton

@@ -2,8 +2,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { getUserInfo, signUpUser, loginUser, logoutUser } from '../Service/ApiService';
-import { REHYDRATE, persistStore } from 'redux-persist';
-import {store} from '../Store/store.js'
+import { REHYDRATE } from 'redux-persist';
 
 
 export const fetchUser = createAsyncThunk(
@@ -176,7 +175,7 @@ const userSlice = createSlice({
       state.isError = true;
       state.users = {};
     });
-    builder.addCase(userLogout.pending, (state, action) =>{
+    builder.addCase(userLogout.pending, (state) =>{
       state.isLoading = false;
       state.isRedirect = false;
       state.isLoggedIn = false;
@@ -187,7 +186,6 @@ const userSlice = createSlice({
       state.isError = false;
 
     }).addCase(userLogout.fulfilled,(state,action)=>{
-      persistStore(store).purge();
       state.users = {};
       state.isLoading = false;
       state.isRedirect = false;

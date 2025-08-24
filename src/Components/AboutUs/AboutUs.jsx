@@ -34,6 +34,7 @@ import Sudhanshu from '../../assets/Sudhanshu.jpeg';
 import Manas from '../../assets/Manas.jpeg';
 import CountUp from 'react-countup';
 import Abhishek from '../../assets/Abhi.jpeg';
+import Akhil from '../../assets/Akhil.jpg';
 
 // Company statistics
 const companyStats = [
@@ -94,7 +95,14 @@ const teamMembers = [
     role: 'Head of AI & LLM Services',
     avatar: `${Manas}`,
     bio: 'Expertise in LLM fine-tuning, evaluation, and enterprise AI integration.',
-    expertise: ['DeepSpeed/FSDP (PyTorch)', 'HELM', 'Level Studio'],
+    expertise: ['DeepSpeed/FSDP (PyTorch)', 'HELM', 'Label Studio'],
+  },
+  {
+    name: 'Akhil Maurya',
+    role: 'Delivery Head',
+    avatar: `${Akhil}`,
+    bio: 'Driving seamless project execution, client delivery, and operational excellence.',
+    expertise: ['Jira', 'Asana', 'Trello', 'Slack','MS Project'],
   },
 ];
 
