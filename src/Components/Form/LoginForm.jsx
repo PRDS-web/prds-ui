@@ -20,7 +20,7 @@ import {
 import BGIMG from '../../assets/BgImg.jpeg';
 import BGIMG_Dark from '../../assets/dark-mode.png';
 import { GithubIcon, GoogleIcon } from 'oauthify';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, Navigate } from 'react-router';
 import ForgotPassword from './ForgotPassword.jsx';
 import { useGoogleLogin } from '@react-oauth/google';
@@ -90,39 +90,46 @@ export default function LoginForm() {
 
   const validateInputs = (event) => {
     event.preventDefault();
-    // if (!emailId || !/\S+@\S+\.\S+/.test(emailId)) {
-    //   setEmailError(true);
-    //   setEmailErrorMessage('Please enter valid email id');
-    // } else {
-    //   setEmailError(false);
-    //   setEmailErrorMessage('');
-    // }
-    // if (!password || password.length < 8) {
-    //   setPasswordError(true);
-    //   setPasswordErrorMessage('Please enter valid password');
-    // } else {
-    //   setPasswordError(false);
-    //   setPasswordErrorMessage('');
-    // }
-    // if (isSignUp && (!confirmPassword || confirmPassword != password)) {
-    //   setConfirmPasswordError(true);
-    //   setConfirmPasswordErrorMessage('Password can not be different and Empty');
-    // } else {
-    //   setConfirmPasswordError(false);
-    //   setConfirmPasswordErrorMessage('');
-    // }
-    // if (emailError || passwordError || (isSignUp && confirmPasswordError)) {
-    //   return false;
-    // }
+    if (!emailId || !/\S+@\S+\.\S+/.test(emailId)) {
+      setEmailError(true);
+      setEmailErrorMessage('Please enter valid email id');
+    } else {
+      setEmailError(false);
+      setEmailErrorMessage('');
+    }
+    if (!password || password.length < 8) {
+      setPasswordError(true);
+      setPasswordErrorMessage('Please enter valid password');
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
+    }
+    if (isSignUp && (!confirmPassword || confirmPassword != password)) {
+      setConfirmPasswordError(true);
+      setConfirmPasswordErrorMessage('Password can not be different and Empty');
+    } else {
+      setConfirmPasswordError(false);
+      setConfirmPasswordErrorMessage('');
+    }
+    if (emailError || passwordError || (isSignUp && confirmPasswordError)) {
+      return false;
+    }
     handleSubmit();
     return true;
   };
-  const handleSubmit = () => {
-    // e.preventDefault();
-    // if (emailError || passwordError || (isSignUp && confirmPasswordError)) {
-    //   return;
-    // }
-    //const data = new FormData(event.currentTarget);
+ // Reset form when sign up is toggled
+  useEffect(() => {
+    if(isSignUp && isSuccess){
+      resetForm();
+      setIsSignUp(false);
+    }
+  }, [isSignUp, isSuccess]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (emailError || passwordError || (isSignUp && confirmPasswordError)) {
+      return;
+    }
     if (isSignUp) {
       dispatch(
         registerUser({

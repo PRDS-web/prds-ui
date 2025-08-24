@@ -234,11 +234,56 @@ export const loginUser = async (userDetails) => {
 }
 
 export const logoutUser = async () =>{
-  try{
+    try{
 
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`,{ withCredentials: true });
-     console.log('User signed in successfully');
-     return response.data;
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`,{ withCredentials: true });
+      console.log('User signed in successfully');
+      return response.data;
+    } catch (error) {
+      if(error.response == undefined || error.response == null) {
+        // this means backend is not running or there is a network issue
+        console.log('Network error or backend not running');
+        return {
+          message: 'Network error. Please check your connection.',
+          title: 'Network Error',
+          status: '500',
+        };
+      }
+      console.error('Error signing up user:', error.response);
+      
+      // Ensure we always return an error object with a message property
+      const errorData = error.response.data;
+      if (errorData && errorData.message) {
+        return errorData;
+      } else {
+        // If backend doesn't provide a message, create a default one based on status
+        let defaultMessage = 'Failed to logout user';
+        if (error.response.status === 404) {
+          defaultMessage = 'Logout endpoint not found';
+        } else if (error.response.status === 400) {
+          defaultMessage = 'Invalid logout request';
+        } else if (error.response.status === 401) {
+          defaultMessage = 'Unauthorized';
+        } else if (error.response.status === 403) {
+          defaultMessage = 'Access denied';
+        } else if (error.response.status >= 500) {
+          defaultMessage = 'Server error. Please try again later';
+        }
+        
+        return {
+          message: defaultMessage,
+          status: error.response.status,
+          data: errorData
+        };
+      }
+    }
+}
+
+export const contactUs = async (contactDetails) => {
+  try {
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/enquiry/contactUs`, contactDetails);
+    console.log('Contact form submitted successfully');
+    return response.data;
   } catch (error) {
     if(error.response == undefined || error.response == null) {
       // this means backend is not running or there is a network issue
@@ -249,19 +294,19 @@ export const logoutUser = async () =>{
         status: '500',
       };
     }
-    console.error('Error signing up user:', error.response);
-    
+    console.error('Error submitting contact form:', error.response);
+
     // Ensure we always return an error object with a message property
     const errorData = error.response.data;
     if (errorData && errorData.message) {
       return errorData;
     } else {
       // If backend doesn't provide a message, create a default one based on status
-      let defaultMessage = 'Failed to logout user';
+      let defaultMessage = 'Failed to submit contact form';
       if (error.response.status === 404) {
-        defaultMessage = 'Logout endpoint not found';
+        defaultMessage = 'Contact endpoint not found';
       } else if (error.response.status === 400) {
-        defaultMessage = 'Invalid logout request';
+        defaultMessage = 'Invalid contact form data';
       } else if (error.response.status === 401) {
         defaultMessage = 'Unauthorized';
       } else if (error.response.status === 403) {
@@ -269,7 +314,7 @@ export const logoutUser = async () =>{
       } else if (error.response.status >= 500) {
         defaultMessage = 'Server error. Please try again later';
       }
-      
+
       return {
         message: defaultMessage,
         status: error.response.status,

@@ -8,8 +8,9 @@ import Footer from '../Components/Footer/Footer';
 import { OAuthifyRedirect } from 'oauthify';
 import Logout from '../Components/Form/Logout';
 import Profile from '../Components/Profile/Profile';
-import ProtectedRoute from '../Components/ProtectedRoute/ProtectedRoute';
-import AboutUs from '../Components/AboutUs/AboutUs';
+import ProtectedRoute from '../Components/ProtectedRoute/ProtectedRoute.jsx';
+import AboutUs from '../Components/AboutUs/AboutUs.jsx';
+import Dashboard from '../Components/Dashboard/Dashboard.jsx';
 
 function ReactRoute() {
    
@@ -30,6 +31,11 @@ function ReactRoute() {
        }/>
        <Route path='/service' element={<><NavBar/><Service/><Footer/></>}/>
         <Route path='/about' element={<><NavBar/><AboutUs/><Footer/></>}/>
+       <Route path='/dashboard' element={
+         <ProtectedRoute>
+           <><NavBar/><Dashboard/><Footer/></>
+         </ProtectedRoute>
+       }/>
      </Routes>
     </BrowserRouter>
   );

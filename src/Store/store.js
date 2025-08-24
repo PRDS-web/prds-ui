@@ -5,18 +5,20 @@ import ProfileReducer from '../Slice/ProfileSlice.js';
 import storage from 'redux-persist/lib/storage'; 
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
+import EnquirySlice from '../Slice/EnquirySlice.js';
 
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['isloading']
+  whitelist: ['user', 'DarkLightMode']
 };
 
 const rootReducer = combineReducers({
   DarkLightMode: DarkLightModeReducer,
   user: UserReducer,
   profile: ProfileReducer,
+  enquiry: EnquirySlice,
 });
 
 
