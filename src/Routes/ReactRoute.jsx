@@ -32,9 +32,9 @@ function ReactRoute() {
        <Route path='/service' element={<><NavBar/><Service/><Footer/></>}/>
         <Route path='/about' element={<><NavBar/><AboutUs/><Footer/></>}/>
        <Route path='/dashboard' element={
-         <ProtectedRoute>
-           <><NavBar/><Dashboard/><Footer/></>
-         </ProtectedRoute>
+        //  <ProtectedRoute>
+           <><NavBar/> <Toolbar /><Dashboard/><Footer/></>
+        //  </ProtectedRoute>
        }/>
      </Routes>
     </BrowserRouter>
