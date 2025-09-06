@@ -323,3 +323,47 @@ export const contactUs = async (contactDetails) => {
     }
   }
 }
+
+export const getAllUser = async () =>{
+  try{
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/getAllUsers`,{ withCredentials: true });
+    return response.data;
+  }catch(error){
+     if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error submitting contact form:', error.response);
+
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    } else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to submit contact form';
+      if (error.response.status === 404) {
+        defaultMessage = 'Contact endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid contact form data';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    }
+  }
+}

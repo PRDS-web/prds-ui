@@ -36,6 +36,7 @@ import {
   DesignServices,
   RocketLaunch,
   Reviews,
+  Star
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 
@@ -70,8 +71,8 @@ export default function Home() {
           }}
         />
       ),
-      title: 'Consultation',
-      desc: 'We brainstorm solutions, share insights, and align expectations.',
+      title: 'Discovery & Consultation',
+      desc: 'We understand your AI/data needs, analyze requirements, and design a custom solution strategy that aligns with your business goals.',
       fontSize: [20,50],
     },
     {
@@ -83,8 +84,8 @@ export default function Home() {
           }}
         />
       ),
-      title: 'Planning',
-      desc: 'We architect scalable, secure workflows and immersive UI/UX.',
+      title: 'Project Planning',
+      desc: 'We create detailed project roadmaps, establish quality standards, and set up secure data pipelines with clear milestones and deliverables.',
     },
     {
       icon: (
@@ -95,8 +96,8 @@ export default function Home() {
           }}
         />
       ),
-      title: 'Execution',
-      desc: 'We build, test, and deliver with pixel precision and tech finesse.',
+      title: 'Execution & Delivery',
+      desc: 'Our global team executes data collection, annotation, or development work with continuous quality monitoring and regular progress updates.',
     },
     {
       icon: (
@@ -107,8 +108,8 @@ export default function Home() {
           }}
         />
       ),
-      title: 'Review',
-      desc: 'We iterate, refine, and validate results for maximum impact.',
+      title: 'Quality Assurance & Handover',
+      desc: 'We conduct rigorous testing, validation, and quality checks before delivering the final solution with comprehensive documentation and support.',
     },
   ];
 
@@ -186,26 +187,26 @@ export default function Home() {
     {
       title: 'Smart Data Tagging',
       discription:
-        'We deliver intelligent data annotation that fuels AI systems with precision, scalability, and industry grade structure designed to accelerate your ML pipelines and unlock deeper insights with greater accuracy.',
-      icon: <DataObjectIcon sx={{ color: 'white' }} />,
+        'We deliver intelligent data annotation that fuels AI systems with precision, scalability, and industry grade structure designed to accelerate your ML pipelines and unlock deeper insights.',
+      icon: <DeveloperModeIcon sx={{ fontSize: 40 }} />,
     },
     {
       title: 'Global Transcription',
       discription:
         'Our transcription specialists convert multilingual audio into crystal clear, time-synced text with linguistic accuracy empowering global communication and content accessibility.',
-      icon: <TranslateIcon sx={{ color: 'white' }} />,
+      icon: <TranslateIcon />,
     },
     {
       title: 'App Crafting Studio',
       discription:
         'We engineer custom web and mobile applications tailored to modern users scalable, performant, and crafted to deliver delightful UI experiences across devices, with seamless integrations',
-      icon: <DeveloperModeIcon sx={{ color: 'white' }} />,
+      icon: <DeveloperModeIcon />,
     },
     {
       title: 'Precision QA Testing',
       discription:
         'We test digital products with meticulous attention to detail—offering manual and automated workflows that ensure reliability, responsiveness, and user trust, while minimizing risk, strengthening quality',
-      icon: <BugReportIcon sx={{ color: 'white' }} />,
+      icon: <BugReportIcon />,
     },
   ];
 
@@ -365,250 +366,539 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Fade in={svgVisible} timeout={1500}>
-        <Container maxWidth={false} disableGutters ref={svgRef}>
-          {!isMobile ? (
-            <Box
-              ref={serviceRef}
-              component="svg"
-              viewBox="0 0 1200 600"
-              preserveAspectRatio="none"
+      {/* Company Overview Section */}
+      <Box
+        sx={{
+          py: { xs: 6, md: 8 },
+          backgroundColor: theme.palette.background.paper,
+          borderTop: '1px solid',
+          borderBottom: '1px solid',
+          borderColor: theme.palette.divider,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography
+              variant="h3"
+              component="h2"
               sx={{
-                width: '100%',
-                height: '100%',
-                display: 'block',
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 700,
+                color: theme.palette.text.primary,
+                mb: 3,
               }}
             >
-              <path
-                d="M0,150 C700,200 1200,0 1200,100 L1200,600 L0,600 Z"
-                fill="rgba(7, 91, 122, 0.6)"
-              />
-              <foreignObject x="0" y="0" width="100%" height="800">
+              What We Do
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                maxWidth: '800px',
+                mx: 'auto',
+                lineHeight: 1.6,
+              }}
+            >
+              We bridge the gap between artificial intelligence and human expertise, 
+              delivering comprehensive solutions that make AI systems smarter, safer, and more reliable.
+            </Typography>
+          </Box>
+
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Card
+                sx={{
+                  p: 4,
+                  height: '100%',
+                  textAlign: 'center',
+                  borderRadius: 3,
+                  boxShadow: 3,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: 6,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
                 <Box
-                  xmlns="http://www.w3.org/1999/xhtml"
                   sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mx: 'auto',
+                    mb: 3,
                     display: 'flex',
-                    height: '100%',
-                    width: '100%',
-                    justifyContent: 'center',
                     alignItems: 'center',
-                    flexDirection: 'column',
-                    py: 4,
+                    justifyContent: 'center',
                   }}
                 >
-                  <Typography
-                    variant="h5"
-                    sx={{
-                      fontWeight: 700,
-                      mb: 4,
-                      textAlign: 'center',
-                      fontSize: { xs: '1.8rem', md: '2.0rem' },
-                    }}
-                  >
-                    Precision RLHF for Advanced AI Models
-                  </Typography>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: { xs: 'column', md: 'row' },
-                      gap: 3,
-                      width: '100%',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {cardData.map((card, idx) => (
-                      <Card
-                        key={idx}
-                        sx={{
-                          width: { xs: '100%', md: 340 },
-                          boxShadow: 3,
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                          borderRadius: 3,
-                          background: (theme) => theme.palette.background.paper,
-                          mb: { xs: 2, md: 0 },
-                        }}
-                      >
-                        <CardContent>
-                          {card.icon}
-                          <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 600, mb: 1 }}
-                          >
-                            {card.title}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            sx={{
-                              color: 'text.secondary',
-                              fontSize: '0.9rem',
-                              height: '30%',
-                            }}
-                          >
-                            {card.content}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </Box>
+                  <DataObjectIcon sx={{ fontSize: 40, color: 'white' }} />
                 </Box>
-              </foreignObject>
-            </Box>
-          ) : (
-            <Box ref={serviceRef} sx={{ py: 4, width: '100%' }}>
-              <Typography
-                variant="h5"
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  AI & Data Solutions
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Data collection, annotation, and validation services that power 
+                  machine learning models with high-quality, culturally diverse datasets.
+                </Typography>
+              </Card>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Card
                 sx={{
-                  fontWeight: 700,
-                  mb: 4,
+                  p: 4,
+                  height: '100%',
                   textAlign: 'center',
-                  fontSize: '2rem',
+                  borderRadius: 3,
+                  boxShadow: 3,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: 6,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mx: 'auto',
+                    mb: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <TranslateIcon sx={{ fontSize: 40, color: 'white' }} />
+                </Box>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  Global Services
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Multilingual transcription, translation, and localization services 
+                  across 150+ languages with native speaker expertise.
+                </Typography>
+              </Card>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Card
+                sx={{
+                  p: 4,
+                  height: '100%',
+                  textAlign: 'center',
+                  borderRadius: 3,
+                  boxShadow: 3,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: 6,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mx: 'auto',
+                    mb: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <DeveloperModeIcon sx={{ fontSize: 40, color: 'white' }} />
+                </Box>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 600,
+                    mb: 2,
+                    color: theme.palette.text.primary,
+                  }}
+                >
+                  Custom Development
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: theme.palette.text.secondary,
+                    lineHeight: 1.6,
+                  }}
+                >
+                  Bespoke web and mobile applications, QA testing, and enterprise 
+                  solutions tailored to your specific business needs.
+                </Typography>
+              </Card>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Enhanced RLHF Section */}
+      <Box
+        ref={serviceRef}
+        sx={{
+          position: 'relative',
+          py: { xs: 8, md: 12 },
+          background: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, rgba(14, 91, 110, 0.15) 0%, rgba(14, 91, 110, 0.05) 50%, rgba(14, 91, 110, 0.15) 100%)'
+              : 'linear-gradient(135deg, rgba(14, 91, 110, 0.08) 0%, rgba(14, 91, 110, 0.03) 50%, rgba(14, 91, 110, 0.08) 100%)',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `
+              radial-gradient(circle at 20% 20%, rgba(14, 91, 110, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(14, 91, 110, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 60%, rgba(14, 91, 110, 0.05) 0%, transparent 50%)
+            `,
+            pointerEvents: 'none',
+          },
+        }}
+      >
+          <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+            <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Typography
+                variant="h2"
+                component="h2"
+                sx={{
+                  fontSize: { xs: '2.2rem', md: '3.2rem' },
+                  fontWeight: 800,
+                  color: theme.palette.text.primary,
+                  mb: 3,
+                  background: `linear-gradient(45deg, ${theme.palette.text.primary}, #0e5b6eff)`,
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
                 }}
               >
                 Precision RLHF for Advanced AI Models
               </Typography>
-              <Box
+              <Typography
+                variant="h6"
                 sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 2,
-                  width: '100%',
-                  justifyContent: 'center',
-                  alignItems: 'center',
+                  color: theme.palette.text.secondary,
+                  fontSize: { xs: '1.1rem', md: '1.3rem' },
+                  fontWeight: 400,
+                  mb: 4,
+                  maxWidth: '900px',
+                  mx: 'auto',
+                  lineHeight: 1.6,
                 }}
               >
-                {cardData.map((card, idx) => (
+                Transform your AI models with human-in-the-loop feedback that ensures 
+                ethical, accurate, and contextually aware responses.
+              </Typography>
+              <Box
+                sx={{
+                  width: 100,
+                  height: 4,
+                  bgcolor: '#0e5b6eff',
+                  mx: 'auto',
+                  borderRadius: 2,
+                }}
+              />
+            </Box>
+
+            <Grid container spacing={4}>
+              {cardData.map((card, idx) => (
+                <Grid size={{ xs: 12, md: 4 }} key={idx}>
                   <Card
-                    key={idx}
                     sx={{
-                      width: '80%',
-                      boxShadow: 3,
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
+                      height: '100%',
+                      p: 0,
                       textAlign: 'center',
-                      borderRadius: 3,
-                      background: (theme) => theme.palette.background.paper,
-                      mb: 2,
+                      borderRadius: 4,
+                      boxShadow: '0 12px 40px rgba(0, 0, 0, 0.1)',
+                      border: '1px solid',
+                      borderColor: theme.palette.divider,
+                      background: theme.palette.background.paper,
+                      cursor: 'pointer',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        height: '4px',
+                        background: `linear-gradient(90deg, #0e5b6eff, #ff9800)`,
+                        transform: 'scaleX(0)',
+                        transformOrigin: 'left',
+                        transition: 'transform 0.3s ease',
+                      },
+                      '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: '0 20px 50px rgba(14, 91, 110, 0.2)',
+                        borderColor: '#0e5b6eff',
+                        '&::before': {
+                          transform: 'scaleX(1)',
+                        },
+                        '& .rlhf-icon': {
+                          transform: 'scale(1.1)',
+                          bgcolor: '#ff9800',
+                        },
+                        '& .rlhf-title': {
+                          color: '#0e5b6eff',
+                        },
+                      },
                     }}
                   >
-                    <CardContent>
-                      {card.icon}
-                      <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    <CardContent sx={{ p: 4, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                      <Box
+                        className="rlhf-icon"
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          borderRadius: '50%',
+                          bgcolor: '#0e5b6eff',
+                          mx: 'auto',
+                          mb: 3,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 8px 20px rgba(14, 91, 110, 0.3)',
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
+
+                      <Typography
+                        className="rlhf-title"
+                        variant="h5"
+                        sx={{
+                          fontWeight: 700,
+                          mb: 3,
+                          color: theme.palette.text.primary,
+                          transition: 'color 0.3s ease',
+                          fontSize: { xs: '1.3rem', md: '1.5rem' },
+                        }}
+                      >
                         {card.title}
                       </Typography>
+
                       <Typography
-                        variant="body2"
-                        sx={{ color: 'text.secondary' }}
+                        variant="body1"
+                        sx={{
+                          color: theme.palette.text.secondary,
+                          lineHeight: 1.7,
+                          fontSize: { xs: '0.95rem', md: '1rem' },
+                        }}
                       >
                         {card.content}
                       </Typography>
                     </CardContent>
                   </Card>
-                ))}
-              </Box>
-            </Box>
-          )}
-        </Container>
-      </Fade>
+                </Grid>
+              ))}
+            </Grid>
+
+          </Container>
+        </Box>
+      {/* Enhanced Services Section */}
       <Box
         sx={{
-          mt: '2%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
+          py: { xs: 8, md: 12 },
           background: (theme) =>
-            theme.palette.mode == 'dark'
-              ? 'linear-gradient(358deg, rgba(22, 22, 42, 1) 7%, rgba(35, 35, 49, 1) 67%, rgba(21, 31, 34, 1) 88%)'
-              : 'linear-gradient(358deg,rgba(78, 78, 145, 1) 7%, rgba(141, 141, 184, 1) 67%, rgba(108, 155, 166, 1) 88%);',
+            theme.palette.mode === 'dark'
+              ? 'linear-gradient(135deg, rgba(14, 91, 110, 0.1) 0%, rgba(14, 91, 110, 0.05) 50%, rgba(14, 91, 110, 0.1) 100%)'
+              : 'linear-gradient(135deg, rgba(14, 91, 110, 0.05) 0%, rgba(14, 91, 110, 0.02) 50%, rgba(14, 91, 110, 0.05) 100%)',
+          position: 'relative',
+          overflow: 'hidden',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'radial-gradient(circle at 20% 80%, rgba(14, 91, 110, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(14, 91, 110, 0.1) 0%, transparent 50%)',
+            pointerEvents: 'none',
+          },
         }}
       >
-        <Typography
-          fontWeight={800}
-          fontSize={{ xs: 25, md: 50 }}
-          mt={4}
-          color="white"
-          fontFamily="cursive"
-        >
-          Services
-        </Typography>
-        <Typography
-          fontWeight={800}
-          fontSize={{ xs: 28, md: 50 }}
-          color="white"
-          fontFamily={'cursive'}
-        >
-          Our Experties
-        </Typography>
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
+          <Box sx={{ textAlign: 'center', mb: 8 }}>
+            <Typography
+              variant="h2"
+              component="h2"
+              sx={{
+                fontSize: { xs: '2.5rem', md: '3.5rem' },
+                fontWeight: 800,
+                color: theme.palette.text.primary,
+                mb: 2,
+                background: `linear-gradient(45deg, ${theme.palette.text.primary}, #0e5b6eff)`,
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Our Services
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: { xs: '1.2rem', md: '1.5rem' },
+                fontWeight: 400,
+                mb: 4,
+                maxWidth: '800px',
+                mx: 'auto',
+                lineHeight: 1.6,
+              }}
+            >
+              Comprehensive solutions that power the future of AI and technology
+            </Typography>
+            <Box
+              sx={{
+                width: 80,
+                height: 4,
+                bgcolor: '#0e5b6eff',
+                mx: 'auto',
+                borderRadius: 2,
+              }}
+            />
+          </Box>
 
-        <Box
-          sx={{
-            flexGrow: 1,
-            width: '90%',
-            mt: '25px', // background: '#020024'
-            height: 'auto',
-            overflow: 'visible',
-          }}
-        >
-          <Grid container spacing={2}>
+          <Grid container spacing={3}>
             {serviceCard.map((service, index) => (
-              <Grid size={{ xs: 12, md: 3 }} key={index}>
+              <Grid size={{ xs: 12, md: 6, lg: 3 }} key={index}>
                 <Card
                   sx={{
-                    width: '96%',
-                    height: '95%',
-                    mx: 'auto',
-                    p: 3,
+                    height: '350px',
+                    p: 0,
                     textAlign: 'center',
-                    boxShadow: 6,
-                    borderRadius: 3,
-                    backgroundImage: `url(${BGIMG})`,
-                    filter:
-                      theme.palette.mode == 'dark'
-                        ? 'brightness(40%) contrast(100%)'
-                        : 'none',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    // backgroundPosition: 'center',
+                    borderRadius: 4,
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+                    border: '1px solid',
+                    borderColor: theme.palette.divider,
+                    background: theme.palette.background.paper,
                     cursor: 'pointer',
-                    transition: 'transform 0.9s, box-shadow 0.3s',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    '&::before': {
+                      content: '""',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: '4px',
+                      background: `linear-gradient(90deg, #0e5b6eff, #ff9800)`,
+                      transform: 'scaleX(0)',
+                      transformOrigin: 'left',
+                      transition: 'transform 0.3s ease',
+                    },
                     '&:hover': {
-                      transform: 'scale(1.1)',
-                      boxShadow: 6,
+                      transform: 'translateY(-12px)',
+                      boxShadow: '0 20px 40px rgba(14, 91, 110, 0.2)',
+                      borderColor: '#0e5b6eff',
+                      '&::before': {
+                        transform: 'scaleX(1)',
+                      },
+                      '& .service-icon': {
+                        transform: 'scale(1.1)',
+                        bgcolor: '#ff9800',
+                      },
+                      '& .service-title': {
+                        color: '#0e5b6eff',
+                      },
                     },
                   }}
                 >
-                  <Box
-                    sx={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: '50%',
-                      bgcolor: '#ff9800',
-                      mx: 'auto',
-                      mb: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {service.icon}
-                  </Box>
+                  <CardContent sx={{ p: 3, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <Box
+                      className="service-icon"
+                      sx={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: '50%',
+                        bgcolor: '#0e5b6eff',
+                        mx: 'auto',
+                        mb: 2,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 8px 16px rgba(14, 91, 110, 0.3)',
+                      }}
+                    >
+                      {service.icon}
+                    </Box>
 
-                  <CardContent sx={{ px: 1 }}>
                     <Typography
+                      className="service-title"
                       variant="h6"
-                      gutterBottom
-                      fontWeight="bold"
-                      color="black"
+                      sx={{
+                        fontWeight: 700,
+                        mb: 2,
+                        color: theme.palette.text.primary,
+                        transition: 'color 0.3s ease',
+                        fontSize: { xs: '1.2rem', md: '1.3rem' },
+                      }}
                     >
                       {service.title}
                     </Typography>
 
-                    <Typography variant="body2" color="black" >
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: theme.palette.text.secondary,
+                        lineHeight: 1.6,
+                        fontSize: { xs: '0.9rem', md: '0.95rem' },
+                      }}
+                    >
                       {service.discription}
                     </Typography>
                   </CardContent>
@@ -616,55 +906,432 @@ export default function Home() {
               </Grid>
             ))}
           </Grid>
-        </Box>
-        <Typography component={'a'} mt={5} mb={5} href="/service" color="white">
-          See Our Services
-        </Typography>
+
+          <Box sx={{ textAlign: 'center', mt: 8 }}>
+            <Button
+              variant="contained"
+              size="large"
+              href="/service"
+              sx={{
+                bgcolor: '#0e5b6eff',
+                color: 'white',
+                px: 6,
+                py: 2,
+                fontSize: '1.1rem',
+                fontWeight: 600,
+                textTransform: 'none',
+                borderRadius: 3,
+                boxShadow: '0 8px 24px rgba(14, 91, 110, 0.3)',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  bgcolor: '#0a4a5a',
+                  transform: 'translateY(-3px)',
+                  boxShadow: '0 12px 32px rgba(14, 91, 110, 0.4)',
+                },
+              }}
+            >
+              Explore All Services
+            </Button>
+          </Box>
+        </Container>
       </Box>
+
+      {/* Why Choose Us Section */}
       <Box
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          mt: '15px',
-          flexDirection: 'column',
-          //background: 'linear-gradient(338deg, rgba(141, 141, 184, 1) 25%, rgba(108, 155, 166, 1) 40%, rgba(93, 93, 186, 1) 76%)'
+          py: { xs: 6, md: 8 },
+          backgroundColor: theme.palette.background.default,
         }}
       >
-        <Typography
-          component={'p'}
-          fontWeight={800}
-          sx={{ fontSize: ['40px', '40px']  }}
-          fontStyle={'inherit'}
-          fontFamily="cursive"
-        >
-          WorkFlow
-        </Typography>
-        <Typography mt={3} sx={{ fontSize: ['25px'] }} fontFamily="cursive">
-          🎯End-to-End Excellence
-        </Typography>
-        <Stepper
-          alternativeLabel
-          activeStep={-1}
-          sx={{ width: '100%', marginTop: '5%' }}
-        >
-          {steps.map((step, i) => (
-            <Step key={i}>
-              <StepLabel
-               icon= {step.icon}
-              >    
-                  <Typography variant="h6" fontWeight="bold" mt={1} sx={{fontSize: {xs: 15}}}>
-                  {step.title}
-                </Typography>
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography
+              variant="h3"
+              component="h2"
+              sx={{
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 700,
+                color: theme.palette.text.primary,
+                mb: 3,
+              }}
+            >
+              Why Choose Pradetra?
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                maxWidth: '800px',
+                mx: 'auto',
+                lineHeight: 1.6,
+                mb: 4,
+              }}
+            >
+              We combine cutting-edge technology with human expertise to deliver 
+              solutions that are both innovative and reliable.
+            </Typography>
+            <Box
+              sx={{
+                width: 80,
+                height: 4,
+                bgcolor: '#0e5b6eff',
+                mx: 'auto',
+                borderRadius: 2,
+              }}
+            />
+          </Box>
 
-                <Typography variant="body2" color="text.secondary" fontSize={13}>
-                  {step.desc}
-                </Typography>
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  p: 3,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.background.paper,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  height: '100%',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-3px)',
+                    boxShadow: 4,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mr: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <GroupIcon sx={{ fontSize: 30, color: 'white' }} />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Global Network
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Our diverse vendor and contributor network spans 50+ countries, 
+                    enabling us to collect region-specific, accent-specific, and 
+                    culturally relevant datasets at scale.
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  p: 3,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.background.paper,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  height: '100%',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-3px)',
+                    boxShadow: 4,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mr: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <LockIcon sx={{ fontSize: 30, color: 'white' }} />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Enterprise Security
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    We maintain the highest security standards with NDA compliance, 
+                    enterprise-grade data pipelines, and strict confidentiality 
+                    protocols for sensitive projects.
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  p: 3,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.background.paper,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  height: '100%',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-3px)',
+                    boxShadow: 4,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mr: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <TrendingUpIcon sx={{ fontSize: 30, color: 'white' }} />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Quality Assurance
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Our multi-layer validation framework ensures 99% accuracy with 
+                    contributor training, automated checks, human review, and 
+                    final audit reports.
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+
+            <Grid size={{ xs: 12, md: 6 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  p: 3,
+                  borderRadius: 3,
+                  backgroundColor: theme.palette.background.paper,
+                  border: '2px solid',
+                  borderColor: theme.palette.divider,
+                  height: '100%',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-3px)',
+                    boxShadow: 4,
+                    borderColor: '#0e5b6eff',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    bgcolor: '#0e5b6eff',
+                    mr: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <EmojiEmotionsIcon sx={{ fontSize: 30, color: 'white' }} />
+                </Box>
+                <Box>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    Ethical AI Focus
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    We champion fairness, inclusivity, and bias-aware solutions, 
+                    ensuring your AI systems are built with ethical considerations 
+                    and cultural sensitivity.
+                  </Typography>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
       </Box>
+
+      {/* Our Process Section - Simplified */}
+      <Box
+        sx={{
+          py: { xs: 6, md: 8 },
+          backgroundColor: theme.palette.background.paper,
+          borderTop: '1px solid',
+          borderBottom: '1px solid',
+          borderColor: theme.palette.divider,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography
+              variant="h3"
+              component="h2"
+              sx={{
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 700,
+                color: theme.palette.text.primary,
+                mb: 3,
+              }}
+            >
+              Our Process
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                color: theme.palette.text.secondary,
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                maxWidth: '800px',
+                mx: 'auto',
+                lineHeight: 1.6,
+                mb: 4,
+              }}
+            >
+              We follow a streamlined approach that ensures quality, efficiency, and client satisfaction at every step.
+            </Typography>
+            <Box
+              sx={{
+                width: 80,
+                height: 4,
+                bgcolor: '#0e5b6eff',
+                mx: 'auto',
+                borderRadius: 2,
+              }}
+            />
+          </Box>
+
+          <Grid container spacing={4}>
+            {steps.map((step, index) => (
+              <Grid size={{ xs: 12, md: 3 }} key={index}>
+                <Box
+                  sx={{
+                    textAlign: 'center',
+                    p: 3,
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                    },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 80,
+                      height: 80,
+                      borderRadius: '50%',
+                      bgcolor: '#0e5b6eff',
+                      mb: 3,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: 3,
+                    }}
+                  >
+                    {step.icon}
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      fontWeight: 600,
+                      mb: 2,
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    {step.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {step.desc}
+                  </Typography>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Box>
+
       <Contact ref={contactRef} />
     </>
   );

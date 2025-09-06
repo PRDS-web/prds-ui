@@ -1,7 +1,7 @@
 //userSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserInfo, signUpUser, loginUser, logoutUser } from '../Service/ApiService';
+import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser } from '../Service/ApiService';
 import { REHYDRATE } from 'redux-persist';
 
 
@@ -45,6 +45,18 @@ export const signInUser = createAsyncThunk(
   async (userDetails, { rejectWithValue }) => {
     const response = await loginUser(userDetails);
     console.log('Response from signInUser:', response);
+    if (response.status < 200 || response.status >= 300) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
+export const getAllUsers = createAsyncThunk(
+  '/getAllUsers',
+  async (_, { rejectWithValue }) => {
+    const response = await getAllUser();
+    console.log('Response from getAllUser:', response);
     if (response.status < 200 || response.status >= 300) {
       return rejectWithValue(response);
     }
@@ -207,6 +219,28 @@ const userSlice = createSlice({
       state.errorMessage = action.payload?.message || 'Something Went Wrong';
       state.isError = false;
     })
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+    })
+    .addCase(getAllUsers.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.users = action.payload;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = 'Users fetched successfully';
+    })
+    .addCase(getAllUsers.rejected, (state, action) => {
+      state.isLoading = false;
+      state.users = {};
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to fetch users';
+      state.isError = true;
+    });
   },
 });
 
