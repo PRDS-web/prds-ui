@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getUserInfo = async (userInfo) => {
   try{
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/sso?code=${userInfo.code}&type=${userInfo.type}`, { withCredentials: true });
+    const response = await axios.get(`/api/v1/auth/sso?code=${userInfo.code}&type=${userInfo.type}`, { withCredentials: true });
     console.log('User information fetched successfully:');
 
     return response.data.user;
@@ -49,7 +49,7 @@ export const getUserInfo = async (userInfo) => {
 
 export const getProfileInfo = async () => {
   try{
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/getUserInfo`, { withCredentials: true});
+    const response = await axios.get('/api/v1/user/getUserInfo', { withCredentials: true});
     console.log('Profile information fetched successfully:');
     return response.data.user;
   }catch (error) {
@@ -95,7 +95,7 @@ export const getProfileInfo = async () => {
 export const updateProfileInfo = async (profileData) => {
   try{
     console.log('updateProfileInfo called with:', profileData);
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/updateProfile`, profileData, { withCredentials: true});
+    const response = await axios.post('/api/v1/user/updateProfile', profileData, { withCredentials: true});
     console.log('Profile updated successfully:', response.data);
     return response.data.user;
   }catch (error) {
@@ -145,7 +145,7 @@ export const updateProfileInfo = async (profileData) => {
 
 export const signUpUser = async (userDetails) => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, userDetails);
+    const response = await axios.post('/api/v1/auth/register', userDetails);
     console.log('User signed up successfully');
     return response.data;
   } catch (error) {
@@ -190,7 +190,7 @@ export const signUpUser = async (userDetails) => {
 
 export const loginUser = async (userDetails) => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, userDetails, { withCredentials: true });
+    const response = await axios.post('/api/v1/auth/login', userDetails, { withCredentials: true });
     console.log('User signed in successfully');
     return response.data;
   } catch (error) {
@@ -236,8 +236,8 @@ export const loginUser = async (userDetails) => {
 export const logoutUser = async () =>{
     try{
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/logout`,{ withCredentials: true });
-      console.log('User signed in successfully');
+      const response = await axios.get('/api/v1/auth/logout',{ withCredentials: true });
+      console.log('User signed out successfully');
       return response.data;
     } catch (error) {
       if(error.response == undefined || error.response == null) {
@@ -281,7 +281,7 @@ export const logoutUser = async () =>{
 
 export const contactUs = async (contactDetails) => {
   try {
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/enquiry/contactUs`, contactDetails);
+    const response = await axios.post('/api/v1/enquiry/contactUs', contactDetails);
     console.log('Contact form submitted successfully');
     return response.data;
   } catch (error) {
@@ -326,7 +326,7 @@ export const contactUs = async (contactDetails) => {
 
 export const getAllUser = async () =>{
   try{
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/user/getAllUsers`,{ withCredentials: true });
+    const response = await axios.get('/api/v1/user/getAllUsers',{ withCredentials: true });
     return response.data;
   }catch(error){
      if(error.response == undefined || error.response == null) {
