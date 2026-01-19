@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import { combineReducers } from 'redux';
 import EnquirySlice from '../Slice/EnquirySlice.js';
+import JobSlice from '../Slice/JobSlice.js';
 
 
 const persistConfig = {
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   user: UserReducer,
   profile: ProfileReducer,
   enquiry: EnquirySlice,
+  jobstore: JobSlice,
 });
 
 

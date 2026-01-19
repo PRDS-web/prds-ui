@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import {
   Box,
   Grid,
@@ -18,6 +20,7 @@ import {
   Button,
   TextField,
   InputAdornment,
+  TablePagination,
   useTheme,
   Divider,
   List,
@@ -72,9 +75,15 @@ import {
   AttachFile as AttachFileIcon,
   PersonAddAlt as PersonAddAltIcon,
   RemoveCircle as RemoveCircleIcon,
+  CalendarMonth as CalendarMonthIcon,
+  Public as PublicIcon,
+  Message as MessageIcon,
 } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetIsSuccess, resetIsError, getAllUsers } from '../../Slice/UserLoginSlice';
+import { getAllEnquiries } from '../../Slice/EnquirySlice';
+import JobOpportunity from './jobOpportunity';
+import { getAllJobs } from '../../Slice/JobSlice';
 
 // Enhanced mock data for modern dashboard
 const mockStats = {
@@ -132,108 +141,6 @@ const mockQuickStats = [
   },
 ];
 
-const mockRecentUsers = [
-  {
-    id: 1,
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    company: 'Tech Corp',
-    country: 'United States',
-    status: 'active',
-    role: 'user',
-    avatar: 'https://i.pravatar.cc/150?img=1',
-    joinDate: '2024-01-15',
-    lastActive: '2 hours ago',
-  },
-  {
-    id: 2,
-    name: 'Jane Smith',
-    email: 'jane.smith@example.com',
-    company: 'Design Studio',
-    country: 'Canada',
-    status: 'active',
-    role: 'admin',
-    avatar: 'https://i.pravatar.cc/150?img=2',
-    joinDate: '2024-01-14',
-    lastActive: '1 hour ago',
-  },
-  {
-    id: 3,
-    name: 'Mike Johnson',
-    email: 'mike.johnson@example.com',
-    company: 'Marketing Plus',
-    country: 'United Kingdom',
-    status: 'pending',
-    role: 'user',
-    avatar: 'https://i.pravatar.cc/150?img=3',
-    joinDate: '2024-01-13',
-    lastActive: '3 days ago',
-  },
-  {
-    id: 4,
-    name: 'Sarah Wilson',
-    email: 'sarah.wilson@example.com',
-    company: 'Innovation Labs',
-    country: 'Australia',
-    status: 'active',
-    role: 'moderator',
-    avatar: 'https://i.pravatar.cc/150?img=4',
-    joinDate: '2024-01-12',
-    lastActive: '5 hours ago',
-  },
-];
-
-const mockContactRequests = [
-  {
-    id: 1,
-    name: 'Alex Thompson',
-    email: 'alex.thompson@example.com',
-    company: 'Digital Solutions',
-    country: 'Germany',
-    message:
-      'I would like to discuss a potential partnership for our upcoming project. We are looking for innovative technology solutions.',
-    status: 'unread',
-    time: '5 minutes ago',
-    priority: 'high',
-  },
-  {
-    id: 2,
-    name: 'Maria Garcia',
-    email: 'maria.garcia@example.com',
-    company: 'Creative Agency',
-    country: 'Spain',
-    message:
-      'We are interested in your services and would like to schedule a consultation call to discuss our requirements.',
-    status: 'read',
-    time: '1 hour ago',
-    priority: 'medium',
-  },
-  {
-    id: 3,
-    name: 'David Chen',
-    email: 'david.chen@example.com',
-    company: 'Tech Innovations',
-    country: 'Singapore',
-    message:
-      'Looking for collaboration opportunities in the Asian market. Would appreciate if you could share more details.',
-    status: 'unread',
-    time: '3 hours ago',
-    priority: 'high',
-  },
-  {
-    id: 4,
-    name: 'Emma Wilson',
-    email: 'emma.wilson@example.com',
-    company: 'Startup Hub',
-    country: 'Netherlands',
-    message:
-      'We are a new startup and would love to learn more about your platform and how it can help us grow.',
-    status: 'read',
-    time: '6 hours ago',
-    priority: 'low',
-  },
-];
-
 const mockRecentActivities = [
   {
     id: 1,
@@ -264,46 +171,6 @@ const mockRecentActivities = [
     type: 'company',
   },
 ];
-
-const mockJobOpportunities = [
-  {
-    id: 1,
-    title: 'Senior Frontend Developer',
-    company: 'Tech Corp',
-    location: 'Remote',
-    type: 'Full-time',
-    status: 'active',
-    applications: 23,
-    postedDate: '2024-01-10',
-    deadline: '2024-02-10',
-    salary: '$80k - $120k',
-  },
-  {
-    id: 2,
-    title: 'UI/UX Designer',
-    company: 'Design Studio',
-    location: 'New York',
-    type: 'Contract',
-    status: 'active',
-    applications: 15,
-    postedDate: '2024-01-12',
-    deadline: '2024-02-12',
-    salary: '$60k - $90k',
-  },
-  {
-    id: 3,
-    title: 'Product Manager',
-    company: 'Innovation Labs',
-    location: 'San Francisco',
-    type: 'Full-time',
-    status: 'closed',
-    applications: 45,
-    postedDate: '2024-01-05',
-    deadline: '2024-02-05',
-    salary: '$100k - $150k',
-  },
-];
-
 const mockChartData = {
   userGrowth: [65, 78, 90, 105, 120, 135, 150],
   monthlyRegistrations: [45, 52, 48, 61, 55, 67, 73],
@@ -339,6 +206,9 @@ const Dashboard = () => {
   const [tabValue, setTabValue] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEmail, setSelectedEmail] = useState(null);
+  const [viewEnquiry, setViewEnquiry] = useState(false);
+  const [viewUser, setViewUser] = useState(false);
+  const [userRow, setUserRow] = useState(0);
   const [replyText, setReplyText] = useState('');
   const [emailFilter, setEmailFilter] = useState('all');
   const [attachments, setAttachments] = useState([]);
@@ -348,13 +218,26 @@ const Dashboard = () => {
   const [ccInput, setCcInput] = useState('');
   const [bccInput, setBccInput] = useState('');
   const [toInput, setToInput] = useState('');
+  const [page, setPage] = useState(0);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const dispatch = useDispatch();
-  
+  dayjs.extend(relativeTime);
   const { users, isError, isLoading, isSuccess, errorMessage, successMessage } =
     useSelector((state) => state.user);
-
+  const { enquiries } = useSelector((state) => state.enquiry);
+  const { Jobs, isJobsLoading } = useSelector((state) =>  state.jobstore);
+    const allEnquires = enquiries.length > 0 ? enquiries : [];
+    const AllUsers = users.user || [];
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
+    if(newValue === 2){
+       dispatch(getAllEnquiries());
+    }else if(newValue ===1){
+       dispatch(getAllUsers());
+    }else if(newValue ===4){
+        dispatch(getAllJobs());
+    }
   };
 
   const handleEmailClick = (email) => {
@@ -379,9 +262,6 @@ const Dashboard = () => {
     setBccInput('');
     setToInput('');
   };
-   useEffect(() => {
-      dispatch(getAllUsers());
-    }, [dispatch]);
   const handleReply = (email) => {
     console.log('Replying to:', email, 'Message:', replyText);
     console.log('To:', toEmails);
@@ -403,7 +283,13 @@ const Dashboard = () => {
     }));
     setAttachments((prev) => [...prev, ...newAttachments]);
   };
-
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   const removeAttachment = (id) => {
     setAttachments((prev) => prev.filter((att) => att.id !== id));
   };
@@ -469,14 +355,13 @@ const Dashboard = () => {
     }
   };
 
-  const filteredUsers = mockRecentUsers.filter(
+  const filteredUsers = AllUsers.filter(
     (user) =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.company.toLowerCase().includes(searchTerm.toLowerCase())
+      user.email.toLowerCase().includes(searchTerm.toLowerCase()) 
   );
 
-  const filteredEmails = mockContactRequests.filter((email) => {
+  const filteredEmails = allEnquires.filter((email) => {
     if (emailFilter === 'all') return true;
     if (emailFilter === 'unread') return email.status === 'unread';
     if (emailFilter === 'read') return email.status === 'read';
@@ -753,14 +638,13 @@ const Dashboard = () => {
                 textTransform: 'none',
                 fontWeight: 600,
                 minHeight: 64,
-                color:
-                  theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
                 '&.Mui-selected': {
-                  color: 'primary.main',
+                  color: 'inherit',
+                  border: `3px solid ${theme.palette.primary.main}`,
                 },
               },
               '& .MuiTabs-indicator': {
-                backgroundColor: 'primary.main',
+                backgroundColor: theme.palette.mode === 'dark' ? 'black' : 'blue',
               },
             }}
           >
@@ -786,7 +670,7 @@ const Dashboard = () => {
                       Recent Users
                     </Typography>
                     <List>
-                      {mockRecentUsers.slice(0, 4).map((user) => (
+                      {AllUsers.slice(0, 4).map((user) => (
                         <ListItem key={user.id} sx={{ px: 0 }}>
                           <ListItemAvatar>
                             <Avatar src={user.avatar} alt={user.name} />
@@ -891,7 +775,8 @@ const Dashboard = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {filteredUsers.map((user) => (
+                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((user, index) => (
                       <TableRow key={user.id}>
                         <TableCell>
                           <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -929,19 +814,19 @@ const Dashboard = () => {
                             }
                           />
                         </TableCell>
-                        <TableCell>{user.company}</TableCell>
-                        <TableCell>{user.country}</TableCell>
+                        <TableCell>{user.company == null ? 'N/A' : user.company}</TableCell>
+                        <TableCell>{user.country == null ? 'N/A' : user.country}</TableCell>
                         <TableCell>
                           <Chip
-                            label={user.status}
+                            label={user.status == null ? 'N/A' : user.status}
                             size="small"
                             color={getStatusColor(user.status)}
                           />
                         </TableCell>
-                        <TableCell>{user.lastActive}</TableCell>
+                        <TableCell>{user.lastActive == null ? 'N/A' : user.lastActive}</TableCell>
                         <TableCell>
                           <Box sx={{ display: 'flex', gap: 1 }}>
-                            <IconButton size="small" color="primary">
+                            <IconButton size="small" color='inherit' onClick={()=>{ setViewUser(true); setUserRow(index); }}>
                               <VisibilityIcon />
                             </IconButton>
                             <IconButton size="small" color="secondary">
@@ -956,6 +841,15 @@ const Dashboard = () => {
                     ))}
                   </TableBody>
                 </Table>
+                 <TablePagination
+                   component="div"
+                   count={allEnquires.length}
+                   page={page}
+                   onPageChange={handleChangePage}
+                   rowsPerPage={rowsPerPage}
+                   onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[5, 10, 25]}
+                 />
               </TableContainer>
             </Box>
           )}
@@ -972,15 +866,15 @@ const Dashboard = () => {
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  Contact Requests ({mockContactRequests.length})
+                  Total Enquires ({allEnquires.length})
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2 }}>
                   <Chip
-                    label={`${mockContactRequests.filter((c) => c.status === 'unread').length} Unread`}
+                    label={`${allEnquires.filter((c) => c.status === 'unread').length} Unread`}
                     color="warning"
                   />
                   <Chip
-                    label={`${mockContactRequests.filter((c) => c.priority === 'high').length} High Priority`}
+                    label={`${allEnquires.filter((c) => c.priority === 'high').length} High Priority`}
                     color="error"
                   />
                 </Box>
@@ -1001,7 +895,8 @@ const Dashboard = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {mockContactRequests.map((contact) => (
+                    {allEnquires.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((contact, index) => (
                       <TableRow key={contact.id}>
                         <TableCell>
                           <Box>
@@ -1019,11 +914,11 @@ const Dashboard = () => {
                             </Typography>
                           </Box>
                         </TableCell>
-                        <TableCell>{contact.company}</TableCell>
-                        <TableCell>{contact.country}</TableCell>
+                        <TableCell>{contact.company == null ? 'N/A' : contact.company}</TableCell>
+                        <TableCell>{contact.country == null ? 'N/A' : contact.country}</TableCell>
                         <TableCell>
                           <Chip
-                            label={contact.priority}
+                            label={contact.priority == null ? 'N/A' : contact.priority}
                             size="small"
                             color={
                               contact.priority === 'high'
@@ -1036,7 +931,7 @@ const Dashboard = () => {
                         </TableCell>
                         <TableCell>
                           <Chip
-                            label={contact.status}
+                            label={contact.status == null ? 'Need to check' : contact.status}
                             size="small"
                             color={
                               contact.status === 'unread'
@@ -1045,18 +940,19 @@ const Dashboard = () => {
                             }
                           />
                         </TableCell>
-                        <TableCell>{contact.time}</TableCell>
+                        <TableCell>{dayjs(contact.createdAt).fromNow()}</TableCell>
                         <TableCell>
-                          <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Box sx={{ display: 'flex', gap: 1, color: 'inherit' }}>
                             <Button
                               size="small"
                               variant="outlined"
-                              startIcon={<EmailIcon />}
+                              sx={{ color: 'inherit', borderColor: 'inherit' }}
+                              startIcon={<EmailIcon color="inherit" />}
                               onClick={() => handleEmailClick(contact)}
                             >
                               Reply
                             </Button>
-                            <IconButton size="small" color="primary">
+                            <IconButton size="small" color="inherit" onClick={()=>{ setViewEnquiry(true); setSelectedRow(index); }}>
                               <VisibilityIcon />
                             </IconButton>
                           </Box>
@@ -1065,6 +961,15 @@ const Dashboard = () => {
                     ))}
                   </TableBody>
                 </Table>
+                 <TablePagination
+                   component="div"
+                   count={allEnquires.length}
+                   page={page}
+                   onPageChange={handleChangePage}
+                   rowsPerPage={rowsPerPage}
+                   onRowsPerPageChange={handleChangeRowsPerPage}
+                    rowsPerPageOptions={[5, 10, 25]}
+                 />
               </TableContainer>
             </Box>
           )}
@@ -1213,110 +1118,7 @@ const Dashboard = () => {
           )}
 
           {tabValue === 4 && (
-            <Box>
-              {/* Job Opportunities Header */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  mb: 3,
-                }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                  Job Opportunities ({mockJobOpportunities.length})
-                </Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<BusinessIcon />}
-                  onClick={() => {
-                    // Handle create new job
-                    console.log('Create new job');
-                  }}
-                >
-                  Create New Job
-                </Button>
-              </Box>
-
-              {/* Job Opportunities Table */}
-              <TableContainer component={Paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Position</TableCell>
-                      <TableCell>Company</TableCell>
-                      <TableCell>Location</TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Applications</TableCell>
-                      <TableCell>Status</TableCell>
-                      <TableCell>Deadline</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {mockJobOpportunities.map((job) => (
-                      <TableRow key={job.id}>
-                        <TableCell>
-                          <Box>
-                            <Typography
-                              variant="body2"
-                              sx={{ fontWeight: 'bold' }}
-                            >
-                              {job.title}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              color="text.secondary"
-                            >
-                              {job.salary}
-                            </Typography>
-                          </Box>
-                        </TableCell>
-                        <TableCell>{job.company}</TableCell>
-                        <TableCell>{job.location}</TableCell>
-                        <TableCell>
-                          <Chip
-                            label={job.type}
-                            size="small"
-                            variant="outlined"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Chip
-                            label={job.applications}
-                            size="small"
-                            color="info"
-                          />
-                        </TableCell>
-                        <TableCell>
-                          <Chip
-                            label={job.status}
-                            size="small"
-                            color={
-                              job.status === 'active' ? 'success' : 'default'
-                            }
-                          />
-                        </TableCell>
-                        <TableCell>{job.deadline}</TableCell>
-                        <TableCell>
-                          <Box sx={{ display: 'flex', gap: 1 }}>
-                            <IconButton size="small" color="primary">
-                              <VisibilityIcon />
-                            </IconButton>
-                            <IconButton size="small" color="secondary">
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton size="small" color="error">
-                              <DeleteIcon />
-                            </IconButton>
-                          </Box>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
+            <JobOpportunity jobs={Jobs} isLoading={isJobsLoading} handleTabChange={handleTabChange} />
           )}
 
           {tabValue === 5 && (
@@ -1806,6 +1608,7 @@ const Dashboard = () => {
             bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'white',
             color: theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
             maxHeight: '90vh',
+            maxWidth: '90wh',
           },
         }}
       >
@@ -2190,6 +1993,383 @@ const Dashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+        open={viewEnquiry}
+        onClose={()=> setViewEnquiry(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'white',
+            color: theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
+            maxHeight: '90vh',
+            maxWidth: '90wh',
+            borderRadius: 3,
+          },
+        }}
+      >
+        <DialogTitle>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main ,
+              // background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
+              py: 2,
+              px: 2,
+              borderRadius: '12px 12px 0 0',
+              margin: -2,
+              marginBottom: 2,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <EmailIcon sx={{ color: 'inherit', fontSize: 28 }} />
+              <Typography variant="h6" sx={{ color: 'inherit', fontWeight: 'bold' }}>
+                Enquiry Details
+              </Typography>
+            </Box>
+            <IconButton 
+              onClick={()=> setViewEnquiry(false)}
+              sx={{ color: 'inherit' }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
+          {selectedRow !== null && (
+            <Box>
+              {/* Header Card with Name and Status */}
+              <Card 
+                sx={{ 
+                  mb: 3, 
+                  bgcolor: 'inherit',
+                  // borderLeft: `4px solid ${theme.palette.primary.main}`,
+                }}
+              >
+                <CardContent sx={{ pb: 2, pt: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: 'inherit', gap: 2 }}>
+                    <Avatar 
+                      sx={{ 
+                        bgcolor: 'inherit', 
+                        color: 'inherit',
+                        borderColor: 'inherit',
+                        borderWidth: 2,
+                        borderStyle: 'solid',
+                        width: 50, 
+                        height: 50,
+                        fontSize: 24,
+                      }}
+                    >
+                      {allEnquires[selectedRow].name?.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                        {allEnquires[selectedRow].name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {allEnquires[selectedRow].email}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+
+              {/* Details Grid */}
+              <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    <CalendarMonthIcon sx={{ color: 'inherit', mt: 1 }} />
+                    <Box>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                        ENQUIRY DATE & TIME
+                      </Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {dayjs(allEnquires[selectedRow].createdAt).format('DD-MM-YYYY HH:mm:ss')}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    <PublicIcon sx={{ color: 'inherit', mt: 1 }} />
+                    <Box>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                        COUNTRY
+                      </Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {allEnquires[selectedRow].country || 'N/A'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                {allEnquires[selectedRow].company && (
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                      <BusinessIcon sx={{ color: 'inherit', mt: 1 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                          COMPANY
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                          {allEnquires[selectedRow].company}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                )}
+              </Grid>
+
+              <Divider sx={{ my: 3 }} />
+
+              {/* Message Section */}
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <MessageIcon sx={{ color: 'inherit' }} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                    Message
+                  </Typography>
+                </Box>
+                <Card 
+                  sx={{ 
+                    bgcolor: theme.palette.mode === 'dark' ? 'grey.700' : 'grey.50',
+                    p: 2,
+                  }}
+                >
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      lineHeight: 1.8,
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {allEnquires[selectedRow].message}
+                  </Typography>
+                </Card>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions
+          sx={{
+            bgcolor: theme.palette.mode === 'dark' ? 'grey.700' : 'grey.50',
+            borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'grey.600' : 'grey.200'}`,
+            gap: 1,
+            p: 2,
+          }}
+        >
+          <Box sx={{ flex: 1 }} />
+          <Button
+            onClick={()=> setViewEnquiry(false)}
+            variant="contained"
+            startIcon={<CloseIcon />}
+            sx={{
+              bgcolor: 'primary.main',
+              color: 'white',
+              textTransform: 'none',
+              fontWeight: 600,
+              '&:hover': {
+                bgcolor: 'primary.dark',
+              },
+            }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={viewUser}
+        onClose={()=> setViewUser(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'white',
+            color: theme.palette.mode === 'dark' ? 'grey.100' : 'text.primary',
+            maxHeight: '90vh',
+            maxWidth: '90wh',
+            borderRadius: 3,
+          },
+        }}
+      >
+        <DialogTitle>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              backgroundColor: theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.main ,
+              // background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
+              py: 2,
+              px: 2,
+              borderRadius: '12px 12px 0 0',
+              margin: -2,
+              marginBottom: 2,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <EmailIcon sx={{ color: 'inherit', fontSize: 28 }} />
+              <Typography variant="h6" sx={{ color: 'inherit', fontWeight: 'bold' }}>
+                User Detail
+              </Typography>
+            </Box>
+            <IconButton 
+              onClick={()=> setViewUser(false)}
+              sx={{ color: 'inherit' }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent sx={{ pt: 3 }}>
+          {selectedRow !== null && (
+            <Box>
+              {/* Header Card with Name and Status */}
+              <Card 
+                sx={{ 
+                  mb: 3, 
+                  bgcolor: 'inherit',
+                  // borderLeft: `4px solid ${theme.palette.primary.main}`,
+                }}
+              >
+                <CardContent sx={{ pb: 2, pt: 2 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', bgcolor: 'inherit', gap: 2 }}>
+                    <Avatar 
+                      sx={{ 
+                        bgcolor: 'inherit', 
+                        color: 'inherit',
+                        borderColor: 'inherit',
+                        borderWidth: 2,
+                        borderStyle: 'solid',
+                        width: 50, 
+                        height: 50,
+                        fontSize: 24,
+                      }}
+                      src={AllUsers[userRow].picture || undefined}
+                      imgProps={{
+                        referrerPolicy: "no-referrer"
+                      }}
+                    >
+                    {AllUsers[userRow].name?.charAt(0).toUpperCase()}
+                    </Avatar>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                        {AllUsers[userRow].name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {AllUsers[userRow].email}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </Card>
+
+              {/* Details Grid */}
+              <Grid container spacing={2} sx={{ mb: 3 }}>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    <CalendarMonthIcon sx={{ color: 'inherit', mt: 1 }} />
+                    <Box>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                        ENQUIRY DATE & TIME
+                      </Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {dayjs(allEnquires[userRow].createdAt).format('DD-MM-YYYY HH:mm:ss')}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                    <PublicIcon sx={{ color: 'inherit', mt: 1 }} />
+                    <Box>
+                      <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                        COUNTRY
+                      </Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {AllUsers[userRow].country || 'N/A'}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Grid>
+                {AllUsers[userRow].company && (
+                  <Grid item xs={12} sm={6}>
+                    <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
+                      <BusinessIcon sx={{ color: 'inherit', mt: 1 }} />
+                      <Box>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.75rem', fontWeight: 'bold', mb: 0.5 }}>
+                          COMPANY
+                        </Typography>
+                        <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                          {AllUsers[userRow].company}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Grid>
+                )}
+              </Grid>
+
+              <Divider sx={{ my: 3 }} />
+
+              {/* Message Section */}
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
+                  <MessageIcon sx={{ color: 'inherit' }} />
+                  <Typography variant="subtitle1" sx={{ fontWeight: 'bold' }}>
+                    Message
+                  </Typography>
+                </Box>
+                <Card 
+                  sx={{ 
+                    bgcolor: theme.palette.mode === 'dark' ? 'grey.700' : 'grey.50',
+                    p: 2,
+                  }}
+                >
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      lineHeight: 1.8,
+                      whiteSpace: 'pre-wrap',
+                      wordBreak: 'break-word',
+                    }}
+                  >
+                    {AllUsers[userRow].message}
+                  </Typography>
+                </Card>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions
+          sx={{
+            bgcolor: theme.palette.mode === 'dark' ? 'grey.700' : 'grey.50',
+            borderTop: `1px solid ${theme.palette.mode === 'dark' ? 'grey.600' : 'grey.200'}`,
+            gap: 1,
+            p: 2,
+          }}
+        >
+          <Box sx={{ flex: 1 }} />
+          <Button
+            onClick={()=> setViewUser(false)}
+            variant="contained"
+            startIcon={<CloseIcon />}
+            sx={{
+              bgcolor: 'primary.main',
+              color: 'white',
+              textTransform: 'none',
+              fontWeight: 600,
+              '&:hover': {
+                bgcolor: 'primary.dark',
+              },
+            }}
+          >
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </Box>
   );
 };

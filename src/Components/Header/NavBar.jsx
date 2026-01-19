@@ -166,10 +166,13 @@ export default function NavBar() {
                   </IconButton>
                 ) : (
                   <Box>
-                    <Tooltip title={(users.name|| users.user.name) || 'Profile'}>
+                    <Tooltip title={(users.name|| users?.user?.name) || 'Profile'}>
                       <IconButton onClick={handleOpenUserMenu}>
                         <Avatar
-                          alt={(users.name|| users.user.name)  || 'User'}
+                          alt={(users.name|| users?.user?.name)  || 'User'}
+                          imgProps={{
+                            referrerPolicy: "no-referrer"
+                         }}
                           src={
                             isImageFailed ||
                             users.picture == '' ||
@@ -349,10 +352,10 @@ export default function NavBar() {
               </IconButton>
             ) : (
               <Box>
-                <Tooltip title={(users.name|| users.user.name) || 'Profile'}>
+                <Tooltip title={(users.name|| users.user?.name) || 'Profile'}>
                   <IconButton onClick={handleOpenUserMenu}>
                     <Avatar
-                      alt={(users.name|| users.user.name) || 'User'}
+                      alt={(users.name|| users.user?.name) || 'User'}
                       src={
                         isImageFailed ||
                         users.picture == '' ||
@@ -360,6 +363,9 @@ export default function NavBar() {
                           ? Boy
                           : users.picture
                       }
+                       imgProps={{
+                            referrerPolicy: "no-referrer"
+                         }}
                       onError={() => setIsImageFailed(true)}
                       sx={{
                         border: '2px solid white',
