@@ -9,12 +9,7 @@ import {
   Fade,
   Card,
   CardContent,
-  useMediaQuery,
-  Grid,
-  Paper,
-  Step,
-  StepLabel,
-  Stepper,
+  Grid
 } from '@mui/material';
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import GroupIcon from '@mui/icons-material/Group';
@@ -26,17 +21,14 @@ import LockIcon from '@mui/icons-material/Lock';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { useEffect, useRef, useState } from 'react';
 import Contact from '../Contact us/Contact';
-import BGIMG from '../../assets/Card-BG.jpg';
 import DataObjectIcon from '@mui/icons-material/DataObject';
 import TranslateIcon from '@mui/icons-material/Translate';
 import DeveloperModeIcon from '@mui/icons-material/DeveloperMode';
 import {
-  EmojiObjects,
   Handshake,
   DesignServices,
   RocketLaunch,
   Reviews,
-  Star
 } from '@mui/icons-material';
 import { useLocation } from 'react-router-dom';
 
@@ -58,7 +50,7 @@ export default function Home() {
   const svgRef = useRef(null);
   const contactRef = useRef(null);
   const serviceRef = useRef(null);
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const location = useLocation();
 
   const steps = [
