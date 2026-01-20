@@ -98,7 +98,7 @@ const jobSlice = createSlice({
         state.isError = true;
         state.Job = {};
       })
-      .addCase(getAllJobs.pending, (state) => {
+      builder.addCase(getAllJobs.pending, (state) => {
         state.isJobsLoading = true;
         state.isRedirect = false;
         state.errorMessage = null;
@@ -129,7 +129,8 @@ const jobSlice = createSlice({
         state.isError = true;
         state.Jobs = [];
         state.Job = {};
-      }).addCase(updateExistingJob.pending, (state) => {
+      })
+      builder.addCase(updateExistingJob.pending, (state) => {
         state.isUpdating = true;
         state.isRedirect = false;
         state.errorMessage = null;

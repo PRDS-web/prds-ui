@@ -1,7 +1,7 @@
 //userSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser } from '../Service/ApiService';
+import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser, forgotPassword, resetPassword } from '../Service/ApiService';
 import { REHYDRATE } from 'redux-persist';
 
 
@@ -64,6 +64,26 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+export const forgotPasswords = createAsyncThunk(
+  '/forgotPassword',
+  async (request, { rejectWithValue }) => {
+    const response = await forgotPassword(request);
+    if (response.status < 200 || response.status >= 300) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+export const resetPasswords = createAsyncThunk(
+  '/resetPassword',
+  async (request, { rejectWithValue }) => {
+    const response = await resetPassword(request);
+    if (response.status < 200 || response.status >= 300) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -241,7 +261,47 @@ const userSlice = createSlice({
       state.errorMessage = action.payload?.message || 'Failed to fetch users';
       state.isError = true;
     });
-  },
+    builder.addCase(forgotPasswords.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+    })
+    .addCase(forgotPasswords.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = action.payload?.message || 'Password reset successfully';
+    })
+    .addCase(forgotPasswords.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to reset password';
+      state.isError = true;
+    });
+    builder.addCase(resetPasswords.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+    })
+    .addCase(resetPasswords.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = action.payload?.message || 'Password reset successfully';
+    })
+    .addCase(resetPasswords.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to reset password';
+      state.isError = true;
+    });
+  }
 });
 
 export const { resetIsSuccess, resetIsError } = userSlice.actions;

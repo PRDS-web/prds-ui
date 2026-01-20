@@ -7,23 +7,17 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPasswords } from '../../Slice/UserLoginSlice';
 
 function ForgotPassword({ open, handleClose }) {
+  const dispatch = useDispatch();
+  const [email, setEmail] = React.useState('');
+  const { isSuccess } = useSelector((state) => state.user);
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
-      slotProps={{
-        paper: {
-          component: 'form',
-          onSubmit: (event) => {
-            event.preventDefault();
-            handleClose();
-          },
-          sx: { backgroundImage: 'none' },
-        },
-      }}
-    >
+      onClose={handleClose} >
       <DialogTitle>Reset password</DialogTitle>
       <DialogContent
         sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}
@@ -35,6 +29,7 @@ function ForgotPassword({ open, handleClose }) {
         <OutlinedInput
           autoFocus
           required
+          value={email}
           margin="dense"
           id="email"
           name="email"
@@ -42,11 +37,17 @@ function ForgotPassword({ open, handleClose }) {
           placeholder="Email address"
           type="email"
           fullWidth
+          onChange={(e) => setEmail(e.target.value)}
         />
       </DialogContent>
       <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" onClick={() =>{ 
+          dispatch(forgotPasswords({ email })); 
+          if(isSuccess){
+           setEmail('');
+          }
+      }}>
           Continue
         </Button>
       </DialogActions>
@@ -54,9 +55,5 @@ function ForgotPassword({ open, handleClose }) {
   );
 }
 
-ForgotPassword.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  open: PropTypes.bool.isRequired,
-};
 
 export default ForgotPassword;
