@@ -622,3 +622,46 @@ export const resetPassword = async (request) => {
     }
   }
 }
+export const verifyUserTokenApi = async (token) => {
+  try {
+    const response = await axios.post('/api/v1/auth//verify', { token });
+    console.log('Token verified successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error verifying token:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to verify token';
+      if (error.response.status === 404) {
+        defaultMessage = 'Verify token endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid token provided';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    }
+  }
+}

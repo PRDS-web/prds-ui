@@ -1,7 +1,5 @@
-//userSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser, forgotPassword, resetPassword } from '../Service/ApiService';
+import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser, forgotPassword, resetPassword, verifyUserTokenApi } from '../Service/ApiService';
 import { REHYDRATE } from 'redux-persist';
 
 
@@ -21,6 +19,18 @@ export const registerUser = createAsyncThunk(
   async (userDetails, { rejectWithValue }) => {
     const response = await signUpUser(userDetails);
     console.log('Response from signUpUser:', response);
+    if (response.status < 200 || response.status >= 300) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
+export const verifyUserToken = createAsyncThunk(
+  '/verifyUserToken',
+  async (token, { rejectWithValue }) => { 
+    const response = await verifyUserTokenApi(token);
+    console.log('Response from verifyUserTokenApi:', response);
     if (response.status < 200 || response.status >= 300) {
       return rejectWithValue(response);
     }
@@ -299,6 +309,26 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = false;
       state.errorMessage = action.payload?.message || 'Failed to reset password';
+      state.isError = true;
+    });
+    builder.addCase(verifyUserToken.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+    })
+    .addCase(verifyUserToken.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = action.payload?.message || 'User verified successfully';
+    })
+    .addCase(verifyUserToken.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to verify user';
       state.isError = true;
     });
   }
