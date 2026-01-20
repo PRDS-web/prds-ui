@@ -536,3 +536,89 @@ export const updateJob = async (jobDetails) => {
     }
   }
 }
+export const forgotPassword = async (request) => {
+  try {
+    const response = await axios.post('/api/v1/auth/forgot-password', request);
+    console.log('Password reset successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error resetting password:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    } 
+    else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to reset password';  
+      if (error.response.status === 404) {
+        defaultMessage = 'Reset password endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid password details provided';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    } 
+  }
+}
+export const resetPassword = async (request) => {
+  try {
+    const response = await axios.post('/api/v1/auth/reset-password', request);
+    console.log('Password reset successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error resetting password:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to reset password';
+      if (error.response.status === 404) {
+        defaultMessage = 'Reset password endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid password details provided';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    }
+  }
+}
