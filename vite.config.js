@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api/v1': {
-        // target: 'https://35.171.154.62.nip.io',
-        target: 'http://localhost:8080',
+        target: 'https://35.171.154.62.nip.io',
+        // target: 'http://localhost:8080',
         changeOrigin: true,
         secure: true,
       }
