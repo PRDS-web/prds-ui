@@ -13,6 +13,7 @@ import AboutUs from '../Components/AboutUs/AboutUs.jsx';
 import Dashboard from '../Components/Dashboard/Dashboard.jsx';
 import VerifyUser from '../Components/VerifyToken/verifyUser.jsx';
 import ResetPassword from '../ResetPassword/resetPassword.jsx';
+import Opportunity from '../Components/Job/Opportunity.jsx';
 
 function ReactRoute() {
    
@@ -38,6 +39,7 @@ function ReactRoute() {
            <><NavBar/> <Toolbar /><Dashboard/><Footer/></>
          </ProtectedRoute>
        }/>
+       <Route path='/opportunity' element={<><NavBar/><Opportunity/><Footer/></>}/>
        <Route path='/verify' element={<><NavBar/><VerifyUser/> <Footer/></>}/>
        <Route path='/reset-password' element={<><NavBar/><ResetPassword/> <Footer/></>}/>
      </Routes>

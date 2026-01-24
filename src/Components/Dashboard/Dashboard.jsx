@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {
@@ -227,8 +227,12 @@ const Dashboard = () => {
     useSelector((state) => state.user);
   const { enquiries } = useSelector((state) => state.enquiry);
   const { Jobs, isJobsLoading } = useSelector((state) =>  state.jobstore);
-    const allEnquires = enquiries.length > 0 ? enquiries : [];
-    const AllUsers = users.user || [];
+  const allEnquires = enquiries.length > 0 ? enquiries : [];
+  const AllUsers = Array.isArray(users?.user) ? users.user : [];
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
     if(newValue === 2){
@@ -239,7 +243,7 @@ const Dashboard = () => {
         dispatch(getAllJobs());
     }
   };
-
+  
   const handleEmailClick = (email) => {
     setSelectedEmail(email);
     setAttachments([]);

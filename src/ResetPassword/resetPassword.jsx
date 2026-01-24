@@ -28,6 +28,40 @@ export default function ResetPassword() {
     password: "",
     confirmPassword: "",
   });
+    const textFieldStyles = {
+    '& .MuiInputLabel-root': {
+      color: 'inherit',
+    },
+
+    // Label color when focused (moves up)
+    '& .MuiInputLabel-root.Mui-focused': {
+      color: 'inherit',
+    },
+
+    // Border color (default)
+    '& .MuiOutlinedInput-root fieldset': {
+      borderColor: 'inherit',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+      borderColor: 'inherit',
+      borderWidth: '2px',
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+      color: 'inherit',
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+      color: 'inherit',
+      borderWidth: '2px',
+    },
+    '&.Mui-focused': {
+      color: 'inherit',
+    },
+  };
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -188,6 +222,7 @@ export default function ResetPassword() {
                 error={!!errors.password}
                 helperText={errors.password}
                 margin="normal"
+                sx={textFieldStyles}
                 placeholder="Enter at least 8 characters"
                 InputProps={{
                   endAdornment: (
@@ -214,6 +249,7 @@ export default function ResetPassword() {
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword}
                 margin="normal"
+                sx={textFieldStyles}
                 placeholder="Re-enter your password"
                 InputProps={{
                   endAdornment: (

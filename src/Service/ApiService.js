@@ -665,3 +665,89 @@ export const verifyUserTokenApi = async (token) => {
     }
   }
 }
+
+export const applyForJob = async (applicationData) => {
+  try {
+    const response = await axios.post('/api/v1/jobs/applyJob', applicationData, { withCredentials: true });
+    console.log('Job application submitted successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error submitting job application:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to submit job application';
+      if (error.response.status === 404) {
+        defaultMessage = 'Job application endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid application details provided';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    } 
+  }
+}
+export const appliedJobs = async () => {
+  try {
+    const response = await axios.get('/api/v1/jobs/getAppliedJobs', { withCredentials: true });
+    console.log('Applied jobs fetched successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error fetching applied jobs:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    } else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to fetch applied jobs';
+      if (error.response.status === 404) {
+        defaultMessage = 'Applied jobs endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid request';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    }
+  }
+}
