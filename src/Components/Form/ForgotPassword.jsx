@@ -6,14 +6,47 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { forgotPasswords } from '../../Slice/UserLoginSlice';
+import { TextField } from '@mui/material';
 
-function ForgotPassword({ open, handleClose }) {
+function ForgotPassword({ open, handleClose, isSuccess }) {
   const dispatch = useDispatch();
   const [email, setEmail] = React.useState('');
-  const { isSuccess } = useSelector((state) => state.user);
+    const textFieldStyles = {
+    '& .MuiInputLabel-root': {
+      color: 'inherit',
+    },
+
+    // Label color when focused (moves up)
+    '& .MuiInputLabel-root.Mui-focused': {
+      color: 'inherit',
+    },
+
+    // Border color (default)
+    '& .MuiOutlinedInput-root fieldset': {
+      borderColor: 'inherit',
+    },
+    '& .MuiOutlinedInput-root.Mui-focused fieldset': {
+      borderColor: 'inherit',
+      borderWidth: '2px',
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+      color: 'inherit',
+    },
+    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+      borderColor: 'inherit',
+      color: 'inherit',
+      borderWidth: '2px',
+    },
+    '&.Mui-focused': {
+      color: 'inherit',
+    },
+  };
   return (
     <Dialog
       open={open}
@@ -26,7 +59,7 @@ function ForgotPassword({ open, handleClose }) {
           Enter your account&apos;s email address, and we&apos;ll send you a link to
           reset your password.
         </DialogContentText>
-        <OutlinedInput
+        <TextField
           autoFocus
           required
           value={email}
@@ -36,6 +69,7 @@ function ForgotPassword({ open, handleClose }) {
           label="Email address"
           placeholder="Email address"
           type="email"
+          sx={textFieldStyles}
           fullWidth
           onChange={(e) => setEmail(e.target.value)}
         />

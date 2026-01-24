@@ -25,7 +25,7 @@ import Boy from '../../assets/boyWithoutBG.png';
 import logo from '../../assets/logo.PNG';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import logo from '../../assets/logo.png';
-const pages = ['Home', 'Service', 'About us', 'Contact us'];
+const pages = ['Home', 'Service', 'Opportunity', 'About us', 'Contact us'];
 const settings = ['Profile', 'Logout'];
 
 export default function NavBar() {

@@ -86,7 +86,7 @@ export default function Footer() {
                   }}
                 />
               </IconButton>
-              <IconButton>
+              <IconButton href='https://x.com/pradetra?s=11'>
                 <Twitter
                   sx={{
                     color: theme.palette.mode == 'dark' ? 'white' : 'black',
@@ -100,7 +100,7 @@ export default function Footer() {
                   }}
                 />
               </IconButton>
-              <IconButton>
+              <IconButton href='https://www.instagram.com/pradetra_/?hl=en'>
                 <Instagram
                   sx={{
                     color: theme.palette.mode == 'dark' ? 'white' : 'black',

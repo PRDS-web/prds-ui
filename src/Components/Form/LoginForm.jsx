@@ -613,6 +613,7 @@ export default function LoginForm() {
                 <ForgotPassword
                   open={isOpen}
                   handleClose={handleClose}
+                  isSuccess={isSuccess}
                 />
               </>
             )}
