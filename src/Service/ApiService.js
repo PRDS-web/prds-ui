@@ -751,3 +751,102 @@ export const appliedJobs = async () => {
     }
   }
 }
+export const getBankingInfo = async () => {
+  try {
+    const response = await axios.get('/api/v1/user/getBankDetails', { withCredentials: true });
+    console.log('Banking information fetched successfully');
+    return response.data;
+  } catch (error) {
+    if(error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    console.error('Error fetching banking information:', error.response);
+    // Ensure we always return an error object with a message property
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    else {
+      // If backend doesn't provide a message, create a default one based on status
+      let defaultMessage = 'Failed to fetch banking information';
+      if (error.response.status === 404) {
+        defaultMessage = 'Banking information endpoint not found';
+      } else if (error.response.status === 400) {
+        defaultMessage = 'Invalid request';
+      } else if (error.response.status === 401) {
+        defaultMessage = 'Unauthorized. Please login again';
+      } else if (error.response.status === 403) {
+        defaultMessage = 'Access denied';
+      } else if (error.response.status >= 500) {
+        defaultMessage = 'Server error. Please try again later';
+      }
+      return {
+        message: defaultMessage,
+        status: error.response.status,
+        data: errorData
+      };
+    }
+  }
+}
+
+export const updateBankDetails = async (bankingData) => {
+  try {
+    const response = await axios.post('/api/v1/user/updateBankDetails', bankingData, { withCredentials: true });
+    console.log('Banking details updated successfully');
+    return response.data;
+  } catch (error) {
+    if (error.response == undefined || error.response == null) {
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    let defaultMessage = 'Failed to update banking details';
+    if (error.response.status === 404) defaultMessage = 'Update banking endpoint not found';
+    return {
+      message: defaultMessage,
+      status: error.response.status,
+      data: errorData
+    };
+  }
+};
+
+export const getBankingHistory = async () => {
+  try {
+    const response = await axios.get('/api/v1/user/getBankinghistory', { withCredentials: true });
+    console.log('Banking history fetched successfully');
+    return response.data;
+  } catch (error) { 
+    if (error.response == undefined || error.response == null) {
+      // this means backend is not running or there is a network issue
+      console.log('Network error or backend not running');
+      return {
+        message: 'Network error. Please check your connection.',
+        title: 'Network Error',
+        status: '500',
+      };
+    }
+    const errorData = error.response.data;
+    if (errorData && errorData.message) {
+      return errorData;
+    }
+    let defaultMessage = 'Failed to fetch banking history';
+    if (error.response.status === 404) defaultMessage = 'Banking history endpoint not found';
+    return {
+      message: defaultMessage,
+      status: error.response.status,
+      data: errorData
+    };
+  }
+}

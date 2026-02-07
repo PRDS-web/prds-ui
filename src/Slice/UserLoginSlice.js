@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser, forgotPassword, resetPassword, verifyUserTokenApi } from '../Service/ApiService';
+import { getUserInfo, signUpUser, loginUser, logoutUser, getAllUser, forgotPassword, resetPassword, verifyUserTokenApi, getBankingInfo, getBankingHistory, updateBankDetails } from '../Service/ApiService';
 import { REHYDRATE } from 'redux-persist';
 
 
@@ -32,6 +32,38 @@ export const verifyUserToken = createAsyncThunk(
     const response = await verifyUserTokenApi(token);
     console.log('Response from verifyUserTokenApi:', response);
     if (response.status < 200 || response.status >= 300) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+export const getBankingDetails = createAsyncThunk(
+  '/getBankingDetails',
+  async (_, { rejectWithValue }) => {
+    const response = await getBankingInfo();
+    if (response?.status && (response.status < 200 || response.status >= 300)) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
+export const getBankingHistoryDetails = createAsyncThunk(
+  '/getBankingHistoryDetails',
+  async (_, { rejectWithValue }) => {
+    const response = await getBankingHistory();
+    if (response?.status && (response.status < 200 || response.status >= 300)) {
+      return rejectWithValue(response);
+    }
+    return response;
+  }
+);
+
+export const updateBankingDetails = createAsyncThunk(
+  '/updateBankingDetails',
+  async (bankingData, { rejectWithValue }) => {
+    const response = await updateBankDetails(bankingData);
+    if (response?.status && (response.status < 200 || response.status >= 300)) {
       return rejectWithValue(response);
     }
     return response;
@@ -106,7 +138,10 @@ const userSlice = createSlice({
     isSuccess: false,
     isError: false,
     isSignedUp: false,
-    isLoggedOut: false
+    isLoggedOut: false,
+    bankingDetails: {},
+    bankingHistory: [],
+    isBankingUpdating: false,
   },
   reducers: {
     resetIsError: (state) => {
@@ -330,6 +365,75 @@ const userSlice = createSlice({
       state.isSuccess = false;
       state.errorMessage = action.payload?.message || 'Failed to verify user';
       state.isError = true;
+    });
+    builder.addCase(getBankingDetails.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+      state.bankingDetails = {};
+    })
+    .addCase(getBankingDetails.fulfilled, (state, action) => {
+      const payload = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = payload?.message || 'Banking details fetched successfully';
+      state.bankingDetails = payload?.bankingDetails || {};
+    })
+    .addCase(getBankingDetails.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to fetch banking details';
+      state.isError = true;
+      state.bankingDetails = {};
+    })
+    builder.addCase(getBankingHistoryDetails.pending, (state) => {
+      state.isLoading = true;
+      state.errorMessage = null;
+      state.successMessage = null;
+      state.isSuccess = false;
+      state.isError = false;
+      state.bankingHistory = [];
+    })
+    .addCase(getBankingHistoryDetails.fulfilled, (state, action) => {
+      const payload = action.payload;
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.errorMessage = null;
+      state.isError = false;
+      state.successMessage = payload?.message || 'Banking history fetched successfully';
+      const hist = payload?.bankingDetailsHistory ?? payload?.bankingHistory ?? payload?.history;
+      state.bankingHistory = Array.isArray(hist) ? hist : [];
+    })
+    .addCase(getBankingHistoryDetails.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = false;
+      state.errorMessage = action.payload?.message || 'Failed to fetch banking history';
+      state.isError = true;
+      state.bankingHistory = [];
+    })
+    builder.addCase(updateBankingDetails.pending, (state) => {
+      state.isBankingUpdating = true;
+      state.errorMessage = null;
+      state.isError = false;
+    })
+    .addCase(updateBankingDetails.fulfilled, (state, action) => {
+      state.isBankingUpdating = false;
+      state.isSuccess = true;
+      state.successMessage = action.payload?.message || 'Banking details updated successfully';
+      const updated = action.payload?.bankingDetails ?? action.payload;
+      if (updated && typeof updated === 'object') {
+        state.bankingDetails = updated;
+      }
+    })
+    .addCase(updateBankingDetails.rejected, (state, action) => {
+      state.isBankingUpdating = false;
+      state.isSuccess = false;
+      state.isError = true;
+      state.errorMessage = action.payload?.message || 'Failed to update banking details';
     });
   }
 });
