@@ -27,6 +27,7 @@ import {
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { applyForTheJob, getAllJobs, updateJobApplicationStatus } from "../../Slice/JobSlice";
+import { APPLICATION_FORM_FIELDS_DEFAULT } from "../../constants/jobConstants";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import WorkIcon from "@mui/icons-material/Work";
@@ -210,6 +211,10 @@ export default function Opportunity() {
       return;
     }
     setSelectedJob(job);
+    const initialCustomValues = {};
+    (job.customApplicationFields || []).forEach((f) => {
+      initialCustomValues[f.id] = "";
+    });
     setFormData({
       firstName: "",
       lastName: "",
@@ -218,7 +223,8 @@ export default function Opportunity() {
       experience: "",
       skills: "",
       coverLetter: "",
-      linkedIn: ""
+      linkedIn: "",
+      customFieldValues: initialCustomValues,
     });
     setFormErrors({});
     setOpenDetailsModal(false);
@@ -227,40 +233,57 @@ export default function Opportunity() {
 
   const validateForm = () => {
     const errors = {};
+    const fieldConfig = selectedJob?.applicationFormFields || APPLICATION_FORM_FIELDS_DEFAULT;
 
-    if (!formData.firstName.trim()) {
-      errors.firstName = "First name is required";
-    }
-    if (!formData.lastName.trim()) {
-      errors.lastName = "Last name is required";
-    }
-    if (!formData.email.trim() || !/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Valid email is required";
-    }
-    if (!formData.phoneNumber.trim() || !/^\d{10}$/.test(formData.phoneNumber)) {
-      errors.phoneNumber = "Valid 10-digit phone number is required";
-    }
-    if (!formData.experience.trim()) {
-      errors.experience = "Experience is required";
-    }
-    if (!formData.skills.trim()) {
-      errors.skills = "Skills are required";
-    }
+    const validations = {
+      firstName: () => !formData.firstName?.trim() && "First name is required",
+      lastName: () => !formData.lastName?.trim() && "Last name is required",
+      email: () => (!formData.email?.trim() || !/\S+@\S+\.\S+/.test(formData.email)) && "Valid email is required",
+      phoneNumber: () => (!formData.phoneNumber?.trim() || !/^\d{10}$/.test(formData.phoneNumber)) && "Valid 10-digit phone number is required",
+      experience: () => !formData.experience?.trim() && "Experience is required",
+      skills: () => !formData.skills?.trim() && "Skills are required",
+      coverLetter: () => !formData.coverLetter?.trim() && "Cover letter is required",
+      linkedIn: () => !formData.linkedIn?.trim() && "LinkedIn profile is required",
+    };
+
+    Object.entries(fieldConfig).forEach(([fieldKey, config]) => {
+      if (config.enabled && config.required && validations[fieldKey]) {
+        const error = validations[fieldKey]();
+        if (error) errors[fieldKey] = error;
+      }
+    });
+
+    // Validate custom fields
+    (selectedJob?.customApplicationFields || []).forEach((field) => {
+      if (field.required) {
+        const value = formData.customFieldValues?.[field.id];
+        if (!value?.toString().trim()) {
+          errors[`custom_${field.id}`] = `${field.label || "This field"} is required`;
+        }
+      }
+    });
+
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (formErrors[name]) {
-      setFormErrors((prev) => ({
+    if (name.startsWith("custom_")) {
+      const fieldId = name.replace("custom_", "");
+      setFormData((prev) => ({
         ...prev,
-        [name]: "",
+        customFieldValues: {
+          ...(prev.customFieldValues || {}),
+          [fieldId]: value,
+        },
       }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+    const errorKey = name.startsWith("custom_") ? name : name;
+    if (formErrors[errorKey]) {
+      setFormErrors((prev) => ({ ...prev, [errorKey]: "" }));
     }
   };
 
@@ -270,7 +293,9 @@ export default function Opportunity() {
       return;
     }
     formData.jobId = selectedJob?._id;
-    formData.skills = formData.skills.split(",").map((skill) => skill.trim());
+    formData.skills = typeof formData.skills === "string"
+      ? formData.skills.split(",").map((skill) => skill.trim()).filter(Boolean)
+      : formData.skills || [];
     formData.userId = _id;
     console.log("Submitting application with data:", formData.userId);
     try {
@@ -1213,145 +1238,81 @@ export default function Opportunity() {
             <Box sx={{ p: 3, width: "100%" }}>
               <Box component="form" onSubmit={handleSubmitApplication} sx={{ width: "100%", boxSizing: "border-box" }}>
                 <Grid container spacing={2} sx={{ width: "100%", m: 0, boxSizing: "border-box" }}>
-                  {/* First Name */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      required
-                      label="First Name"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      error={!!formErrors.firstName}
-                      helperText={formErrors.firstName}
-                      variant="outlined"
-                      size="small"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Last Name */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Last Name"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      error={!!formErrors.lastName}
-                      helperText={formErrors.lastName}
-                      variant="outlined"
-                      size="small"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Email */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Email Address"
-                      required
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      error={!!formErrors.email}
-                      helperText={formErrors.email}
-                      variant="outlined"
-                      size="small"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Phone */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Phone Number"
-                      name="phoneNumber"
-                      required
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      error={!!formErrors.phoneNumber}
-                      helperText={formErrors.phoneNumber}
-                      variant="outlined"
-                      size="small"
-                      placeholder="10-digit number"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Experience */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Years of Experience"
-                      name="experience"
-                      value={formData.experience}
-                      onChange={handleInputChange}
-                      error={!!formErrors.experience}
-                      helperText={formErrors.experience}
-                      variant="outlined"
-                      required
-                      size="small"
-                      type="number"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* LinkedIn Profile */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="LinkedIn Profile URL"
-                      name="linkedIn"
-                      value={formData.linkedIn}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      required
-                      size="small"
-                      placeholder="https://linkedin.com/in/yourprofile"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Skills */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Skills"
-                      name="skills"
-                      value={formData.skills}
-                      onChange={handleInputChange}
-                      error={!!formErrors.skills}
-                      helperText={formErrors.skills || "Enter skills separated by commas"}
-                      variant="outlined"
-                      size="medium"
-                      multiline
-                      required
-                      rows={2}
-                      placeholder="e.g., React, Node.js, Python, etc."
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
-
-                  {/* Cover Letter */}
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Cover Letter"
-                      name="coverLetter"
-                      value={formData.coverLetter}
-                      onChange={handleInputChange}
-                      variant="outlined"
-                      size="medium"
-                      multiline
-                      rows={3}
-                      placeholder="Tell us why you're interested in this position"
-                      sx={textFieldStyles}
-                    />
-                  </Grid>
+                  {(() => {
+                    const fieldConfig = selectedJob?.applicationFormFields || APPLICATION_FORM_FIELDS_DEFAULT;
+                    const fieldProps = {
+                      firstName: { type: "text", placeholder: "", multiline: false, rows: 1 },
+                      lastName: { type: "text", placeholder: "", multiline: false, rows: 1 },
+                      email: { type: "email", placeholder: "", multiline: false, rows: 1 },
+                      phoneNumber: { type: "text", placeholder: "10-digit number", multiline: false, rows: 1 },
+                      experience: { type: "number", placeholder: "", multiline: false, rows: 1 },
+                      skills: { type: "text", placeholder: "e.g., React, Node.js, Python, etc.", multiline: true, rows: 2 },
+                      coverLetter: { type: "text", placeholder: "Tell us why you're interested in this position", multiline: true, rows: 3 },
+                      linkedIn: { type: "url", placeholder: "https://linkedin.com/in/yourprofile", multiline: false, rows: 1 },
+                    };
+                    const getCustomFieldProps = (type) => {
+                      const types = {
+                        text: { type: "text", multiline: false, rows: 1 },
+                        textarea: { type: "text", multiline: true, rows: 3 },
+                        email: { type: "email", multiline: false, rows: 1 },
+                        url: { type: "url", multiline: false, rows: 1 },
+                        number: { type: "number", multiline: false, rows: 1 },
+                        phone: { type: "tel", multiline: false, rows: 1 },
+                      };
+                      return types[type] || types.text;
+                    };
+                    return (
+                      <>
+                        {Object.entries(fieldConfig)
+                          .filter(([, config]) => config.enabled)
+                          .map(([fieldKey, config]) => (
+                            <Grid item xs={12} key={fieldKey}>
+                              <TextField
+                                fullWidth
+                                required={config.required}
+                                label={config.label}
+                                name={fieldKey}
+                                type={fieldProps[fieldKey]?.type || "text"}
+                                value={formData[fieldKey] || ""}
+                                onChange={handleInputChange}
+                                error={!!formErrors[fieldKey]}
+                                helperText={formErrors[fieldKey]}
+                                variant="outlined"
+                                size={fieldProps[fieldKey]?.multiline ? "medium" : "small"}
+                                multiline={fieldProps[fieldKey]?.multiline || false}
+                                rows={fieldProps[fieldKey]?.rows || 1}
+                                placeholder={fieldProps[fieldKey]?.placeholder}
+                                sx={textFieldStyles}
+                              />
+                            </Grid>
+                          ))}
+                        {(selectedJob?.customApplicationFields || []).map((field) => {
+                          const props = getCustomFieldProps(field.type);
+                          return (
+                            <Grid item xs={12} key={field.id}>
+                              <TextField
+                                fullWidth
+                                required={field.required}
+                                label={field.label || "Custom Field"}
+                                name={`custom_${field.id}`}
+                                type={props.type}
+                                value={formData.customFieldValues?.[field.id] || ""}
+                                onChange={handleInputChange}
+                                error={!!formErrors[`custom_${field.id}`]}
+                                helperText={formErrors[`custom_${field.id}`]}
+                                variant="outlined"
+                                size={props.multiline ? "medium" : "small"}
+                                multiline={props.multiline || false}
+                                rows={props.rows || 1}
+                                placeholder={field.label ? `Enter ${field.label.toLowerCase()}` : ""}
+                                sx={textFieldStyles}
+                              />
+                            </Grid>
+                          );
+                        })}
+                      </>
+                    );
+                  })()}
                 </Grid>
 
                 {/* Buttons */}

@@ -9,7 +9,7 @@ export const fetchProfile = createAsyncThunk(
   // to indicate that we are not using the first parameter
   async (_, { rejectWithValue }) => {
     const response = await getProfileInfo();
-    console.log('Response from getProfileInfo:', response);
+    console.log('Response from getProfileInfo:');
     
     // Check if response indicates an error (has message property or status indicates error)
     if (response.message || (response.status && response.status >= 400)) {
@@ -32,7 +32,7 @@ export const updateProfile = createAsyncThunk(
       console.log('Error detected in updateProfile thunk, rejecting with:', response);
       return rejectWithValue(response);
     }
-    console.log('Success in updateProfile thunk, returning:', response);
+    console.log('Success in updateProfile thunk, returning:');
     return response;
   }
 );

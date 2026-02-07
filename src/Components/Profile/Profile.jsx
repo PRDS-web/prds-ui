@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import dayjs from 'dayjs';
 import {
   Container,
   Paper,
@@ -53,6 +54,7 @@ import {
 } from '@mui/icons-material';
 import { fetchProfile, updateProfile, resetIsSuccess, resetIsError } from '../../Slice/ProfileSlice';
 import { getAppliedJobs } from '../../Slice/JobSlice';
+import BankingInfo from './BankingInfo';
 
 
 function TabPanel({ children, value, index, ...other }) {
@@ -93,6 +95,8 @@ function Profile() {
     website: 'https://johndoe.dev',
     loggedInType: '',
     isVerified: false,
+    createdAt: '',
+    updatedAt: '',
 
     // Banking Info
     bankName: 'Chase Bank',
@@ -150,6 +154,8 @@ function Profile() {
         github: users.github || '',
         loggedInType: users.loggedInType || '',
         isVerified: users.isVerified || false,
+        createdAt: users.createdAt || '',
+        updatedAt: users.updatedAt || '',
       };
       setProfileData(updatedProfileData);
       setEditData(updatedProfileData);
@@ -177,16 +183,6 @@ function Profile() {
     }
   }, [isSuccess, isError, dispatch]);
 
-  // Debug logging for state changes
-  useEffect(() => {
-    console.log('Profile state changed:', {
-      isSuccess,
-      isError,
-      successMessage,
-      errorMessage,
-      isUpdating
-    });
-  }, [isSuccess, isError, successMessage, errorMessage, isUpdating]);
 
   const handleTabChange = (event, newValue) => {
     if (isEditing && hasUnsavedChanges) {
@@ -485,507 +481,6 @@ function Profile() {
       </Grid>
     </Grid>
   );
-
-  const renderBankingInfo = () => {
-    const banksList = ['Chase Bank', 'Bank of America', 'Wells Fargo', 'Citibank', 'HDFC Bank', 'ICICI Bank', 'State Bank of India', 'Axis Bank', 'Other'];
-
-    return (
-      <Box>
-        <Alert severity="info" sx={{ mb: 3 }}>
-          Manage your banking and payment information securely. All sensitive data is encrypted.
-        </Alert>
-
-        <Grid container spacing={3}>
-          {/* PayPal Account */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#0070ba',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  🅿️
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                    }}
-                  >
-                    PayPal Account
-                  </Typography>
-                  {isEditing ? (
-                    <TextField
-                      fullWidth
-                      type="email"
-                      value={editData.paypalEmail}
-                      onChange={(e) => handleInputChange('paypalEmail', e.target.value)}
-                      variant="outlined"
-                      size="small"
-                      placeholder="your.email@paypal.com"
-                      sx={{ mt: 1 }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.paypalEmail || 'Not provided'}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* UPI ID */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#6c63ff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  ₹
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                    }}
-                  >
-                    UPI ID
-                  </Typography>
-                  {isEditing ? (
-                    <TextField
-                      fullWidth
-                      value={editData.upiId}
-                      onChange={(e) => handleInputChange('upiId', e.target.value)}
-                      variant="outlined"
-                      size="small"
-                      placeholder="yourname@upi"
-                      sx={{ mt: 1 }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.upiId || 'Not provided'}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Bank Selection */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#28a745',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  🏦
-                </Box>
-                <Box sx={{ flex: 1, width: '100%' }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                      display: 'block',
-                    }}
-                  >
-                    Select Bank
-                  </Typography>
-                  {isEditing ? (
-                    <FormControl fullWidth size="small" sx={{ mt: 1 }}>
-                      <Select
-                        value={editData.bankName}
-                        onChange={(e) => handleInputChange('bankName', e.target.value)}
-                      >
-                        {banksList.map((bank, index) => (
-                          <MenuItem key={index} value={bank}>
-                            {bank}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.bankName}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Account Type */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#fd7e14',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  📊
-                </Box>
-                <Box sx={{ flex: 1, width: '100%' }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                      display: 'block',
-                    }}
-                  >
-                    Account Type
-                  </Typography>
-                  {isEditing ? (
-                    <FormControl fullWidth size="small" sx={{ mt: 1 }}>
-                      <Select
-                        value={editData.accountType}
-                        onChange={(e) => handleInputChange('accountType', e.target.value)}
-                      >
-                        <MenuItem value="Checking">Checking</MenuItem>
-                        <MenuItem value="Savings">Savings</MenuItem>
-                        <MenuItem value="Business">Business</MenuItem>
-                      </Select>
-                    </FormControl>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.accountType}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Account Number */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#dc3545',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  💳
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                    }}
-                  >
-                    Account Number
-                  </Typography>
-                  {isEditing ? (
-                    <TextField
-                      fullWidth
-                      type="password"
-                      value={editData.accountNumber}
-                      onChange={(e) => handleInputChange('accountNumber', e.target.value)}
-                      variant="outlined"
-                      size="small"
-                      placeholder="1234567890"
-                      sx={{ mt: 1 }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.accountNumber}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Routing Number */}
-          <Grid size={{ xs: 12, md: 6 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#17a2b8',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  🔐
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                    }}
-                  >
-                    Routing Number
-                  </Typography>
-                  {isEditing ? (
-                    <TextField
-                      fullWidth
-                      value={editData.routingNumber}
-                      onChange={(e) => handleInputChange('routingNumber', e.target.value)}
-                      variant="outlined"
-                      size="small"
-                      placeholder="021000021"
-                      sx={{ mt: 1 }}
-                    />
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.routingNumber}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-
-          {/* Card Type */}
-          <Grid size={{ xs: 12 }}>
-            <Paper
-              sx={{
-                p: 3,
-                borderRadius: 2,
-                backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : '#f8f9fa',
-                border: '2px solid',
-                borderColor: theme.palette.mode === 'dark' ? 'divider' : '#e0e0e0',
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  boxShadow: 3,
-                  borderColor: '#1976d2',
-                },
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                <Box
-                  sx={{
-                    width: 50,
-                    height: 50,
-                    borderRadius: '50%',
-                    backgroundColor: '#6f42c1',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.5rem',
-                    flexShrink: 0,
-                  }}
-                >
-                  💰
-                </Box>
-                <Box sx={{ flex: 1 }}>
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      color: 'text.secondary',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: 0.5,
-                      display: 'block',
-                    }}
-                  >
-                    Card Type
-                  </Typography>
-                  {isEditing ? (
-                    <FormControl fullWidth size="small" sx={{ mt: 1 }}>
-                      <Select
-                        value={editData.cardType}
-                        onChange={(e) => handleInputChange('cardType', e.target.value)}
-                      >
-                        <MenuItem value="Visa">Visa</MenuItem>
-                        <MenuItem value="Mastercard">Mastercard</MenuItem>
-                        <MenuItem value="American Express">American Express</MenuItem>
-                        <MenuItem value="Discover">Discover</MenuItem>
-                      </Select>
-                    </FormControl>
-                  ) : (
-                    <Typography
-                      variant="body2"
-                      sx={{ fontWeight: 600, color: 'text.primary', mt: 1 }}
-                    >
-                      {editData.cardType}
-                    </Typography>
-                  )}
-                </Box>
-              </Box>
-            </Paper>
-          </Grid>
-        </Grid>
-      </Box>
-    );
-  };
 
   const renderSecurityPrivacy = () => (
     <Grid container spacing={3}>
@@ -1760,7 +1255,7 @@ function Profile() {
       case 0:
         return renderGeneralInfo();
       case 1:
-        return renderBankingInfo();
+        return <BankingInfo />;
       case 2:
         return renderSecurityPrivacy();
       case 3:
@@ -1922,6 +1417,22 @@ function Profile() {
                 }}
               />
             </Box>
+            {(profileData.updatedAt || profileData.createdAt) && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, flexWrap: 'wrap', opacity: 0.95, mb: 2 }}>
+                {profileData.updatedAt && (
+                  <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Event sx={{ fontSize: '1rem' }} />
+                    Profile updated on {dayjs(profileData.updatedAt).format('DD MMM YYYY, HH:mm')}
+                  </Typography>
+                )}
+                {profileData.createdAt && (
+                  <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Event sx={{ fontSize: '1rem' }} />
+                    Account created on {dayjs(profileData.createdAt).format('DD MMM YYYY')}
+                  </Typography>
+                )}
+              </Box>
+            )}
             <Typography
               variant="h6"
               sx={{
@@ -2066,8 +1577,8 @@ function Profile() {
               </Box>
             )}
 
-            {/* Action Buttons */}
-            {selectedTab !== 5 && (
+            {/* Action Buttons - hidden on Applied Jobs and Banking Info (BankingInfo has its own Edit/Submit/Cancel) */}
+            {selectedTab !== 5 && selectedTab !== 1 && (
             <Box
               sx={{
                 display: 'flex',

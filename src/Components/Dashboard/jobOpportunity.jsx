@@ -26,6 +26,10 @@ import {
   MenuItem,
   Snackbar,
   Alert,
+  FormControlLabel,
+  Checkbox,
+  Switch,
+  Divider,
 } from '@mui/material';
 import {
   Work as WorkIcon,
@@ -38,10 +42,12 @@ import {
   Person as PersonIcon,
   TrendingUp as TrendingUpIcon,
   CheckCircle as CheckCircleIcon,
+  Add as AddIcon,
 } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import { useSelector, useDispatch } from 'react-redux';
 import { createNewJob, resetIsSuccess, updateExistingJob } from '../../Slice/JobSlice';
+import { APPLICATION_FORM_FIELDS_DEFAULT, CUSTOM_FIELD_TYPES } from '../../constants/jobConstants';
 
 export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
   const theme = useTheme();
@@ -62,6 +68,8 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
     lastdateToApply: dayjs().add(30, 'days').format('YYYY-MM-DD'),
     skillsRequired: [],
     appliedCandidates: [],
+    applicationFormFields: JSON.parse(JSON.stringify(APPLICATION_FORM_FIELDS_DEFAULT)),
+    customApplicationFields: [],
   });
   const { successMessage, isSuccess } = useSelector((state) => state.jobstore);
 
@@ -103,8 +111,15 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
     dispatch(updateExistingJob(newJob));
   }
   const handleViewJob = (job) => {
-    setNewJob(JSON.parse(JSON.stringify(job)));
-    setEditedJob(JSON.parse(JSON.stringify(job)));
+    const jobCopy = JSON.parse(JSON.stringify(job));
+    if (!jobCopy.applicationFormFields) {
+      jobCopy.applicationFormFields = JSON.parse(JSON.stringify(APPLICATION_FORM_FIELDS_DEFAULT));
+    }
+    if (!jobCopy.customApplicationFields) {
+      jobCopy.customApplicationFields = [];
+    }
+    setNewJob(jobCopy);
+    setEditedJob(jobCopy);
     setSkillsInput(job.skillsRequired?.join(', ') || '');
     setViewJobDetail(true);
   };
@@ -120,6 +135,8 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
       lastdateToApply: dayjs().add(30, 'days').format('YYYY-MM-DD'),
       skillsRequired: [],
       appliedCandidates: [],
+      applicationFormFields: JSON.parse(JSON.stringify(APPLICATION_FORM_FIELDS_DEFAULT)),
+      customApplicationFields: [],
     });
     setSkillsInput('');
     setCreateJobDialogOpen(true);
@@ -134,6 +151,61 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
     }
   }, [isSuccess, dispatch]);
 
+  const handleApplicationFieldChange = (fieldKey, enabled) => {
+    setNewJob((prev) => ({
+      ...prev,
+      applicationFormFields: {
+        ...prev.applicationFormFields,
+        [fieldKey]: {
+          ...prev.applicationFormFields[fieldKey],
+          enabled,
+        },
+      },
+    }));
+  };
+
+  const handleApplicationFieldRequiredChange = (fieldKey, required) => {
+    setNewJob((prev) => ({
+      ...prev,
+      applicationFormFields: {
+        ...prev.applicationFormFields,
+        [fieldKey]: {
+          ...prev.applicationFormFields[fieldKey],
+          required,
+        },
+      },
+    }));
+  };
+
+  const handleAddCustomField = () => {
+    const newField = {
+      id: `custom_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`,
+      label: '',
+      required: false,
+      type: 'text',
+    };
+    setNewJob((prev) => ({
+      ...prev,
+      customApplicationFields: [...(prev.customApplicationFields || []), newField],
+    }));
+  };
+
+  const handleUpdateCustomField = (fieldId, updates) => {
+    setNewJob((prev) => ({
+      ...prev,
+      customApplicationFields: (prev.customApplicationFields || []).map((f) =>
+        f.id === fieldId ? { ...f, ...updates } : f
+      ),
+    }));
+  };
+
+  const handleRemoveCustomField = (fieldId) => {
+    setNewJob((prev) => ({
+      ...prev,
+      customApplicationFields: (prev.customApplicationFields || []).filter((f) => f.id !== fieldId),
+    }));
+  };
+
   const handleDisableJobButton = () => {
     if (
       viewJobDetail &&
@@ -145,7 +217,11 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
       newJob.lastdateToApply == editedJob.lastdateToApply &&
       newJob.jobDescription == editedJob.jobDescription &&
       JSON.stringify(newJob.skillsRequired) ==
-        JSON.stringify(editedJob.skillsRequired)
+        JSON.stringify(editedJob.skillsRequired) &&
+      JSON.stringify(newJob.applicationFormFields) ==
+        JSON.stringify(editedJob.applicationFormFields) &&
+      JSON.stringify(newJob.customApplicationFields) ==
+        JSON.stringify(editedJob.customApplicationFields)
     ) {
       return true;
     } else if (
@@ -158,6 +234,11 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
     ) {
       return true;
     }
+    // Disable if any custom field has empty label
+    const hasInvalidCustomField = (newJob.customApplicationFields || []).some(
+      (f) => !f.label || !f.label.trim()
+    );
+    if (hasInvalidCustomField) return true;
     return false;
   };
 
@@ -192,6 +273,8 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
       lastdateToApply: dayjs().add(30, 'days').format('YYYY-MM-DD'),
       skillsRequired: [],
       appliedCandidates: [],
+      applicationFormFields: JSON.parse(JSON.stringify(APPLICATION_FORM_FIELDS_DEFAULT)),
+      customApplicationFields: [],
     });
     setSkillsInput('');
   };
@@ -497,6 +580,153 @@ export default function JobOpportunity({ jobs, isLoading, handleTabChange }) {
               rows={2}
               placeholder="e.g. React, JavaScript, Node.js, MongoDB"
             />
+
+            {/* Application Form Fields - Select which fields applicants need to fill */}
+            <Box
+              sx={{
+                p: 2,
+                borderRadius: 2,
+                border: `1px solid ${theme.palette.mode === 'dark' ? 'grey.600' : 'grey.300'}`,
+                bgcolor: theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
+              }}
+            >
+              <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2 }}>
+                Application Form Fields
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                Select which fields applicants must fill when applying. Toggle Required to make each field mandatory.
+              </Typography>
+              <Grid container spacing={2}>
+                {Object.entries(newJob.applicationFormFields || APPLICATION_FORM_FIELDS_DEFAULT).map(([fieldKey, config]) => (
+                  <Grid item xs={12} sm={6} md={4} key={fieldKey}>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        p: 1.5,
+                        borderRadius: 1,
+                        bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'white',
+                        border: `1px solid ${theme.palette.mode === 'dark' ? 'grey.700' : 'grey.200'}`,
+                      }}
+                    >
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={config.enabled}
+                            onChange={(e) => handleApplicationFieldChange(fieldKey, e.target.checked)}
+                            size="small"
+                          />
+                        }
+                        label={<Typography variant="body2">{config.label}</Typography>}
+                      />
+                      {config.enabled && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                          <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                            Required
+                          </Typography>
+                          <Switch
+                            size="small"
+                            checked={config.required}
+                            onChange={(e) => handleApplicationFieldRequiredChange(fieldKey, e.target.checked)}
+                          />
+                        </Box>
+                      )}
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+
+            {/* Additional Custom Fields */}
+            <Box
+              sx={{
+                  p: 2,
+                  borderRadius: 2,
+                  border: `1px solid ${theme.palette.mode === 'dark' ? 'grey.600' : 'grey.300'}`,
+                bgcolor: theme.palette.mode === 'dark' ? 'grey.900' : 'grey.50',
+              }}
+            >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Box>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                      Additional Custom Fields
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
+                      Add your own fields for applicants to fill (e.g., Portfolio URL, Expected Salary, Availability)
+                    </Typography>
+                  </Box>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    startIcon={<AddIcon />}
+                    onClick={handleAddCustomField}
+                    sx={{
+                      textTransform: 'none',
+                      fontWeight: 600,
+                    }}
+                  >
+                    Add Field
+                  </Button>
+                </Box>
+                {(newJob.customApplicationFields || []).map((field) => (
+                  <Box
+                    key={field.id}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 2,
+                      mb: 2,
+                      p: 2,
+                      borderRadius: 1,
+                      bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'white',
+                      border: `1px solid ${theme.palette.mode === 'dark' ? 'grey.700' : 'grey.200'}`,
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <TextField
+                      size="small"
+                      label="Field Label"
+                      placeholder="e.g. Portfolio URL"
+                      value={field.label}
+                      onChange={(e) => handleUpdateCustomField(field.id, { label: e.target.value })}
+                      sx={{ ...textFieldStyles, flex: 1, minWidth: 140 }}
+                    />
+                    <FormControl size="small" sx={{ minWidth: 120 }}>
+                      <InputLabel>Type</InputLabel>
+                      <Select
+                        value={field.type || 'text'}
+                        label="Type"
+                        onChange={(e) => handleUpdateCustomField(field.id, { type: e.target.value })}
+                      >
+                        {CUSTOM_FIELD_TYPES.map((t) => (
+                          <MenuItem key={t.value} value={t.value}>
+                            {t.label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          size="small"
+                          checked={field.required || false}
+                          onChange={(e) => handleUpdateCustomField(field.id, { required: e.target.checked })}
+                        />
+                      }
+                      label={<Typography variant="caption">Required</Typography>}
+                    />
+                    <IconButton
+                      size="small"
+                      color="error"
+                      onClick={() => handleRemoveCustomField(field.id)}
+                      aria-label="Remove field"
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                ))}
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions
