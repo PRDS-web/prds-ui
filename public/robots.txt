@@ -2,5 +2,5 @@ User-agent: *
 Allow: /
 
 # Update this to your production domain
-Sitemap: https://pradetra.com/sitemap.xml
+Sitemap: https://www.pradetra.com/sitemap.xml
 
